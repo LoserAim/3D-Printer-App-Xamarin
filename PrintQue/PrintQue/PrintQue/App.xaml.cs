@@ -11,7 +11,7 @@ namespace PrintQue
         {
             InitializeComponent();
 
-            MainPage = new LoginPage();
+            MainPage = new NavigationPage(new LoginPage());
             //MainPage = new MainPage();
         }
 
