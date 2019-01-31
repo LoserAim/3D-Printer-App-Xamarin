@@ -30,7 +30,16 @@ namespace PrintQue
             else
             {
                 //then try to log in user
+                if (userNameEntry.Text.Equals("admin")){
+                    //admin
+                    Navigation.PushAsync(new AdminTabContainer());
+                } else
+                {
+                    //student
+                    Navigation.PushAsync(new UserTabContainer());
+                }
 
+                
             }
 
         }
