@@ -1,17 +1,14 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="PrintQue.LoginPage">
-
+             x:Class="PrintQue.RegisterPage">
     <StackLayout VerticalOptions="Center" Margin="30,10">
 
+        <Entry x:Name="NameEntry" Placeholder="First Name"/>
         <Entry x:Name="userNameEntry" Placeholder="Username or Email Adress" Keyboard="Email"/>
         <Entry x:Name="userPasswordEntry" Placeholder="Password" IsPassword="True"/>
-        <Button x:Name="LoginButton" Text="Log in" Clicked="LoginButton_Clicked" Margin="0,35"  BackgroundColor="DodgerBlue" TextColor="White"/>
-
-        <Label Text="Don't have an account?" HorizontalOptions="Center"/>
-        <Label x:Name="RegisterLabel" Text="Register" HorizontalOptions="Center" TextColor="CadetBlue"/>
-
+        <Entry x:Name="PasswordConfirmEntry" Placeholder="Confirm Password" IsPassword="True"/>
+        <Button x:Name="LoginButton" Text="Register" Clicked="RegisterButton_Clicked" Margin="0,35"  BackgroundColor="DodgerBlue" TextColor="White"/>
     </StackLayout>
 
 </ContentPage>
