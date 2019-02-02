@@ -2,11 +2,20 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="PrintQue.UserMainPage">
-    <ContentPage.Content>
-        <StackLayout>
+    <ScrollView>
+    <StackLayout>
             <Label Text="Welcome to the main user page!"
                 VerticalOptions="CenterAndExpand" 
                 HorizontalOptions="CenterAndExpand" />
+            <Image Source="cryingdab"></Image>
+            <Image Source="cryingdab"></Image>
+            <Image Source="cryingdab"></Image>
+            <Image Source="cryingdab"></Image>
+            <Image Source="cryingdab"></Image>
+            <Image Source="cryingdab"></Image>
+            <Image Source="cryingdab"></Image>
+            <Image Source="cryingdab"></Image>
         </StackLayout>
-    </ContentPage.Content>
+       
+    </ScrollView>
 </ContentPage>
