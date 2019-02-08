@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PrintQue.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -40,7 +41,11 @@ namespace PrintQue
                  else
                 {
                     //passwords are not matching error
-
+                    User user = new User()
+                    {
+                        Name = NameEntry.Text,
+                        Email = 
+                    }
                 }
 
             }
