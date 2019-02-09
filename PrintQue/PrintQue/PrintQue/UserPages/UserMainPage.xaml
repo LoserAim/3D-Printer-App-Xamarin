@@ -3,37 +3,64 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="PrintQue.UserMainPage">
     <ScrollView>
-        <Grid RowSpacing="1">
+        <Grid RowSpacing="1" Margin="20,20">
             <Grid.RowDefinitions>
                 <RowDefinition Height="20" />
-                <RowDefinition Height="40" />
                 <RowDefinition Height="20" />
-                <RowDefinition Height="20" />
-
-                <RowDefinition Height="20" />
-                <RowDefinition Height="40" />
                 <RowDefinition Height="20" />
                 <RowDefinition Height="20" />
 
                 <RowDefinition Height="20" />
-                <RowDefinition Height="40" />
+                <RowDefinition Height="20" />
+                <RowDefinition Height="20" />
+                <RowDefinition Height="20" />
+
+                <RowDefinition Height="20" />
+                <RowDefinition Height="20" />
+                <RowDefinition Height="20" />
+                <RowDefinition Height="20" />
+
+                <RowDefinition Height="20" />
+                <RowDefinition Height="20" />
+                <RowDefinition Height="20" />
+                <RowDefinition Height="20" />
+
+                <RowDefinition Height="20" />
                 <RowDefinition Height="20" />
                 <RowDefinition Height="20" />
             </Grid.RowDefinitions>
-            <Label x:Name="PrinterName0" Text="Wilson" Grid.Row="0" />
-            <Button x:Name="PrinterStatusButton0" Text="Open" Clicked="PrinterStatusButton_Clicked" BackgroundColor="ForestGreen" TextColor="White" Grid.Row="1" />
-            <Label Text="Time Left: 00:00" Grid.Row="2" />
-            <Label Text="Prints Queued: 0" Grid.Row="3" />
+            <Label x:Name="PrinterName0" Text="Printer: " Grid.Row="0" Grid.Column="0" />
+            <Button x:Name="PrinterStatusButton0" Text="Open" FontSize="20" Clicked="PrinterStatusButton_Clicked" BackgroundColor="ForestGreen" TextColor="White" Grid.Row="0" Grid.RowSpan="3" Grid.Column="1" />
+            <Label Text="Time Left: 00:00" Grid.Row="1" Grid.Column="0" />
+            <Label Text="Prints Queued: 0" Grid.Row="2" Grid.Column="0" />
 
-            <Label x:Name="PrinterName1" Text="Printer: " Grid.Row="4" />
-            <Button x:Name="PrinterStatusButton1" Text="Open" Clicked="PrinterStatusButton_Clicked" BackgroundColor="ForestGreen" TextColor="White" Grid.Row="5" />
-            <Label Text="Time Left: 00:00" Grid.Row="6" />
-            <Label Text="Prints Queued: 0" Grid.Row="7" />
+            <Label Grid.Row="3" />
 
-            <Label x:Name="PrinterName2" Text="Printer: " Grid.Row="8" />
-            <Button x:Name="PrinterStatusButton2" Text="Open" Clicked="PrinterStatusButton_Clicked" BackgroundColor="ForestGreen" TextColor="White" Grid.Row="9" />
-            <Label Text="Time Left: 00:00" Grid.Row="10" />
-            <Label Text="Prints Queued: 0" Grid.Row="11" />
+            <Label x:Name="PrinterName1" Text="Printer: " Grid.Row="4" Grid.Column="0" />
+            <Button x:Name="PrinterStatusButton1" Text="Open" FontSize="20" Clicked="PrinterStatusButton_Clicked" BackgroundColor="ForestGreen" TextColor="White" Grid.Row="4" Grid.RowSpan="3" Grid.Column="1" />
+            <Label Text="Time Left: 00:00" Grid.Row="5" Grid.Column="0" />
+            <Label Text="Prints Queued: 0" Grid.Row="6" Grid.Column="0" />
+
+            <Label Grid.Row="7" />
+
+            <Label x:Name="PrinterName2" Text="Printer: " Grid.Row="8" Grid.Column="0" />
+            <Button x:Name="PrinterStatusButton2" Text="Open" FontSize="20" Clicked="PrinterStatusButton_Clicked" BackgroundColor="ForestGreen" TextColor="White" Grid.Row="8" Grid.RowSpan="3" Grid.Column="1" />
+            <Label Text="Time Left: 00:00" Grid.Row="9" Grid.Column="0" />
+            <Label Text="Prints Queued: 0" Grid.Row="10" Grid.Column="0" />
+            
+            <Label Grid.Row="11" />
+
+            <Label x:Name="PrinterName3" Text="Printer: " Grid.Row="12" Grid.Column="0" />
+            <Button x:Name="PrinterStatusButton3" Text="Open" FontSize="20" Clicked="PrinterStatusButton_Clicked" BackgroundColor="ForestGreen" TextColor="White" Grid.Row="12" Grid.RowSpan="3" Grid.Column="1" />
+            <Label Text="Time Left: 00:00" Grid.Row="13" Grid.Column="0" />
+            <Label Text="Prints Queued: 0" Grid.Row="14" Grid.Column="0" />
+
+            <Label Grid.Row="15" />
+
+            <Label x:Name="PrinterName4" Text="Printer: " Grid.Row="16" Grid.Column="0" />
+            <Button x:Name="PrinterStatusButton4" Text="Open" FontSize="20" Clicked="PrinterStatusButton_Clicked" BackgroundColor="ForestGreen" TextColor="White" Grid.Row="16" Grid.RowSpan="3" Grid.Column="1" />
+            <Label Text="Time Left: 00:00" Grid.Row="17" Grid.Column="0" />
+            <Label Text="Prints Queued: 0" Grid.Row="18" Grid.Column="0" />
         </Grid>
     </ScrollView>
 </ContentPage>
