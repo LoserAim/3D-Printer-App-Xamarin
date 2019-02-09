@@ -1,4 +1,6 @@
-﻿using System;
+﻿using PrintQue.Models;
+using SQLite;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -37,7 +39,11 @@ namespace PrintQue
         {
             bool isUsernameEmpty = string.IsNullOrEmpty(userNameEntry.Text);
             bool isPasswordEmpty = string.IsNullOrEmpty(userPasswordEntry.Text);
-
+            User login = new User()
+            {
+                UserName = userNameEntry.Text,
+                Password = userPasswordEntry.Text
+            };
             if (isUsernameEmpty || isPasswordEmpty)
             {
                 //then show error
@@ -45,6 +51,20 @@ namespace PrintQue
             }
             else
             {
+                using (SQLiteConnection conn = new SQLiteConnection(App.DatabaseLocation))
+                {
+                    conn.CreateTable<User>();
+                    var users = conn.Table<User>().ToList();
+                    if (users.Count > 0)
+                    {
+                        if (login.UserName ==)
+                    }
+                    else
+                    {
+                        DisplayAlert("Failure", "There is no users stored in the local database", "OK");
+                    }
+
+                }
                 //then try to log in user
                 if (userNameEntry.Text.Equals("admin")){
                     //admin
