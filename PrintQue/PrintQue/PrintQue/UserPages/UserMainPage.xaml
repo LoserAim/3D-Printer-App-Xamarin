@@ -2,20 +2,38 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="PrintQue.UserMainPage">
-    <ScrollView>
-    <StackLayout>
-            <Label Text="Welcome to the main user page!"
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" />
-            <Image Source="cryingdab"></Image>
-            <Image Source="cryingdab"></Image>
-            <Image Source="cryingdab"></Image>
-            <Image Source="cryingdab"></Image>
-            <Image Source="cryingdab"></Image>
-            <Image Source="cryingdab"></Image>
-            <Image Source="cryingdab"></Image>
-            <Image Source="cryingdab"></Image>
-        </StackLayout>
-       
+    <ScrollView Margin="30,10">
+        <Grid RowSpacing="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="20" />
+                <RowDefinition Height="40" />
+                <RowDefinition Height="20" />
+                <RowDefinition Height="20" />
+
+                <RowDefinition Height="20" />
+                <RowDefinition Height="40" />
+                <RowDefinition Height="20" />
+                <RowDefinition Height="20" />
+
+                <RowDefinition Height="20" />
+                <RowDefinition Height="40" />
+                <RowDefinition Height="20" />
+                <RowDefinition Height="20" />
+            </Grid.RowDefinitions>
+            <Label x:Name="PrinterName0" Text="Wilson" Grid.Row="0" />
+            <Button x:Name="PrinterStatusButton0" Text="Open" Clicked="PrinterStatusButton_Clicked" BackgroundColor="ForestGreen" TextColor="White" Grid.Row="1" />
+            <Label Text="Time Left: 00:00" Grid.Row="2" />
+            <Label Text="Prints Queued: 0" Grid.Row="3" />
+
+            <Label x:Name="PrinterName1" Text="Printer: " Grid.Row="4" />
+            <Button x:Name="PrinterStatusButton1" Text="Open" Clicked="PrinterStatusButton_Clicked" BackgroundColor="ForestGreen" TextColor="White" Grid.Row="5" />
+            <Label Text="Time Left: 00:00" Grid.Row="6" />
+            <Label Text="Prints Queued: 0" Grid.Row="7" />
+
+            <Label x:Name="PrinterName2" Text="Printer: " Grid.Row="8" />
+            <Button x:Name="PrinterStatusButton2" Text="Open" Clicked="PrinterStatusButton_Clicked" BackgroundColor="ForestGreen" TextColor="White" Grid.Row="9" />
+            <Label Text="Time Left: 00:00" Grid.Row="10" />
+            <Label Text="Prints Queued: 0" Grid.Row="11" />
+        </Grid>
     </ScrollView>
 </ContentPage>
