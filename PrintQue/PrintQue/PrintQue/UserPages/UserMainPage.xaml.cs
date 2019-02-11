@@ -16,5 +16,10 @@ namespace PrintQue
 		{
 			InitializeComponent ();
 		}
-	}
+
+        private void PrinterStatusButton_Clicked(object sender, EventArgs e)
+        {
+
+        }
+    }
 }
