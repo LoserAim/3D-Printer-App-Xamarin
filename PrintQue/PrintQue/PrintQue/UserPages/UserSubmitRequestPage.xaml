@@ -4,7 +4,7 @@
              x:Class="PrintQue.UserPages.UserSubmitRequestPage">
     <ContentPage.Content>
         <StackLayout>
-            <Label Text="Welcome to the User Submission Page! there is no way to get to me yet"
+            <Label Text="Welcome to the User Submission Page!"
                 VerticalOptions="CenterAndExpand" 
                 HorizontalOptions="CenterAndExpand" />
         </StackLayout>
