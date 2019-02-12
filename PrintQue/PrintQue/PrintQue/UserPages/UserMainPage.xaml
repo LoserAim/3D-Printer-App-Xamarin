@@ -2,73 +2,101 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="PrintQue.UserMainPage">
-    <ScrollView>
-        <Grid RowSpacing="25" Margin="20,20">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="160"  />
-                <RowDefinition Height="160" />
-                <RowDefinition Height="160" />
-                <RowDefinition Height="160" />
-                <RowDefinition Height="160" />
-                <RowDefinition Height="160" />
-                
-            </Grid.RowDefinitions>
+    
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"  />
 
-            <Frame x:Name="Printer1" Grid.Row="0" Grid.Column="0" BackgroundColor="LightGray" >
-                <StackLayout>
-                    <Label x:Name="PrinterName1" Text="Printer: " Style="" />                    
-                    <Label x:Name="Printer1TimeLeft" Text="Time Left: 00:00"  />
-                    <Label x:Name="Printer1PrintsQueued" Text="Prints Queued: 0" />
-                    <Button x:Name="PrinterStatusButton1" Text="Open" FontSize="20" Clicked="PrinterStatusButton_Clicked" BackgroundColor="ForestGreen" TextColor="White" VerticalOptions="End" />
-                </StackLayout>
-            </Frame>
+        </Grid.RowDefinitions>
 
-            <Frame x:Name="Printer2" Grid.Row="1" Grid.Column="0" BackgroundColor="LightGray" >
-                <StackLayout>
-                    <Label x:Name="PrinterName2" Text="Printer: " Style="" />
-                    <Label x:Name="Printer2TimeLeft" Text="Time Left: 00:00"  />
-                    <Label x:Name="Printer2PrintsQueued" Text="Prints Queued: 0" />
-                    <Button x:Name="PrinterStatusButton2" Text="Open" FontSize="20" Clicked="PrinterStatusButton_Clicked" BackgroundColor="ForestGreen" TextColor="White"  />
 
-                </StackLayout>
-            </Frame>
+        <ScrollView Grid.Row="0">
+            <Grid RowSpacing="25" Margin="20,20">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="160"  />
+                        <RowDefinition Height="160" />
+                        <RowDefinition Height="160" />
+                        <RowDefinition Height="160" />
+                        <RowDefinition Height="160" />
+                        <RowDefinition Height="160" />
 
-            <Frame x:Name="Printer3" Grid.Row="2" Grid.Column="0" BackgroundColor="LightGray">
-                <StackLayout>
-                    <Label x:Name="PrinterName3" Text="Printer: " Style="" />
-                    <Label x:Name="Printer3TimeLeft" Text="Time Left: 00:00"  />
-                    <Label x:Name="Printer3PrintsQueued" Text="Prints Queued: 0" />
-                    <Button x:Name="PrinterStatusButton3" Text="Open" FontSize="20" Clicked="PrinterStatusButton_Clicked" BackgroundColor="ForestGreen" TextColor="White"  />
+                    </Grid.RowDefinitions>
 
-                </StackLayout>
-            </Frame>
-            <Frame x:Name="Printer4" Grid.Row="3" Grid.Column="0" BackgroundColor="LightGray" >
-                <StackLayout>
-                    <Label x:Name="PrinterName4" Text="Printer: " Style="" />
-                    <Label x:Name="Printer4TimeLeft" Text="Time Left: 00:00"  />
-                    <Label x:Name="Printer4PrintsQueued" Text="Prints Queued: 0" />
-                    <Button x:Name="PrinterStatusButton4" Text="Open" FontSize="20" Clicked="PrinterStatusButton_Clicked" BackgroundColor="ForestGreen" TextColor="White"  />
+                    <Frame x:Name="Printer1" Grid.Row="0" Grid.Column="0" BackgroundColor="LightGray" >
+                        <StackLayout>
+                            <Label x:Name="PrinterName1" Text="Printer: " Style="" />
+                            <Label x:Name="Printer1TimeLeft" Text="Time Left: 00:00"  />
+                            <Label x:Name="Printer1PrintsQueued" Text="Prints Queued: 0" />
+                            <Button x:Name="PrinterStatusButton1" Text="Open" FontSize="20" Clicked="PrinterStatusButton_Clicked" BackgroundColor="ForestGreen" TextColor="White" VerticalOptions="End" />
+                        </StackLayout>
+                    </Frame>
 
-                </StackLayout>
-            </Frame>
-            <Frame x:Name="Printer5" Grid.Row="4" Grid.Column="0" BackgroundColor="LightGray"  >
-                <StackLayout>
-                    <Label x:Name="PrinterName5" Text="Printer: " Style="" />
-                    <Label x:Name="Printer5TimeLeft" Text="Time Left: 00:00"  />
-                    <Label x:Name="Printer5PrintsQueued" Text="Prints Queued: 0" />
-                    <Button x:Name="PrinterStatusButton5" Text="Open" FontSize="20" Clicked="PrinterStatusButton_Clicked" BackgroundColor="ForestGreen" TextColor="White"  />
+                    <Frame x:Name="Printer2" Grid.Row="1" Grid.Column="0" BackgroundColor="LightGray" >
+                        <StackLayout>
+                            <Label x:Name="PrinterName2" Text="Printer: " Style="" />
+                            <Label x:Name="Printer2TimeLeft" Text="Time Left: 00:00"  />
+                            <Label x:Name="Printer2PrintsQueued" Text="Prints Queued: 0" />
+                            <Button x:Name="PrinterStatusButton2" Text="Open" FontSize="20" Clicked="PrinterStatusButton_Clicked" BackgroundColor="ForestGreen" TextColor="White"  />
 
-                </StackLayout>
-            </Frame>
-            <Frame x:Name="Printer6" Grid.Row="5" Grid.Column="0" BackgroundColor="LightGray">
-                <StackLayout>
-                    <Label x:Name="PrinterName6" Text="Printer: " Style="" />
-                    <Label x:Name="Printer6TimeLeft" Text="Time Left: 00:00"  />
-                    <Label x:Name="Printer6PrintsQueued" Text="Prints Queued: 0" />
-                    <Button x:Name="PrinterStatusButton6" Text="Open" FontSize="20" Clicked="PrinterStatusButton_Clicked" BackgroundColor="ForestGreen" TextColor="White"  />
+                        </StackLayout>
+                    </Frame>
 
-                </StackLayout>
-            </Frame>
-        </Grid>
-    </ScrollView>
+                    <Frame x:Name="Printer3" Grid.Row="2" Grid.Column="0" BackgroundColor="LightGray">
+                        <StackLayout>
+                            <Label x:Name="PrinterName3" Text="Printer: " Style="" />
+                            <Label x:Name="Printer3TimeLeft" Text="Time Left: 00:00"  />
+                            <Label x:Name="Printer3PrintsQueued" Text="Prints Queued: 0" />
+                            <Button x:Name="PrinterStatusButton3" Text="Open" FontSize="20" Clicked="PrinterStatusButton_Clicked" BackgroundColor="ForestGreen" TextColor="White"  />
+
+                        </StackLayout>
+                    </Frame>
+                    <Frame x:Name="Printer4" Grid.Row="3" Grid.Column="0" BackgroundColor="LightGray" >
+                        <StackLayout>
+                            <Label x:Name="PrinterName4" Text="Printer: " Style="" />
+                            <Label x:Name="Printer4TimeLeft" Text="Time Left: 00:00"  />
+                            <Label x:Name="Printer4PrintsQueued" Text="Prints Queued: 0" />
+                            <Button x:Name="PrinterStatusButton4" Text="Open" FontSize="20" Clicked="PrinterStatusButton_Clicked" BackgroundColor="ForestGreen" TextColor="White"  />
+
+                        </StackLayout>
+                    </Frame>
+                    <Frame x:Name="Printer5" Grid.Row="4" Grid.Column="0" BackgroundColor="LightGray"  >
+                        <StackLayout>
+                            <Label x:Name="PrinterName5" Text="Printer: " Style="" />
+                            <Label x:Name="Printer5TimeLeft" Text="Time Left: 00:00"  />
+                            <Label x:Name="Printer5PrintsQueued" Text="Prints Queued: 0" />
+                            <Button x:Name="PrinterStatusButton5" Text="Open" FontSize="20" Clicked="PrinterStatusButton_Clicked" BackgroundColor="ForestGreen" TextColor="White"  />
+
+                        </StackLayout>
+                    </Frame>
+                    <Frame x:Name="Printer6" Grid.Row="5" Grid.Column="0" BackgroundColor="LightGray">
+                        <StackLayout>
+                            <Label x:Name="PrinterName6" Text="Printer: " Style="" />
+                            <Label x:Name="Printer6TimeLeft" Text="Time Left: 00:00"  />
+                            <Label x:Name="Printer6PrintsQueued" Text="Prints Queued: 0" />
+                            <Button x:Name="PrinterStatusButton6" Text="Open" FontSize="20" Clicked="PrinterStatusButton_Clicked" BackgroundColor="ForestGreen" TextColor="White"  />
+
+                        </StackLayout>
+                    </Frame>
+
+
+                </Grid>
+
+            </ScrollView>
+
+
+        <Button Grid.Row="0" Margin="10,10"
+                x:Name="CreateRequestButton"
+                WidthRequest      ="60"
+                HeightRequest     ="60"
+                CornerRadius      ="30"
+                HorizontalOptions ="End"
+                VerticalOptions="End"
+                Text="+"
+                Font="20"
+                TextColor="White"
+                BackgroundColor ="DodgerBlue"
+                Clicked="CreateRequestButton_Clicked"/>
+
+
+       </Grid>
 </ContentPage>

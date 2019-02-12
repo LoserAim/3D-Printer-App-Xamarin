@@ -21,5 +21,10 @@ namespace PrintQue
         {
 
         }
+
+        private void CreateRequestButton_Clicked(object sender, EventArgs e)
+        {
+            Navigation.PushAsync(new UserPages.UserSubmitRequestPage());
+        }
     }
 }
