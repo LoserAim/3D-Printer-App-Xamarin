@@ -39,11 +39,6 @@ namespace PrintQue
         {
             bool isUsernameEmpty = string.IsNullOrEmpty(userNameEntry.Text);
             bool isPasswordEmpty = string.IsNullOrEmpty(userPasswordEntry.Text);
-            User login = new User()
-            {
-                UserName = userNameEntry.Text,
-                Password = userPasswordEntry.Text
-            };
             if (isUsernameEmpty || isPasswordEmpty)
             {
                 //then show error
@@ -55,25 +50,34 @@ namespace PrintQue
                 {
                     conn.CreateTable<User>();
                     var users = conn.Table<User>().ToList();
-                    if (users.Count > 0)
+ 
+                    var loguser = users.SingleOrDefault(g => g.Email == userNameEntry.Text || g.UserName == userNameEntry.Text);
+                    if (loguser != null)
                     {
-                        if (login.UserName ==)
+                        if (loguser.Password == userPasswordEntry.Text)
+                        {
+                            Navigation.PushAsync(new UserTabContainer());
+                        }
+                        else
+                        {
+                            DisplayAlert("Failure", "The password does not match with the user.", "OK");
+                        }
                     }
                     else
                     {
-                        DisplayAlert("Failure", "There is no users stored in the local database", "OK");
+                        DisplayAlert("Failure", "There is no user with this username stored in the local database", "OK");
                     }
 
                 }
-                //then try to log in user
-                if (userNameEntry.Text.Equals("admin")){
-                    //admin
-                    Navigation.PushAsync(new AdminTabContainer());
-                } else
-                {
-                    //student
-                    Navigation.PushAsync(new UserTabContainer());
-                }
+                ////then try to log in user
+                //if (userNameEntry.Text.Equals("admin")){
+                //    //admin
+                //    Navigation.PushAsync(new AdminTabContainer());
+                //} else
+                //{
+                //    //student
+                //    Navigation.PushAsync(new UserTabContainer());
+                //}
 
                 
             }

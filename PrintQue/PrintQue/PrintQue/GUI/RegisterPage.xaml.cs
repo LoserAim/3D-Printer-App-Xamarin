@@ -45,10 +45,11 @@ namespace PrintQue
                     User user = new User()
                     {
                         Name = NameEntry.Text,
-                        Email = userNameEntry.Text,
+                        UserName = userNameEntry.Text,
                         Admin = 0,
                         Password = PasswordConfirmEntry.Text
                     };
+
                     using (SQLiteConnection conn = new SQLiteConnection(App.DatabaseLocation))
                     {
                         conn.CreateTable<User>();
@@ -56,6 +57,7 @@ namespace PrintQue
                         if(Num >0)
                         {
                             DisplayAlert("Success", "You have been Registered", "OK");
+                            Navigation.PushAsync(new LoginPage());
                         }
                         else
                         {
