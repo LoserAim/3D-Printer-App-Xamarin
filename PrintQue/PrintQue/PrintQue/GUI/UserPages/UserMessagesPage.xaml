@@ -7,6 +7,9 @@
             <Label Text="Welcome to the user messages page"
                 VerticalOptions="CenterAndExpand" 
                 HorizontalOptions="CenterAndExpand" />
+            
+            
+            
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

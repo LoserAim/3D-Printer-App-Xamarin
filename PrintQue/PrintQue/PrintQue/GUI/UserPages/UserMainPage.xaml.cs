@@ -16,5 +16,15 @@ namespace PrintQue
 		{
 			InitializeComponent ();
 		}
-	}
+
+        private void PrinterStatusButton_Clicked(object sender, EventArgs e)
+        {
+
+        }
+
+        private void CreateRequestButton_Clicked(object sender, EventArgs e)
+        {
+            Navigation.PushAsync(new UserPages.UserSubmitRequestPage());
+        }
+    }
 }
