@@ -1,12 +1,26 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="PrintQue.RequestsPage">
-    <ContentPage.Content>
-        <StackLayout>
-            <Label Text="Welcome to the Admin Requests Page!"
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" />
-        </StackLayout>
-    </ContentPage.Content>
+             x:Class="PrintQue.RequestsPage"
+             >
+
+        <ListView x:Name="RequestListView">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                <ViewCell>
+                    <ViewCell.ContextActions>
+                        <MenuItem Clicked="OnMore" CommandParameter="{Binding .}"
+               Text="More" />
+                        <MenuItem Clicked="OnDelete" CommandParameter="{Binding .}"
+               Text="Delete" IsDestructive="True" />
+                    </ViewCell.ContextActions>
+                    <StackLayout Padding="15,0">
+                        <Label Text="{Binding ProjectName}" />
+                    </StackLayout>
+                </ViewCell>
+            </DataTemplate>
+
+            </ListView.ItemTemplate>
+        </ListView>
+
 </ContentPage>
