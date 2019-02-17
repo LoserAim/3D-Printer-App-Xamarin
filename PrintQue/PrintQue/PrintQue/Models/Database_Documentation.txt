@@ -1,0 +1,61 @@
+﻿Due to the inclusion of foreign keys, I had to include an extra nuget package to 
+handle the relationships between the tables. Below is example code for calling the
+tables. These are examples and will be incomplete.
+
+using SQLite; //For General Sqlite attributes and use.
+using SQLiteNetExtensions.Attributes; //For foreign keys
+using System.Collections.Generic;
+
+public class Stock
+{
+    [PrimaryKey, AutoIncrement]
+    public int Id { get; set; }
+    [MaxLength(8)]
+    public string Symbol { get; set; }
+
+    [OneToMany(CascadeOperations = CascadeOperation.All)]      // One to many relationship with Valuation
+    public List<Valuation> Valuations { get; set; }
+}
+
+public class Valuation
+{
+    [PrimaryKey, AutoIncrement]
+    public int Id { get; set; }
+
+    [ForeignKey(typeof(Stock))]     // Specify the foreign key
+    public int StockId { get; set; }
+    public DateTime Time { get; set; }
+    public decimal Price { get; set; }
+
+    [ManyToOne]      // Many to one relationship with Stock
+    public Stock Stock { get; set; }
+}
+
+var db = Utils.CreateConnection();
+db.CreateTable<Stock>();
+db.CreateTable<Valuation>();
+
+var euro = new Stock() {
+    Symbol = "�"
+};
+db.Insert(euro);   // Insert the object in the database
+
+var valuation = new Valuation() {
+    Price = 15,
+    Time = DateTime.Now,
+};
+db.Insert(valuation);   // Insert the object in the database
+
+// Objects created, let's stablish the relationship
+euro.Valuations = new List<Valuation> { valuation };
+
+db.UpdateWithChildren(euro);   // Update the changes into the database
+if (valuation.Stock == euro) {
+    Debug.WriteLine("Inverse relationship already set, yay!");
+}
+
+// Get the object and the relationships
+var storedValuation = db.GetWithChildren<Valuation>(valuation.Id);
+if (euro.Symbol.Equals(storedValuation.Stock.Symbol)) {
+    Debug.WriteLine("Object and relationships loaded correctly!");
+}

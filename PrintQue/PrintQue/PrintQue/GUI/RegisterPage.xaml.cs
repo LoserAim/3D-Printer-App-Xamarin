@@ -1,7 +1,9 @@
-﻿using System;
+﻿using PrintQue.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using SQLite;
 using System.Threading.Tasks;
 
 using Xamarin.Forms;
@@ -40,7 +42,28 @@ namespace PrintQue
                  else
                 {
                     //passwords are not matching error
+                    User user = new User()
+                    {
+                        Name = NameEntry.Text,
+                        UserName = userNameEntry.Text,
+                        Admin = 0,
+                        Password = PasswordConfirmEntry.Text
+                    };
 
+                    using (SQLiteConnection conn = new SQLiteConnection(App.DatabaseLocation))
+                    {
+                        conn.CreateTable<User>();
+                        var Num = conn.Insert(user);
+                        if(Num >0)
+                        {
+                            DisplayAlert("Success", "You have been Registered", "OK");
+                            Navigation.PushAsync(new LoginPage());
+                        }
+                        else
+                        {
+                            DisplayAlert("Failure", "You Have not been Registered", "OK");
+                        }
+                    }
                 }
 
             }
