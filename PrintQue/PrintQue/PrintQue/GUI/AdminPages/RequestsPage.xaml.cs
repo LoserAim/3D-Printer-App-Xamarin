@@ -1,5 +1,6 @@
 ﻿using PrintQue.Models;
 using SQLite;
+using SQLiteNetExtensions.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,54 +23,72 @@ namespace PrintQue
             {
                 conn.CreateTable<Request>();
                 var requests = conn.Table<Request>().ToList();
+                if(requests.Count > 0)
+                {
+                    conn.DeleteAll<Request>();
+                }
+                
+                
+                var users = conn.Table<User>().ToList();
+                var printers = conn.Table<Printer>().ToList();
+                var UserRequest = users.SingleOrDefault(g => g.UserID == 1);
+                var PrinterRequest = printers.SingleOrDefault(p => p.ID == 1);
                 if (requests.Count < 1)
                 {
                     var TestRequest = new Request()
                     {
                         ProjectName = "BubbyHitMeUp",
-                        UserID = 1,
-                        PrinterID = 1,
+                        //user = UserRequest,
+                        //printer = PrinterRequest,
+                        //UserID = UserRequest.UserID,
+                        //PrinterID = PrinterRequest.ID,
+
+                    };
+                    conn.Insert(TestRequest);
+                    
+                    TestRequest = new Request()
+                    {
+                        ProjectName = "What the frick",
+
+                    };
+                    conn.Insert(TestRequest);
+                    TestRequest = new Request()
+                    {
+                        ProjectName = "Manassa",
+
+                    };
+                    conn.Insert(TestRequest);
+                    TestRequest = new Request()
+                    {
+                        ProjectName = "Manassa",
 
                     };
                     conn.Insert(TestRequest);
                 }
-                
+                requests = conn.Table<Request>().ToList();
+                foreach (var r in requests)
+                {
+                    UserRequest.Requests.Add(r);
+                    PrinterRequest.Requests.Add(r);
+                }
+                conn.UpdateWithChildren(UserRequest);
+                conn.UpdateWithChildren(PrinterRequest);
+
+
 
             }
         }
 
 
 
-        private void ClickedMenuDeny(object sender, EventArgs e)
-        {
-            try
-            {
 
-
-            }
-            catch
-            {
-
-            }
-        }
-        private void ClickedMenuDetails(object sender, EventArgs e)
-        {
-            try
-            {
-
-
-            }
-            catch
-            {
-
-            }
-        }
         protected override void OnAppearing()
         {
             using (SQLiteConnection conn = new SQLiteConnection(App.DatabaseLocation))
             {
                 conn.CreateTable<Request>();
                 var requests = conn.Table<Request>().ToList();
+
                 RequestListView.ItemsSource = requests;
 
             }

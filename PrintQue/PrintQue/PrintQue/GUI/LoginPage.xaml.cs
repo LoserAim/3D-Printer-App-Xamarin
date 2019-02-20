@@ -22,17 +22,35 @@ namespace PrintQue
             {
                 conn.CreateTable<Printer>();
                 var printers = conn.Table<Printer>().ToList();
-                if (printers.Count < 1)
+                if(printers.Count < 1)
                 {
                     var testprinter = new Printer()
                     {
                         Name = "TestPrinter01",
-                        Color = "Wasseme",
+                        Color = "Wasseem",
+                        Status = "Open",
                     };
+                    conn.Insert(testprinter);
+                    testprinter = new Printer()
+                    {
+                        Name = "TestPrinter02",
+                        Color = "Jake",
+                        Status = "Open",
+                    };
+                    conn.Insert(testprinter);
+                    testprinter = new Printer()
+                    {
+                        Name = "TestPrinter03",
+                        Color = "Nick",
+                        Status = "Open",
+                    };
+                    conn.Insert(testprinter);
                 }
+
+                
             }
 
-            }
+        }
 
             private void RegisterLabel_Clicked()
         {

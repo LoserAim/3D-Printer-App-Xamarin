@@ -4,22 +4,14 @@
              x:Class="PrintQue.RequestsPage"
              >
 
-        <ListView x:Name="RequestListView">
+    
+    
+        <ListView x:Name="RequestListView" SeparatorColor="Aquamarine">
             <ListView.ItemTemplate>
                 <DataTemplate>
-                <ViewCell>
-                    <ViewCell.ContextActions>
-                        <MenuItem Clicked="OnMore" CommandParameter="{Binding .}"
-               Text="More" />
-                        <MenuItem Clicked="OnDelete" CommandParameter="{Binding .}"
-               Text="Delete" IsDestructive="True" />
-                    </ViewCell.ContextActions>
-                    <StackLayout Padding="15,0">
-                        <Label Text="{Binding ProjectName}" />
-                    </StackLayout>
-                </ViewCell>
-            </DataTemplate>
-
+                    <TextCell Text="{Binding PropertyName}" Detail="{Binding }"/>
+                    
+                </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
 
