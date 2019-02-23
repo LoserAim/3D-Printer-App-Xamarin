@@ -1,0 +1,82 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage 
+
+    Title="{Binding ProjectName}"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="PrintQue.GUI.AdminPages.RequestDetailPage">
+
+    <TableView Intent="Form">
+            <TableRoot>
+                <TableSection Title="Requests Details">
+                    <ViewCell>
+                        <StackLayout Orientation="Horizontal">
+                            <Label x:Name="lbl_Message" Text="Message" VerticalOptions="Center" HorizontalOptions="StartAndExpand"  TextColor="DeepSkyBlue">
+                                <Label.GestureRecognizers>
+                                    <TapGestureRecognizer Tapped="lbl_Message_Tapped"/>
+                                </Label.GestureRecognizers>
+                            </Label>
+                            <Label x:Name="lbl_Update" Text="Update"   VerticalOptions="Center" HorizontalOptions="CenterAndExpand" TextColor="DeepSkyBlue">
+                                <Label.GestureRecognizers>
+                                    <TapGestureRecognizer Tapped="lbl_Update_Tapped"/>
+                                </Label.GestureRecognizers>
+                            </Label>
+                            <Label x:Name="lbl_Delete" Text="Delete"   VerticalOptions="Center" HorizontalOptions="EndAndExpand"    TextColor="DeepSkyBlue">
+                                <Label.GestureRecognizers>
+                                    <TapGestureRecognizer Tapped="lbl_Delete_Tapped"/>
+                                </Label.GestureRecognizers>
+                            </Label>
+                            
+                        </StackLayout>
+                    </ViewCell>
+                    <TextCell Text="Name" Detail="{Binding user.UserName}"/>
+                    <EntryCell  x:Name="ent_ProjectName" Label="ProjectName" Text="{Binding ProjectName}"/>
+                    
+                    <ViewCell Tapped="Printer_Selector_Tapped">
+                        <StackLayout Orientation="Horizontal" Padding="13, 5">
+                            <Label Text="Assigned Printer" VerticalOptions="Center"/>
+                            <Label 
+                                x:Name="Printers_Picker"
+                                VerticalOptions="Center"
+                                HorizontalOptions="EndAndExpand"
+                                Text="None"
+                                TextColor="Gray"/>
+                        </StackLayout>
+                    </ViewCell>
+                    <ViewCell>
+                        <StackLayout Orientation="Vertical" >
+                        <Editor x:Name="edi_Description" Text="{Binding Description}" VerticalOptions="FillAndExpand" AutoSize="TextChanges" HeightRequest="100"/>
+
+                    </StackLayout>
+                    </ViewCell>
+
+            </TableSection>
+            <TableSection Title="User Detail">
+                
+            </TableSection>
+            </TableRoot>
+    </TableView>
+    <!--<StackLayout>
+        <Label Text="RequestID"/>
+        <Entry x:Name="RequestID_Entry" Placeholder="{Binding RequestID}"/>
+        <Label Text="Request Creator"/>
+        <Entry x:Name="UserName_Entry" Placeholder="{Binding user.UserName}"/>
+        <Label Text="Designated Printer"/>
+        <StackLayout>
+            <Picker x:Name="PrinterSelection" Title="{Binding printer.Name}" SelectedIndexChanged="PrinterSelection_SelectedIndexChanged">
+            </Picker>
+        </StackLayout>
+        <Grid ColumnSpacing="4" HorizontalOptions="FillAndExpand">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="33.33*" />
+                <ColumnDefinition Width="33.33*" />
+                <ColumnDefinition Width="33.33*" />
+            </Grid.ColumnDefinitions>
+            <Button Text="Update" FontSize="Micro" Grid.Column="0" HorizontalOptions="FillAndExpand"/>
+            <Button Text="Message" FontSize="Micro" Grid.Column="1" HorizontalOptions="FillAndExpand"/>
+            <Button Text="Delete" FontSize="Micro" Grid.Column="2" HorizontalOptions="FillAndExpand"/>
+        </Grid>
+
+    </StackLayout>-->
+    
+</ContentPage>

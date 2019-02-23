@@ -19,7 +19,6 @@ namespace PrintQue.Models
         public DateTime DateRequestMade { get; set; }
         public DateTime DateRequestSet { get; set; }
         public DateTime TimeLeft { get; set; }
-        public int ProjectsQueued { get; set; }
         public string ProjectName { get; set; }
         public string Description { get; set; }
         public int ProjectType { get; set; }

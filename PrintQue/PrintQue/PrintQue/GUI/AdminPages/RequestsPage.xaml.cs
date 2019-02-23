@@ -1,4 +1,5 @@
-﻿using PrintQue.Models;
+﻿using PrintQue.GUI.AdminPages;
+using PrintQue.Models;
 using SQLite;
 using SQLiteNetExtensions.Extensions;
 using System;
@@ -27,18 +28,20 @@ namespace PrintQue
                 if (string.IsNullOrWhiteSpace(searchText))
                     return sortedRequests;
 
-                return sortedRequests.Where(g => g.ProjectName.StartsWith(searchText)).ToList(); 
+                return sortedRequests.Where(g => g.ProjectName.StartsWith(searchText) || g.user.UserName.StartsWith(searchText)).ToList(); 
             }
         }
 		public RequestsPage ()
 		{
 			InitializeComponent ();
 
-            RequestListView.ItemsSource = GetRequests();
-
         }
 
-
+        protected override void OnAppearing()
+        {
+            base.OnAppearing();
+            RequestListView.ItemsSource = GetRequests();
+        }
 
 
 
@@ -65,6 +68,15 @@ namespace PrintQue
         private void SearchBar_TextChanged(object sender, TextChangedEventArgs e)
         {
             RequestListView.ItemsSource = GetRequests(e.NewTextValue);
+        }
+
+        async private void RequestListView_ItemSelected(object sender, SelectedItemChangedEventArgs e)
+        {
+            if (e.SelectedItem == null)
+                return;
+            var request = e.SelectedItem as Request;
+            await Navigation.PushAsync(new RequestDetailPage(request));
+            RequestListView.SelectedItem = null;
         }
     }
 }

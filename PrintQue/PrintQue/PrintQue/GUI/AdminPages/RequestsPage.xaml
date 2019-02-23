@@ -8,7 +8,7 @@
 
     <StackLayout>
         <SearchBar Placeholder="Search..." TextChanged="SearchBar_TextChanged"/>
-        <ListView x:Name="RequestListView" HasUnevenRows="True" IsPullToRefreshEnabled="true" Refreshing="RequestListView_Refreshing">
+        <ListView x:Name="RequestListView" HasUnevenRows="True" IsPullToRefreshEnabled="true" Refreshing="RequestListView_Refreshing" ItemSelected="RequestListView_ItemSelected">
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <ViewCell>
@@ -18,9 +18,10 @@
                         </ViewCell.ContextActions>
                         <StackLayout Orientation="Horizontal" Padding="5">
                             <StackLayout HorizontalOptions="StartAndExpand">
-                                <Label Text="{Binding ProjectName}"/>
+                                <Label Text="{Binding ProjectName}" TextColor="Black"/>
+                                <Label Text="{Binding user.UserName}"/>
                             </StackLayout>
-                            <Button Text="Details"/>
+                            
                         </StackLayout>
                     </ViewCell>
 
