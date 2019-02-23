@@ -1,12 +1,34 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="PrintQue.RequestsPage">
-    <ContentPage.Content>
-        <StackLayout>
-            <Label Text="Welcome to the Admin Requests Page!"
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" />
-        </StackLayout>
-    </ContentPage.Content>
+             x:Class="PrintQue.RequestsPage"
+             >
+
+
+
+    <StackLayout>
+        <SearchBar Placeholder="Search..." TextChanged="SearchBar_TextChanged"/>
+        <ListView x:Name="RequestListView" HasUnevenRows="True" IsPullToRefreshEnabled="true" Refreshing="RequestListView_Refreshing" ItemSelected="RequestListView_ItemSelected">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <ViewCell>
+                        <ViewCell.ContextActions>
+                            <MenuItem Text="Approve" Clicked="Clicked_Approve" CommandParameter="{Binding .}"/>
+                            <MenuItem Text="Deny" Clicked="Clicked_Deny" CommandParameter="{Binding .}"/>
+                        </ViewCell.ContextActions>
+                        <StackLayout Orientation="Horizontal" Padding="5">
+                            <StackLayout HorizontalOptions="StartAndExpand">
+                                <Label Text="{Binding ProjectName}" TextColor="Black"/>
+                                <Label Text="{Binding user.UserName}"/>
+                            </StackLayout>
+                            
+                        </StackLayout>
+                    </ViewCell>
+
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+    </StackLayout>
+    
+
 </ContentPage>

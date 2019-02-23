@@ -2,7 +2,9 @@
 <TabbedPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:local="clr-namespace:PrintQue"
-             x:Class="PrintQue.AdminTabContainer">
+             x:Class="PrintQue.AdminTabContainer"
+            xmlns:android="clr-namespace:Xamarin.Forms.PlatformConfiguration.AndroidSpecific;assembly=Xamarin.Forms.Core"
+        android:TabbedPage.IsSwipePagingEnabled="False">
 
     <local:ApprovalsPage Title="Apprvls."/>
 
