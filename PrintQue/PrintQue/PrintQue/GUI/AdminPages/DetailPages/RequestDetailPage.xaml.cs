@@ -59,8 +59,7 @@ namespace PrintQue.GUI.AdminPages
         private void lbl_Update_Tapped(object sender, EventArgs e)
         {
             DisplayAlert("Alert!", "Request has been updated!", "OK");
-            _request.ProjectName = ent_ProjectName.Text;
-            _request.Description = edi_Description.Text;
+
             
             
         }

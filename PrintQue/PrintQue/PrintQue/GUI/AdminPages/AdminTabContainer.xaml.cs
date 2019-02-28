@@ -19,6 +19,19 @@ namespace PrintQue
 
         }
 
+        private void ToolbarItem_Plus_Activated(object sender, EventArgs e)
+        {
 
+        }
+
+        private void ToolbarItem_Add_Printer_Activated(object sender, EventArgs e)
+        {
+
+        }
+
+        private void ToolbarItem_Add_Request_Activated(object sender, EventArgs e)
+        {
+
+        }
     }
 }
