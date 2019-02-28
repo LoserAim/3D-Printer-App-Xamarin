@@ -5,23 +5,18 @@
              >
 
 
-
     <StackLayout>
         <SearchBar Placeholder="Search..." TextChanged="SearchBar_TextChanged"/>
         <ListView x:Name="RequestListView" HasUnevenRows="True" IsPullToRefreshEnabled="true" Refreshing="RequestListView_Refreshing" ItemSelected="RequestListView_ItemSelected">
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <ViewCell>
-                        <ViewCell.ContextActions>
-                            <MenuItem Text="Approve" Clicked="Clicked_Approve" CommandParameter="{Binding .}"/>
-                            <MenuItem Text="Deny" Clicked="Clicked_Deny" CommandParameter="{Binding .}"/>
-                        </ViewCell.ContextActions>
                         <StackLayout Orientation="Horizontal" Padding="5">
                             <StackLayout HorizontalOptions="StartAndExpand">
-                                <Label Text="{Binding ProjectName}" TextColor="Black"/>
-                                <Label Text="{Binding user.UserName}"/>
+                                <Label Text="{Binding Name}" TextColor="Black"/>
+                                <Label Text="{Binding Color}" TextColor="{Binding Color}"/>
                             </StackLayout>
-                            
+                            <Button Text="{Binding Status}"/>
                         </StackLayout>
                     </ViewCell>
 

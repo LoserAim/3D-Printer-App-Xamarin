@@ -6,6 +6,11 @@
             xmlns:android="clr-namespace:Xamarin.Forms.PlatformConfiguration.AndroidSpecific;assembly=Xamarin.Forms.Core"
         android:TabbedPage.IsSwipePagingEnabled="False">
 
+    <TabbedPage.ToolbarItems>
+        <ToolbarItem Icon="plus.png" Activated="Toolbar_Plus_Activated" Order="Primary"/>
+        <ToolbarItem Text="Add Request" Activated="Toolbar_Add_Request_Activated" Order="Secondary"/>
+        <ToolbarItem Text="Add Printer" Activated="Toolbar_Add_Printer_Activated" Order="Secondary"/>
+    </TabbedPage.ToolbarItems>
     <local:ApprovalsPage Title="Apprvls."/>
 
     <local:RequestsPage Title="Requests"/>

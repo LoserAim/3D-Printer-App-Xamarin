@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage 
+
+    Title="New Printer"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="PrintQue.GUI.AdminPages.RequestDetailPage">
+
+    <TableView Intent="Form">
+        <TableRoot>
+            <TableSection Title="Print Details">
+                <EntryCell x:Name="ent_Printer_Name" Label="Name Of Printer"  Text="{Binding Name}"/>
+                <EntryCell  x:Name="ent_Printer_Status" Label="Status of Printer" Text="{Binding Status}"/>
+                <EntryCell  x:Name="ent_Printer_Color" Label="Color of Printer" Text="{Binding Color}"/>
+                <ViewCell>
+                    <StackLayout Orientation="Horizontal">
+                        <Button Text="Done" HorizontalOptions="FillAndExpand" Clicked="Clicked_Done"/>
+                    </StackLayout>
+                </ViewCell>
+            </TableSection>
+            
+        </TableRoot>
+    </TableView>
+
+</ContentPage>
