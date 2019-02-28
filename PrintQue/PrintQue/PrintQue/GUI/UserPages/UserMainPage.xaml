@@ -2,24 +2,8 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="PrintQue.UserMainPage">
-    <ListView x:Name="PrinterListView" HasUnevenRows="True" IsPullToRefreshEnabled="true" Refreshing="PrinterListView_Refreshing">
-        <ListView.ItemTemplate>
-            <DataTemplate>
-                <ViewCell>
-
-                    <StackLayout Orientation="Horizontal" Padding="5">
-                        <StackLayout HorizontalOptions="StartAndExpand">
-                            <Label Text="{Binding ProjectName}" TextColor="Black"/>
-                            <Label Text="{Binding user.UserName}"/>
-                        </StackLayout>
-                        <Button Text=""/>
-                    </StackLayout>
-                </ViewCell>
-
-            </DataTemplate>
-        </ListView.ItemTemplate>
-    </ListView>
-    <!--<Grid>
+    
+    <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="*"  />
 
@@ -114,5 +98,5 @@
                 Clicked="CreateRequestButton_Clicked"/>
 
 
-       </Grid>-->
+       </Grid>
 </ContentPage>

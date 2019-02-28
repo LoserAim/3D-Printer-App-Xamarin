@@ -38,13 +38,13 @@ db.CreateTable<Valuation>();
 var euro = new Stock() {
     Symbol = "�"
 };
-db.Insert(euro);   // Insert the object in the database; Euro = user 
+db.Insert(euro);   // Insert the object in the database
 
 var valuation = new Valuation() {
     Price = 15,
     Time = DateTime.Now,
 };
-db.Insert(valuation);   // Insert the object in the database; Valuation = request
+db.Insert(valuation);   // Insert the object in the database
 
 // Objects created, let's stablish the relationship
 euro.Valuations = new List<Valuation> { valuation };

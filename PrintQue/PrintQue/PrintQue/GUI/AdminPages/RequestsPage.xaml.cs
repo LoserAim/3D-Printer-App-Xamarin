@@ -41,7 +41,6 @@ namespace PrintQue
         {
             base.OnAppearing();
             RequestListView.ItemsSource = GetRequests();
-            
         }
 
 
@@ -79,7 +78,5 @@ namespace PrintQue
             await Navigation.PushAsync(new RequestDetailPage(request));
             RequestListView.SelectedItem = null;
         }
-
-
     }
 }

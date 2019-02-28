@@ -38,7 +38,10 @@ namespace PrintQue.GUI.AdminPages
         }
         public RequestDetailPage (Request request)
 		{
-           
+            if (request == null)
+            {
+                throw new ArgumentNullException();
+            }
             BindingContext = request;
             _request = request;
 			InitializeComponent ();
