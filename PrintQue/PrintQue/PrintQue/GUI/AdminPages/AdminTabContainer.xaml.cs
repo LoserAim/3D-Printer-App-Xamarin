@@ -1,4 +1,6 @@
-﻿using System;
+﻿using PrintQue.GUI.AdminPages;
+using PrintQue.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
@@ -19,6 +21,21 @@ namespace PrintQue
 
         }
 
+        private void ToolbarItem_Plus_Activated(object sender, EventArgs e)
+        {
+            var request = new Request();
+            Navigation.PushAsync(new RequestDetailPage(request));
+        }
 
+        private void ToolbarItem_Add_Printer_Activated(object sender, EventArgs e)
+        {
+            Navigation.PushAsync(new PrinterDetailPage());
+        }
+
+        private void ToolbarItem_Add_Request_Activated(object sender, EventArgs e)
+        {
+            var request = new Request();
+            Navigation.PushAsync(new RequestDetailPage(request));
+        }
     }
 }

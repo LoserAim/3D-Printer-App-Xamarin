@@ -5,56 +5,48 @@
     xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="PrintQue.GUI.AdminPages.RequestDetailPage">
-
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Icon="save.png" Activated="ToolbarItem_Save_Activated" Order="Primary"/>
+        <ToolbarItem x:Name="tool_Message" Icon="message.png" Activated="ToolbarItem_Message_Activated" Order="Primary"/>
+        <ToolbarItem x:Name="tool_Delete" Icon="delete.png" Activated="ToolbarItem_Delete_Activated" Order="Primary"/>
+    </ContentPage.ToolbarItems>
     <TableView Intent="Form">
             <TableRoot>
-                <TableSection Title="Requests Details">
-                    <ViewCell>
-                        <StackLayout Orientation="Horizontal">
-                            <Label x:Name="lbl_Message" Text="Message" VerticalOptions="Center" HorizontalOptions="StartAndExpand"  TextColor="DeepSkyBlue">
-                                <Label.GestureRecognizers>
-                                    <TapGestureRecognizer Tapped="lbl_Message_Tapped"/>
-                                </Label.GestureRecognizers>
-                            </Label>
-                            <Label x:Name="lbl_Update" Text="Update"   VerticalOptions="Center" HorizontalOptions="CenterAndExpand" TextColor="DeepSkyBlue">
-                                <Label.GestureRecognizers>
-                                    <TapGestureRecognizer Tapped="lbl_Update_Tapped"/>
-                                </Label.GestureRecognizers>
-                            </Label>
-                            <Label x:Name="lbl_Delete" Text="Delete"   VerticalOptions="Center" HorizontalOptions="EndAndExpand"    TextColor="DeepSkyBlue">
-                                <Label.GestureRecognizers>
-                                    <TapGestureRecognizer Tapped="lbl_Delete_Tapped"/>
-                                </Label.GestureRecognizers>
-                            </Label>
-                            
-                        </StackLayout>
-                    </ViewCell>
-                    <TextCell Text="Name" Detail="{Binding user.UserName}"/>
-                    <EntryCell  x:Name="ent_ProjectName" Label="ProjectName" Text="{Binding ProjectName}"/>
-                    
-                    <ViewCell Tapped="Printer_Selector_Tapped">
-                        <StackLayout Orientation="Horizontal" Padding="13, 5">
-                            <Label Text="Assigned Printer" VerticalOptions="Center"/>
-                            <Label 
+            <TableSection Title="Requests Details">
+                <ViewCell Tapped="User_Selector_Tapped">
+                    <StackLayout Orientation="Horizontal" Padding="13, 5">
+                        <Label Text="Assigned User" VerticalOptions="Center"/>
+                        <Label 
+                                x:Name="Users_Picker"
+                                VerticalOptions="Center"
+                                HorizontalOptions="EndAndExpand"
+                                Text="none"
+                                TextColor="Gray"/>
+                    </StackLayout>
+                </ViewCell>
+                <EntryCell  x:Name="ent_ProjectName" Label="ProjectName" Text="{Binding ProjectName}"/>
+
+                <ViewCell Tapped="Printer_Selector_Tapped">
+                    <StackLayout Orientation="Horizontal" Padding="13, 5">
+                        <Label Text="Assigned Printer" VerticalOptions="Center"/>
+                        <Label 
                                 x:Name="Printers_Picker"
                                 VerticalOptions="Center"
                                 HorizontalOptions="EndAndExpand"
-                                Text="None"
+                                Text="none"
                                 TextColor="Gray"/>
-                        </StackLayout>
-                    </ViewCell>
-                    <ViewCell>
-                        <StackLayout Orientation="Vertical" >
+                    </StackLayout>
+                </ViewCell>
+                <ViewCell>
+                    <StackLayout Orientation="Vertical" >
+                        <Label Text="Description"/>
                         <Editor x:Name="edi_Description" Text="{Binding Description}" VerticalOptions="FillAndExpand" AutoSize="TextChanges" HeightRequest="100"/>
 
                     </StackLayout>
-                    </ViewCell>
+                </ViewCell>
 
             </TableSection>
-            <TableSection Title="User Detail">
-                
-            </TableSection>
-            </TableRoot>
+        </TableRoot>
     </TableView>
     <!--<StackLayout>
         <Label Text="RequestID"/>

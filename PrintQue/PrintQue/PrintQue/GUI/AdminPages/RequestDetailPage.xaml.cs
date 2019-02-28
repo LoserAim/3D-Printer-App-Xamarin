@@ -16,16 +16,7 @@ namespace PrintQue.GUI.AdminPages
 	public partial class RequestDetailPage : ContentPage
 	{
         private Request _request;
-        List<Printer> GetPrinters()
-        {
-            using (SQLiteConnection conn = new SQLiteConnection(App.DatabaseLocation))
-            {
-                conn.CreateTable<Printer>();
 
-
-                return conn.Table<Printer>().ToList();
-            }
-        }
         private void Update_Request(Request request)
         {
             using (SQLiteConnection conn = new SQLiteConnection(App.DatabaseLocation))
@@ -40,7 +31,8 @@ namespace PrintQue.GUI.AdminPages
 		{
             if (request == null)
             {
-                throw new ArgumentNullException();
+                ToolbarItems.RemoveAt(1);
+                ToolbarItems.RemoveAt(2);
             }
             BindingContext = request;
             _request = request;
@@ -48,15 +40,15 @@ namespace PrintQue.GUI.AdminPages
 
 
 		}
-        private void lbl_Message_Tapped(object sender, EventArgs e)
+        private void ToolbarItem_Message_Activated(object sender, EventArgs e)
         {
             DisplayAlert("Message Clicked!", "W00t!", "OK");
         }
-        private void lbl_Delete_Tapped(object sender, EventArgs e)
+        private void ToolbarItem_Delete_Activated(object sender, EventArgs e)
         {
             DisplayAlert("Delete Clicked!", "W00t!", "OK");
         }
-        private void lbl_Update_Tapped(object sender, EventArgs e)
+        private void ToolbarItem_Save_Activated(object sender, EventArgs e)
         {
             DisplayAlert("Alert!", "Request has been updated!", "OK");
             _request.ProjectName = ent_ProjectName.Text;
@@ -76,6 +68,17 @@ namespace PrintQue.GUI.AdminPages
             };
             await Navigation.PushAsync(page);
         }
+        async void User_Selector_Tapped(object sender, EventArgs e)
+        {
+            var page = new UserSelectorPage();
+            page.PrinterNames.ItemSelected += (source, args) =>
+            {
+                Users_Picker.Text = args.SelectedItem.ToString();
+                Navigation.PopAsync();
+            };
+            await Navigation.PushAsync(page);
+        }
+
 
     }
 }
