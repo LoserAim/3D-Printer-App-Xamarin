@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
-namespace PrintQue.GUI.AdminPages.DetailPages
+namespace PrintQue.GUI.AdminPages
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class PrinterDetailPage : ContentPage

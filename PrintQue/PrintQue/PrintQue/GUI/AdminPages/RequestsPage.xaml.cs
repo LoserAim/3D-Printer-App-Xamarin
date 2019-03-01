@@ -1,4 +1,4 @@
-﻿using PrintQue.GUI.AdminPages.DetailPages;
+﻿using PrintQue.GUI.AdminPages;
 using PrintQue.Models;
 using SQLite;
 using SQLiteNetExtensions.Extensions;
@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
-namespace PrintQue.GUI.AdminPages.TabbedPages
+namespace PrintQue
 {
 	[XamlCompilation(XamlCompilationOptions.Compile)]
 	public partial class RequestsPage : ContentPage

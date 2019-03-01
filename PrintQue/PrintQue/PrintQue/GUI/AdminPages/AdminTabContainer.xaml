@@ -2,7 +2,7 @@
 <TabbedPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:local="clr-namespace:PrintQue"
-             x:Class="PrintQue.GUI.AdminPages.AdminTabContainer"
+             x:Class="PrintQue.AdminTabContainer"
             xmlns:android="clr-namespace:Xamarin.Forms.PlatformConfiguration.AndroidSpecific;assembly=Xamarin.Forms.Core"
         android:TabbedPage.IsSwipePagingEnabled="False">
     <TabbedPage.ToolbarItems>
@@ -10,13 +10,13 @@
         <ToolbarItem Text="Add Printer" Activated="ToolbarItem_Add_Printer_Activated" Order="Secondary"/>
         <ToolbarItem Text="Add Request" Activated="ToolbarItem_Add_Request_Activated" Order="Secondary"/>
     </TabbedPage.ToolbarItems>
-    <local:TabbedPages.ApprovalsPage Title="Apprvls."/>
+    <local:ApprovalsPage Title="Apprvls."/>
 
-  <local:TabbedPages.RequestsPage Title="Requests"/>
+    <local:RequestsPage Title="Requests"/>
 
-  <local:TabbedPages.DenialsPage Title="Denials"/>
+    <local:DenialsPage Title="Denials"/>
 
-  <local:TabbedPages.AdminMessagesPage Title="Messages"/>
+    <local:AdminMessagesPage Title="Messages"/>
 
 
 </TabbedPage>

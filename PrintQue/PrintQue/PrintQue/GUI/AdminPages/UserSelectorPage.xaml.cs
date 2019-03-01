@@ -9,22 +9,22 @@ using System.Threading.Tasks;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
-namespace PrintQue.GUI.AdminPages.SelectorPages
+namespace PrintQue.GUI.AdminPages
 {
 	[XamlCompilation(XamlCompilationOptions.Compile)]
-	public partial class PrinterSelectorPage : ContentPage
+	public partial class UserSelectorPage : ContentPage
 	{
-        List<Printer> GetPrinters()
+        List<User> GetUsers()
         {
             using (SQLiteConnection conn = new SQLiteConnection(App.DatabaseLocation))
             {
-                conn.CreateTable<Printer>();
+                conn.CreateTable<User>();
 
 
-                return conn.Table<Printer>().ToList();
+                return conn.Table<User>().ToList();
             }
         }
-        public PrinterSelectorPage ()
+        public UserSelectorPage ()
 		{
 			InitializeComponent ();
 		}
@@ -32,13 +32,12 @@ namespace PrintQue.GUI.AdminPages.SelectorPages
         {
             base.OnAppearing();
             var StringList = new List<string>();
-            foreach (var p in GetPrinters())
+            foreach (var p in GetUsers())
             {
                 StringList.Add(p.Name);
+                User_ListView.ItemsSource = StringList;
             }
-            Printer_ListView.ItemsSource = StringList;
         }
-        public ListView PrinterNames { get { return Printer_ListView; } }
-
+        public ListView PrinterNames { get { return User_ListView; } }
     }
 }

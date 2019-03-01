@@ -23,28 +23,28 @@
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Update="GUI\AdminPages\TabbedPages\AdminMessagesPage.xaml">
+    <EmbeddedResource Update="GUI\AdminPages\AdminMessagesPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="GUI\AdminPages\AdminTabContainer.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="GUI\AdminPages\TabbedPages\ApprovalsPage.xaml">
+    <EmbeddedResource Update="GUI\AdminPages\ApprovalsPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="GUI\AdminPages\TabbedPages\DenialsPage.xaml">
+    <EmbeddedResource Update="GUI\AdminPages\DenialsPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="GUI\AdminPages\DetailPages\PrinterDetailPage.xaml">
+    <EmbeddedResource Update="GUI\AdminPages\PrinterDetailPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="GUI\AdminPages\SelectorPages\PrinterSelectorPage.xaml">
+    <EmbeddedResource Update="GUI\AdminPages\PrinterSelectorPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="GUI\AdminPages\DetailPages\RequestDetailPage.xaml">
+    <EmbeddedResource Update="GUI\AdminPages\RequestDetailPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="GUI\AdminPages\SelectorPages\UserSelectorPage.xaml">
+    <EmbeddedResource Update="GUI\AdminPages\UserSelectorPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="GUI\LoginPage.xaml">
@@ -53,7 +53,7 @@
     <EmbeddedResource Update="GUI\RegisterPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="GUI\AdminPages\TabbedPages\RequestsPage.xaml">
+    <EmbeddedResource Update="GUI\AdminPages\RequestsPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="GUI\UserPages\UserMainPage.xaml">

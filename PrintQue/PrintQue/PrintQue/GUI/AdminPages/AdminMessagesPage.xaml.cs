@@ -7,12 +7,12 @@ using System.Threading.Tasks;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
-namespace PrintQue.GUI.AdminPages.TabbedPages
+namespace PrintQue
 {
 	[XamlCompilation(XamlCompilationOptions.Compile)]
-	public partial class DenialsPage : ContentPage
+	public partial class AdminMessagesPage : ContentPage
 	{
-		public DenialsPage ()
+		public AdminMessagesPage ()
 		{
 			InitializeComponent ();
 		}
