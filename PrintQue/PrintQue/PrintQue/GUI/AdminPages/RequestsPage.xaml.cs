@@ -21,7 +21,11 @@ namespace PrintQue
             using (SQLiteConnection conn = new SQLiteConnection(App.DatabaseLocation))
             {
                 conn.CreateTable<Request>();
-                
+
+                // The only reason I added this line was so that
+                // when an admin logs in and goes to the requests page,
+                // the app won't throw an exception saying there's no Printer DB table.
+                conn.CreateTable<Printer>(); 
 
                 var requests = conn.GetAllWithChildren<Request>().ToList();
                 var sortedRequests = requests.Where(g => g.Status == null).ToList();
