@@ -26,7 +26,7 @@
                 </ViewCell>
                 <EntryCell  x:Name="ent_ProjectName" Label="ProjectName" Text="{Binding ProjectName}"/>
 
-                <ViewCell Tapped="Printer_Selector_Tapped">
+                 <ViewCell Tapped="Printer_Selector_Tapped">
                     <StackLayout Orientation="Horizontal" Padding="13, 5">
                         <Label Text="Assigned Printer" VerticalOptions="Center"/>
                         <Label 
