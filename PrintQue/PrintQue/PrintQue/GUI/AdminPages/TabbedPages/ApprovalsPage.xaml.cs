@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
-namespace PrintQue
+namespace PrintQue.GUI.AdminPages.TabbedPages
 {
 	[XamlCompilation(XamlCompilationOptions.Compile)]
 	public partial class ApprovalsPage : ContentPage

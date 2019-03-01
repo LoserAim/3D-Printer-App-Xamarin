@@ -1,0 +1,65 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage 
+
+    Title="{Binding ProjectName}"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="PrintQue.GUI.AdminPages.DetailPages.RequestDetailPage">
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Icon="save.png" 
+                     Activated="ToolbarItem_Save_Activated" 
+                     Order="Primary"/>
+        <ToolbarItem x:Name="tool_Message" Icon="message.png" 
+                     Activated="ToolbarItem_Message_Activated" 
+                     Order="Primary"/>
+        <ToolbarItem x:Name="tool_Delete" Icon="delete.png" 
+                     Activated="ToolbarItem_Delete_Activated" 
+                     Order="Primary"/>
+    </ContentPage.ToolbarItems>
+    <TableView Intent="Form">
+            <TableRoot>
+            <TableSection Title="Requests Details">
+                <ViewCell Tapped="User_Selector_Tapped">
+                    <StackLayout Orientation="Horizontal" Padding="13, 5">
+                        <Label Text="Assigned User" VerticalOptions="Center"/>
+                        <Label 
+                                x:Name="Users_Picker"
+                                VerticalOptions="Center"
+                                HorizontalOptions="EndAndExpand"
+                                Text="{Binding user.UserName}"
+                                TextColor="Gray"/>
+                    </StackLayout>
+                </ViewCell>
+                <EntryCell  x:Name="ent_ProjectName" 
+                            Label="ProjectName" 
+                            Text="{Binding ProjectName}"/>
+
+                 <ViewCell Tapped="Printer_Selector_Tapped">
+                    <StackLayout Orientation="Horizontal" Padding="13, 5">
+                        <Label Text="Assigned Printer" VerticalOptions="Center"/>
+                        <Label 
+                                x:Name="Printers_Picker"
+                                VerticalOptions="Center"
+                                HorizontalOptions="EndAndExpand"
+                                Text="none"
+                                TextColor="Gray"/>
+                    </StackLayout>
+                </ViewCell>
+                <ViewCell>
+                    <StackLayout Orientation="Vertical" >
+                        <Label Text="Description"/>
+                        <Editor x:Name="edi_Description" 
+                                Text="{Binding Description}" 
+                                VerticalOptions="FillAndExpand" 
+                                AutoSize="TextChanges" 
+                                HeightRequest="100"/>
+
+                    </StackLayout>
+                </ViewCell>
+
+            </TableSection>
+        </TableRoot>
+    </TableView>
+
+    
+</ContentPage>
