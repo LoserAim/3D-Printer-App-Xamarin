@@ -76,8 +76,7 @@ namespace PrintQue.GUI.AdminPages
         private void ToolbarItem_Save_Activated(object sender, EventArgs e)
         {
             DisplayAlert("Alert!", "Request has been updated!", "OK");
-            _request.ProjectName = ent_ProjectName.Text;
-            _request.Description = edi_Description.Text;
+
             
             
         }
@@ -122,7 +121,16 @@ namespace PrintQue.GUI.AdminPages
             };
             await Navigation.PushAsync(page);
         }
-
-
+        
+        async void PersonalUse_Selector_Tapped(object sender, EventArgs e)
+        {
+            var page = new PersonalUseSelector();
+            page.PersonalUse.ItemSelected += (source, args) =>
+            {
+                PersonalUse_Picker.Text = args.SelectedItem.ToString();
+                Navigation.PopAsync();
+            };
+            await Navigation.PushAsync(page);
+        }
     }
 }

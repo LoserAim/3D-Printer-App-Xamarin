@@ -53,6 +53,9 @@
     <EmbeddedResource Update="GUI\AdminPages\SelectorPages\ColorSelectorPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
+    <EmbeddedResource Update="GUI\AdminPages\SelectorPages\PersonalUseSelector.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
     <EmbeddedResource Update="GUI\AdminPages\SelectorPages\StatusSelectorPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>

@@ -52,8 +52,18 @@
                 </ViewCell>
                 <ViewCell>
                     <StackLayout Padding="0,10,0,0">
-                        <Label x:Name="PrintTimeLabel" HorizontalTextAlignment="Center" BackgroundColor="White" Text="Print Time: ASAP"></Label>
+                        <Label x:Name="PrintTimeLabel" HorizontalTextAlignment="Center" Text="Print Time: ASAP"></Label>
                         <Button Text="Want to schedule your print?" Clicked="ScheduleDay_Clicked"></Button>
+                    </StackLayout>
+                </ViewCell>
+                <ViewCell>
+                    <StackLayout>
+                        <Slider HorizontalOptions="StartAndExpand" x:Name="sli_Duration"  Maximum="8" Minimum="1" Value="4"/>
+                        <Label HorizontalOptions="Center" 
+                               Text="{Binding 
+                                         Source={x:Reference sli_Duration}, 
+                                         Path=Value, 
+                                         StringFormat='{0:N0}'}"/>
                     </StackLayout>
                 </ViewCell>
                 <ViewCell>
@@ -69,7 +79,17 @@
 
                     </StackLayout>
                 </ViewCell>
-                
+                <ViewCell Tapped="PersonalUse_Selector_Tapped">
+                    <StackLayout Orientation="Horizontal" Padding="13, 5">
+                        <Label Text="Assigned PersonalUse" VerticalOptions="Center"/>
+                        <Label 
+                                x:Name="PersonalUse_Picker"
+                                VerticalOptions="Center"
+                                HorizontalOptions="EndAndExpand"
+                                Text="{Binding PersonalUse}"
+                                TextColor="Gray"/>
+                    </StackLayout>
+                </ViewCell>
 
             </TableSection>
         </TableRoot>
