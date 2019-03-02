@@ -1,4 +1,5 @@
-﻿using PrintQue.Models;
+﻿using PrintQue.GUI.AdminPages;
+using PrintQue.Models;
 using SQLite;
 using SQLiteNetExtensions.Extensions;
 using System;
@@ -15,95 +16,71 @@ namespace PrintQue
 	[XamlCompilation(XamlCompilationOptions.Compile)]
 	public partial class RequestsPage : ContentPage
 	{
-        public int ItemSelected;
+        List<Request> GetRequests(string searchText = null)
+        {
+            using (SQLiteConnection conn = new SQLiteConnection(App.DatabaseLocation))
+            {
+                conn.CreateTable<Request>();
+
+                // The only reason I added this line was so that
+                // when an admin logs in and goes to the requests page,
+                // the app won't throw an exception saying there's no Printer DB table.
+                conn.CreateTable<Printer>(); 
+
+                var requests = conn.GetAllWithChildren<Request>().ToList();
+                var sortedRequests = requests.Where(g => g.Status == null).ToList();
+                if (string.IsNullOrWhiteSpace(searchText))
+                    return sortedRequests;
+
+                return sortedRequests.Where(g => g.ProjectName.StartsWith(searchText) || g.user.UserName.StartsWith(searchText)).ToList(); 
+            }
+        }
 		public RequestsPage ()
 		{
 			InitializeComponent ();
-            using (SQLiteConnection conn = new SQLiteConnection(App.DatabaseLocation))
-            {
-                conn.CreateTable<Request>();
-                var requests = conn.Table<Request>().ToList();
-                if(requests.Count > 0)
-                {
-                    conn.DeleteAll<Request>();
-                }
-                
-                
-                var users = conn.Table<User>().ToList();
-                var printers = conn.Table<Printer>().ToList();
-                var UserRequest = users.SingleOrDefault(g => g.UserID == 1);
-                var PrinterRequest = printers.SingleOrDefault(p => p.ID == 1);
-                if (requests.Count < 1)
-                {
-                    var TestRequest = new Request()
-                    {
-                        ProjectName = "BubbyHitMeUp",
-                        //user = UserRequest,
-                        //printer = PrinterRequest,
-                        //UserID = UserRequest.UserID,
-                        //PrinterID = PrinterRequest.ID,
 
-                    };
-                    conn.Insert(TestRequest);
-                    
-                    TestRequest = new Request()
-                    {
-                        ProjectName = "What the frick",
-
-                    };
-                    conn.Insert(TestRequest);
-                    TestRequest = new Request()
-                    {
-                        ProjectName = "Manassa",
-
-                    };
-                    conn.Insert(TestRequest);
-                    TestRequest = new Request()
-                    {
-                        ProjectName = "ButtBaby",
-
-                    };
-                    conn.Insert(TestRequest);
-                }
-                requests = conn.Table<Request>().ToList();
-                foreach (var r in requests)
-                {
-                    UserRequest.Requests.Add(r);
-                    PrinterRequest.Requests.Add(r);
-                }
-                conn.UpdateWithChildren(UserRequest);
-                conn.UpdateWithChildren(PrinterRequest);
-
-
-
-            }
         }
-
-
-
 
         protected override void OnAppearing()
         {
-            using (SQLiteConnection conn = new SQLiteConnection(App.DatabaseLocation))
-            {
-                conn.CreateTable<Request>();
-                var requests = conn.Table<Request>().ToList();
-
-                RequestListView.ItemsSource = requests;
-
-            }
+            base.OnAppearing();
+            RequestListView.ItemsSource = GetRequests();
         }
 
-        public void OnMore(object sender, EventArgs e)
+
+
+        public void Clicked_Approve(object sender, EventArgs e)
         {
-            var mi = ((MenuItem)sender);
-            DisplayAlert("More Context Action", mi.CommandParameter + " more context action", "OK");
+            var menuItem = sender as MenuItem;
+            var request = menuItem.CommandParameter as Request;
+            DisplayAlert("Approve", request.ProjectName, "OK");
         }
 
-        public void OnDelete(object sender, EventArgs e)
+        public void Clicked_Deny(object sender, EventArgs e)
         {
-            var mi = ((MenuItem)sender);
-            DisplayAlert("Delete Context Action", mi.CommandParameter + " delete context action", "OK");
+            var request = (sender as MenuItem).CommandParameter as Request;
+            DisplayAlert("Deny", request.ProjectName, "OK");
+        }
+
+        private void RequestListView_Refreshing(object sender, EventArgs e)
+        {
+            RequestListView.ItemsSource = GetRequests();
+            RequestListView.IsRefreshing = false;
+            RequestListView.EndRefresh();
+        }
+
+        private void SearchBar_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            RequestListView.ItemsSource = GetRequests(e.NewTextValue);
+        }
+
+        async private void RequestListView_ItemSelected(object sender, SelectedItemChangedEventArgs e)
+        {
+            if (e.SelectedItem == null)
+                return;
+            var request = e.SelectedItem as Request;
+            await Navigation.PushAsync(new RequestDetailPage(request));
+            RequestListView.SelectedItem = null;
         }
     }
 }

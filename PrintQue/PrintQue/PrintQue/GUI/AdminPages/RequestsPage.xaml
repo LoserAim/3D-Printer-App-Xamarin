@@ -4,15 +4,31 @@
              x:Class="PrintQue.RequestsPage"
              >
 
-    
-    
-        <ListView x:Name="RequestListView" SeparatorColor="Aquamarine">
+
+
+    <StackLayout>
+        <SearchBar Placeholder="Search..." TextChanged="SearchBar_TextChanged"/>
+        <ListView x:Name="RequestListView" HasUnevenRows="True" IsPullToRefreshEnabled="true" Refreshing="RequestListView_Refreshing" ItemSelected="RequestListView_ItemSelected">
             <ListView.ItemTemplate>
                 <DataTemplate>
-                    <TextCell Text="{Binding PropertyName}" Detail="{Binding }"/>
-                    
+                    <ViewCell>
+                        <ViewCell.ContextActions>
+                            <MenuItem Text="Approve" Clicked="Clicked_Approve" CommandParameter="{Binding .}"/>
+                            <MenuItem Text="Deny" Clicked="Clicked_Deny" CommandParameter="{Binding .}"/>
+                        </ViewCell.ContextActions>
+                        <StackLayout Orientation="Horizontal" Padding="5">
+                            <StackLayout HorizontalOptions="StartAndExpand">
+                                <Label Text="{Binding ProjectName}" TextColor="Black"/>
+                                <Label Text="{Binding user.UserName}"/>
+                            </StackLayout>
+                            
+                        </StackLayout>
+                    </ViewCell>
+
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
+    </StackLayout>
+    
 
 </ContentPage>

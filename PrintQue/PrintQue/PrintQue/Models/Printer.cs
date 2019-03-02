@@ -16,6 +16,8 @@ namespace PrintQue.Models
         public string Status { get; set; }
         [NotNull]
         public string Color { get; set; }
+        public int ProjectsQueued { get; set; }
+
         [OneToMany(CascadeOperations = CascadeOperation.All)]
         public List<Request> Requests { get; set; }
     }
