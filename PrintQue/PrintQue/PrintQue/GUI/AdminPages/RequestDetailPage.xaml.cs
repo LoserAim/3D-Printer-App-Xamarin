@@ -1,8 +1,13 @@
-﻿using PrintQue.Models;
+﻿using Plugin.FilePicker;
+using Plugin.FilePicker.Abstractions;
+using PrintQue.GUI.UserPages;
+using PrintQue.Models;
+using PrintQue.Widgets.CalendarWidget;
 using SQLite;
 using SQLiteNetExtensions.Extensions;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -15,6 +20,7 @@ namespace PrintQue.GUI.AdminPages
 	[XamlCompilation(XamlCompilationOptions.Compile)]
 	public partial class RequestDetailPage : ContentPage
 	{
+        private Date _dateRequestSet;
         private Request _request;
 
         private void Update_Request(Request request)
@@ -29,17 +35,35 @@ namespace PrintQue.GUI.AdminPages
         }
         public RequestDetailPage (Request request)
 		{
+
+			InitializeComponent ();
             if (request == null)
             {
                 ToolbarItems.RemoveAt(1);
-                ToolbarItems.RemoveAt(2);
+                ToolbarItems.RemoveAt(1);
             }
             BindingContext = request;
             _request = request;
-			InitializeComponent ();
 
 
-		}
+        }
+        private async void SelectFile_Clicked(object sender, EventArgs e)
+        {
+            try
+            {
+                FileData fileData = await CrossFilePicker.Current.PickFile();
+
+                // User cancelled file selection
+                if (fileData == null)
+                    return;
+
+                SelectedFileLabel.Text = fileData.FileName;
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine("Exception choosing file: " + ex.ToString());
+            }
+        }
         private void ToolbarItem_Message_Activated(object sender, EventArgs e)
         {
             DisplayAlert("Message Clicked!", "W00t!", "OK");
@@ -56,8 +80,17 @@ namespace PrintQue.GUI.AdminPages
             
             
         }
-
-
+        private void OnDateSubmitted(Date date)
+        {
+            _dateRequestSet = date;
+            PrintTimeLabel.Text = "Print Time: " + date.ToString();
+        }
+        private async void ScheduleDay_Clicked(object sender, EventArgs e)
+        {
+            var page = new UserScheduleDayPage();
+            page.OnDateSubmitted += OnDateSubmitted;
+            await Navigation.PushAsync(page);
+        }
         async void Printer_Selector_Tapped(object sender, EventArgs e)
         {
             var page = new PrinterSelectorPage();

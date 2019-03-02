@@ -10,7 +10,7 @@
         <ToolbarItem x:Name="tool_Message" Icon="message.png" Activated="ToolbarItem_Message_Activated" Order="Primary"/>
         <ToolbarItem x:Name="tool_Delete" Icon="delete.png" Activated="ToolbarItem_Delete_Activated" Order="Primary"/>
     </ContentPage.ToolbarItems>
-    <TableView Intent="Form">
+    <TableView Intent="Form" HasUnevenRows="True">
             <TableRoot>
             <TableSection Title="Requests Details">
                 <ViewCell Tapped="User_Selector_Tapped">
@@ -38,12 +38,25 @@
                     </StackLayout>
                 </ViewCell>
                 <ViewCell>
-                    <StackLayout Orientation="Vertical" >
+                    <StackLayout Padding="0,10,0,0">
+                        <Label x:Name="PrintTimeLabel" HorizontalTextAlignment="Center" BackgroundColor="White" Text="Print Time: ASAP"></Label>
+                        <Button Text="Want to schedule your print?" Clicked="ScheduleDay_Clicked"></Button>
+                    </StackLayout>
+                </ViewCell>
+                <ViewCell>
+                    <StackLayout Padding="0,10,0,0" Orientation="Horizontal">
+                        <Label x:Name="SelectedFileLabel" HorizontalTextAlignment="Center" Text="No File Selected"></Label>
+                        <Button x:Name="SelectFile" Clicked="SelectFile_Clicked" Text="Select Model File" HorizontalOptions="FillAndExpand"></Button>
+                    </StackLayout>
+                </ViewCell>
+                <ViewCell>
+                    <StackLayout Padding="0,10,0,0">
                         <Label Text="Description"/>
                         <Editor x:Name="edi_Description" Text="{Binding Description}" VerticalOptions="FillAndExpand" AutoSize="TextChanges" HeightRequest="100"/>
 
                     </StackLayout>
                 </ViewCell>
+
 
             </TableSection>
         </TableRoot>
