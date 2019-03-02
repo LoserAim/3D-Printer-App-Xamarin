@@ -12,8 +12,28 @@
         <TableRoot>
             <TableSection Title="Printer Details">
                 <EntryCell x:Name="ent_Name" Label="Printer Name" Placeholder="Type Here..."/>
-                <EntryCell x:Name="ent_Status" Label="Printer Status" Placeholder="Type Here..."/>
-                <EntryCell x:Name="ent_Color" Label="Printer Color" Placeholder="Type Here..."/>
+                <ViewCell Tapped="Status_Selector_Tapped">
+                    <StackLayout Orientation="Horizontal" Padding="13, 5">
+                        <Label Text="Assigned Status" VerticalOptions="Center"/>
+                        <Label 
+                                x:Name="Status_Picker"
+                                VerticalOptions="Center"
+                                HorizontalOptions="EndAndExpand"
+                                Text="none"
+                                TextColor="Gray"/>
+                    </StackLayout>
+                </ViewCell>
+                <ViewCell Tapped="Color_Selector_Tapped">
+                    <StackLayout Orientation="Horizontal" Padding="13, 5">
+                        <Label Text="Assigned Color" VerticalOptions="Center"/>
+                        <Label 
+                                x:Name="Color_Picker"
+                                VerticalOptions="Center"
+                                HorizontalOptions="EndAndExpand"
+                                Text="none"
+                                TextColor="Gray"/>
+                    </StackLayout>
+                </ViewCell>
             </TableSection>
         </TableRoot>
     </TableView>

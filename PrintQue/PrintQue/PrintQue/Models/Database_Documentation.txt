@@ -49,7 +49,10 @@ db.Insert(valuation);   // Insert the object in the database
 // Objects created, let's stablish the relationship
 euro.Valuations = new List<Valuation> { valuation };
 
+
 db.UpdateWithChildren(euro);   // Update the changes into the database
+
+
 if (valuation.Stock == euro) {
     Debug.WriteLine("Inverse relationship already set, yay!");
 }

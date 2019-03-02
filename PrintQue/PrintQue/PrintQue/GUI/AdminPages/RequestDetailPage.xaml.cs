@@ -1,5 +1,6 @@
 ﻿using Plugin.FilePicker;
 using Plugin.FilePicker.Abstractions;
+using PrintQue.GUI.AdminPages.SelectorPages;
 using PrintQue.GUI.UserPages;
 using PrintQue.Models;
 using PrintQue.Widgets.CalendarWidget;
@@ -104,9 +105,19 @@ namespace PrintQue.GUI.AdminPages
         async void User_Selector_Tapped(object sender, EventArgs e)
         {
             var page = new UserSelectorPage();
-            page.PrinterNames.ItemSelected += (source, args) =>
+            page.UserNames.ItemSelected += (source, args) =>
             {
                 Users_Picker.Text = args.SelectedItem.ToString();
+                Navigation.PopAsync();
+            };
+            await Navigation.PushAsync(page);
+        }
+        async void Status_Selector_Tapped(object sender, EventArgs e)
+        {
+            var page = new StatusSelectorPage();
+            page.StatusNames.ItemSelected += (source, args) =>
+            {
+                Status_Picker.Text = args.SelectedItem.ToString();
                 Navigation.PopAsync();
             };
             await Navigation.PushAsync(page);

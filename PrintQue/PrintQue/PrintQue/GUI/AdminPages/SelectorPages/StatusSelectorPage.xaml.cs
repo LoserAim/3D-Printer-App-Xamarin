@@ -9,23 +9,23 @@ using System.Threading.Tasks;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
-namespace PrintQue.GUI.AdminPages
+namespace PrintQue.GUI.AdminPages.SelectorPages
 {
 	[XamlCompilation(XamlCompilationOptions.Compile)]
-	public partial class UserSelectorPage : ContentPage
+	public partial class StatusSelectorPage : ContentPage
 	{
-        public UserSelectorPage()
-        {
-            InitializeComponent();
-        }
-        List<User> GetUsers()
+		public StatusSelectorPage ()
+		{
+			InitializeComponent ();
+		}
+        List<Status> GetStatuses()
         {
             using (SQLiteConnection conn = new SQLiteConnection(App.DatabaseLocation))
             {
-                conn.CreateTable<User>();
+                conn.CreateTable<Status>();
 
 
-                return conn.Table<User>().ToList();
+                return conn.Table<Status>().ToList();
             }
         }
 
@@ -33,12 +33,13 @@ namespace PrintQue.GUI.AdminPages
         {
             base.OnAppearing();
             var StringList = new List<string>();
-            foreach (var p in GetUsers())
+            foreach (var p in GetStatuses())
             {
                 StringList.Add(p.Name);
-                User_ListView.ItemsSource = StringList;
+                Status_ListView.ItemsSource = StringList;
             }
         }
-        public ListView UserNames { get { return User_ListView; } }
+        public ListView StatusNames { get { return Status_ListView; } }
+
     }
 }

@@ -10,7 +10,9 @@
         <ToolbarItem x:Name="tool_Message" Icon="message.png" Activated="ToolbarItem_Message_Activated" Order="Primary"/>
         <ToolbarItem x:Name="tool_Delete" Icon="delete.png" Activated="ToolbarItem_Delete_Activated" Order="Primary"/>
     </ContentPage.ToolbarItems>
-    <TableView Intent="Form" HasUnevenRows="True">
+    <TableView Intent="Form" 
+               HasUnevenRows="True"
+               IsTabStop="False">
             <TableRoot>
             <TableSection Title="Requests Details">
                 <ViewCell Tapped="User_Selector_Tapped">
@@ -31,6 +33,17 @@
                         <Label Text="Assigned Printer" VerticalOptions="Center"/>
                         <Label 
                                 x:Name="Printers_Picker"
+                                VerticalOptions="Center"
+                                HorizontalOptions="EndAndExpand"
+                                Text="none"
+                                TextColor="Gray"/>
+                    </StackLayout>
+                </ViewCell>
+                <ViewCell Tapped="Status_Selector_Tapped">
+                    <StackLayout Orientation="Horizontal" Padding="13, 5">
+                        <Label Text="Assigned Status" VerticalOptions="Center"/>
+                        <Label 
+                                x:Name="Status_Picker"
                                 VerticalOptions="Center"
                                 HorizontalOptions="EndAndExpand"
                                 Text="none"
@@ -61,27 +74,6 @@
             </TableSection>
         </TableRoot>
     </TableView>
-    <!--<StackLayout>
-        <Label Text="RequestID"/>
-        <Entry x:Name="RequestID_Entry" Placeholder="{Binding RequestID}"/>
-        <Label Text="Request Creator"/>
-        <Entry x:Name="UserName_Entry" Placeholder="{Binding user.UserName}"/>
-        <Label Text="Designated Printer"/>
-        <StackLayout>
-            <Picker x:Name="PrinterSelection" Title="{Binding printer.Name}" SelectedIndexChanged="PrinterSelection_SelectedIndexChanged">
-            </Picker>
-        </StackLayout>
-        <Grid ColumnSpacing="4" HorizontalOptions="FillAndExpand">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="33.33*" />
-                <ColumnDefinition Width="33.33*" />
-                <ColumnDefinition Width="33.33*" />
-            </Grid.ColumnDefinitions>
-            <Button Text="Update" FontSize="Micro" Grid.Column="0" HorizontalOptions="FillAndExpand"/>
-            <Button Text="Message" FontSize="Micro" Grid.Column="1" HorizontalOptions="FillAndExpand"/>
-            <Button Text="Delete" FontSize="Micro" Grid.Column="2" HorizontalOptions="FillAndExpand"/>
-        </Grid>
 
-    </StackLayout>-->
     
 </ContentPage>
