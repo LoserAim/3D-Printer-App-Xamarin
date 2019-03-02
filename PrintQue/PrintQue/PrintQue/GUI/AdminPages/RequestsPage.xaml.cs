@@ -28,11 +28,11 @@ namespace PrintQue
                 conn.CreateTable<Printer>(); 
 
                 var requests = conn.GetAllWithChildren<Request>().ToList();
-                var sortedRequests = requests.Where(g => g.Status == null).ToList();
+                var sortedRequests = requests.Where(g => g.status == null).ToList();
                 if (string.IsNullOrWhiteSpace(searchText))
                     return sortedRequests;
 
-                return sortedRequests.Where(g => g.ProjectName.StartsWith(searchText) || g.user.UserName.StartsWith(searchText)).ToList(); 
+                return sortedRequests.Where(g => g.ProjectName.StartsWith(searchText) || g.user.Email.StartsWith(searchText)).ToList(); 
             }
         }
 		public RequestsPage ()

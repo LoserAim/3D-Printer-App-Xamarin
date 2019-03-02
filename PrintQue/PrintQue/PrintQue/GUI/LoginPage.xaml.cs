@@ -62,7 +62,7 @@ namespace PrintQue
                         conn.CreateTable<User>();
                         var users = conn.Table<User>().ToList();
  
-                        var loguser = users.SingleOrDefault(g => g.Email == userNameEntry.Text || g.UserName == userNameEntry.Text);
+                        var loguser = users.SingleOrDefault(g => g.Email == userNameEntry.Text);
                         if (loguser != null)
                         {
                             if (loguser.Password == userPasswordEntry.Text)
