@@ -18,24 +18,23 @@ namespace PrintQue
 	{
         List<Request> GetRequests(string searchText = null)
         {
+            List<Request> requests = new List<Request>();
             using (SQLiteConnection conn = new SQLiteConnection(App.DatabaseLocation))
             {
                 conn.CreateTable<Request>();
 
-                // The only reason I added this line was so that
-                // when an admin logs in and goes to the requests page,
-                // the app won't throw an exception saying there's no Printer DB table.
-                conn.CreateTable<Printer>(); 
-
-                var requests = conn.GetAllWithChildren<Request>().ToList();
-                var sortedRequests = requests.Where(g => g.status == null).ToList();
-                if (string.IsNullOrWhiteSpace(searchText))
-                    return sortedRequests;
-
-                return sortedRequests.Where(g => g.ProjectName.StartsWith(searchText) || g.user.Email.StartsWith(searchText)).ToList(); 
+                requests = conn.GetAllWithChildren<Request>().ToList();
             }
+            var sortedRequests = requests.Where(g => g.status != null 
+            || !g.status.Name.Contains("Approved") 
+            || !g.status.Name.Contains ("Denied")).ToList();
+            if (string.IsNullOrWhiteSpace(searchText))
+                return sortedRequests;
+
+            return sortedRequests.Where(g => g.ProjectName.StartsWith(searchText) || g.user.Email.StartsWith(searchText)).ToList();
+
         }
-		public RequestsPage ()
+        public RequestsPage ()
 		{
 			InitializeComponent ();
 

@@ -16,8 +16,6 @@ namespace PrintQue.Models
         public int StatusID { get; set; }
         [ForeignKey(typeof(PrintColor))]
         public int ColorID { get; set; }
-        [NotNull]
-        public string Color { get; set; }
         public int ProjectsQueued { get; set; }
 
         [OneToMany(CascadeOperations = CascadeOperation.All)]

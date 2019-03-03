@@ -30,9 +30,14 @@ namespace PrintQue.GUI.AdminPages.DetailPages
                 };
                 var rows = conn.Insert(status);
                 if (rows > 0)
+                {
                     DisplayAlert("Success!", "Status was successfully save!", "OK");
+                    Navigation.PopAsync();
+                }
                 else
+                {
                     DisplayAlert("Failure", "Status was not saved!", "OK");
+                }
 
 
             }

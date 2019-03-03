@@ -3,6 +3,7 @@ using SQLite;
 using System.Collections.Generic;
 using System.Text;
 using SQLiteNetExtensions.Attributes;
+using Newtonsoft.Json;
 
 namespace PrintQue.Models
 {
@@ -18,10 +19,11 @@ namespace PrintQue.Models
         public int UserID { get; set; }
         public DateTime DateMade { get; set; }
         public DateTime DateRequested { get; set; }
-        public DateTime Duration { get; set; }
+        public int Duration { get; set; }
         public string ProjectName { get; set; }
         public string Description { get; set; }
-        public int Personal { get; set; }
+        public string File { get; set; }
+        public string Personal { get; set; }
         [ManyToOne]
         public User user { get; set; }
         [ManyToOne]

@@ -11,6 +11,7 @@ using SQLiteNetExtensions.Extensions;
 
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
+using PrintQue.GUI.AdminPages.DetailPages;
 
 namespace PrintQue
 {
@@ -55,21 +56,24 @@ namespace PrintQue
             using (SQLiteConnection conn = new SQLiteConnection(App.DatabaseLocation))
             {
                 conn.DropTable<Printer>();
-                conn.DropTable<User>();
-                conn.DropTable<Request>();
+               // conn.DropTable<User>();
+                //conn.DropTable<Request>();
 
-
+                //conn.DropTable<PrintColor>();
+                //conn.DropTable<Status>();
 
             }
         }
 
-        private void ToolbarItem_Add_Color_Activated(object sender, EventArgs e)
+        async private void ToolbarItem_Add_Color_Activated(object sender, EventArgs e)
         {
+            await Navigation.PushAsync(new PrintColorDetailPage());
 
         }
 
-        private void ToolbarItem_Add_Status_Activated(object sender, EventArgs e)
+        async private void ToolbarItem_Add_Status_Activated(object sender, EventArgs e)
         {
+            await Navigation.PushAsync(new StatusDetailPage());
 
         }
     }

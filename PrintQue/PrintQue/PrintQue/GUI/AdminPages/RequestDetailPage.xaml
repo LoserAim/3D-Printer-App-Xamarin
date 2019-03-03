@@ -58,8 +58,9 @@
                 </ViewCell>
                 <ViewCell>
                     <StackLayout>
-                        <Slider HorizontalOptions="StartAndExpand" x:Name="sli_Duration"  Maximum="8" Minimum="1" Value="4"/>
-                        <Label HorizontalOptions="Center" 
+                        <Slider HorizontalOptions="CenterAndExpand" x:Name="sli_Duration"  Maximum="8" Minimum="1" Value="4"/>
+                        <Label x:Name="lbl_sli_duration" 
+                            HorizontalOptions="Center" 
                                Text="{Binding 
                                          Source={x:Reference sli_Duration}, 
                                          Path=Value, 

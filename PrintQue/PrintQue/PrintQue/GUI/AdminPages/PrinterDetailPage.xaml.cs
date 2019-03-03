@@ -16,11 +16,29 @@ namespace PrintQue.GUI.AdminPages
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class PrinterDetailPage : ContentPage
     {
+        private List<Status> currentStatus;
+        private List<PrintColor> currentColors;
+        void GetLists()
+        {
+            using (SQLiteConnection conn = new SQLiteConnection(App.DatabaseLocation))
+            {
+                conn.CreateTable<Status>();
+                conn.CreateTable<PrintColor>();
+                currentColors = conn.Table<PrintColor>().ToList();
+                currentStatus = conn.Table<Status>().ToList();
 
+            }
+        }
         public PrinterDetailPage()
         {
             InitializeComponent();
 
+        }
+        protected override void OnAppearing()
+        {
+            base.OnAppearing();
+
+            
         }
         async void Status_Selector_Tapped(object sender, EventArgs e)
         {
@@ -47,39 +65,34 @@ namespace PrintQue.GUI.AdminPages
             var response = await DisplayAlert("Warning", "Are you sure you want to Create this Printer?", "Yes", "No");
             if (response)
             {
-                var color = Color_Picker.Text;
-                var status = Status_Picker.Text;
                 var printer = new Printer()
                 {
                     Name = ent_Name.Text,
                     ProjectsQueued = 0,
                 };
-
+                GetLists();
+                var foundstatus = currentStatus.SingleOrDefault(s => s.Name.Contains(Status_Picker.Text));
+                var foundprintcolor = currentColors.SingleOrDefault(pc => pc.Name.Contains(Color_Picker.Text));
+                //
+                if (foundstatus.Printers == null)
+                    foundstatus.Printers = new List<Printer>() { printer };
+                else
+                    foundstatus.Printers.Add(printer);
+                //
+                if (foundprintcolor.Printers == null)
+                    foundprintcolor.Printers = new List<Printer>() { printer };
+                else
+                    foundprintcolor.Printers.Add(printer);
                 using (SQLiteConnection conn = new SQLiteConnection(App.DatabaseLocation))
                 {
                     conn.CreateTable<Printer>();
-                    conn.CreateTable<Status>();
-                    conn.CreateTable<PrintColor>();
-                    var liststatus = conn.Table<Status>().ToList();
-                    var listprintcolor = conn.Table<PrintColor>().ToList();
-                    var foundstatus = liststatus.SingleOrDefault(s => s.Name.Contains(status));
-                    var foundprintcolor = listprintcolor.SingleOrDefault(pc => pc.Name.Contains(color));
-                    var rows = conn.Insert(printer);
-                    if(rows > 0)
-                    {
-                        await DisplayAlert("Success", "Printer was Successfully created!", "OK");
-                        await Navigation.PopAsync();
-                    }
-                    else
-                    {
-                        await DisplayAlert("Failure", "Uh oh! Looks like someone failed to create a printer!", "OK");
-                    }
-                    foundstatus.Printers.Add(printer);
-                    foundprintcolor.Printers.Add(printer);
+                    conn.Insert(printer);
                     conn.UpdateWithChildren(foundprintcolor);
                     conn.UpdateWithChildren(foundstatus);
                 }
-                
+                await Navigation.PopAsync();
+
+
             }
 
         }

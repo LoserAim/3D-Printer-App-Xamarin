@@ -30,12 +30,19 @@ namespace PrintQue.GUI.AdminPages.DetailPages
                 };
                 var rows = conn.Insert(printcolor);
                 if (rows > 0)
+                {
                     DisplayAlert("Success!", "Print Color was successfully save!", "OK");
+                    Navigation.PopAsync();
+                }
                 else
+                {
                     DisplayAlert("Failure", "Print Color was not saved!", "OK");
+
+                }
 
 
             }
+
         }
     }
 }
