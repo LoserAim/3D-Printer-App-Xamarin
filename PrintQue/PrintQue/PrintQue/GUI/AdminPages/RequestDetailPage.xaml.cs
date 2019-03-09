@@ -37,24 +37,26 @@ namespace PrintQue.GUI.AdminPages
                     sp => sp.Name.Contains(Printers_Picker.Text));
              var status = statusRequest.SingleOrDefault(
                     ss => ss.Name.Contains(Status_Picker.Text));
+            //For some reason Requests is initialized as null
             if (user.Requests == null)
                 user.Requests = new List<Request>() { request };
             else
                 user.Requests.Add(request);
+
             if(printer.Requests == null)
                 printer.Requests = new List<Request>() { request };
             else
                 printer.Requests.Add(request);
+
             if(status.Requests == null)
-                printer.Requests = new List<Request>() { request };
+                status.Requests = new List<Request>() { request };
             else
                 status.Requests.Add(request);
 
 
             using (SQLiteConnection conn = new SQLiteConnection(App.DatabaseLocation))
             {
-                conn.CreateTable<Request>();
-                conn.Update(request);
+                conn.Insert(request);
                 conn.UpdateWithChildren(user);
                 conn.UpdateWithChildren(printer);
                 conn.UpdateWithChildren(status);
@@ -64,9 +66,6 @@ namespace PrintQue.GUI.AdminPages
         {
             using (SQLiteConnection conn = new SQLiteConnection(App.DatabaseLocation))
             {
-                conn.CreateTable<User>();
-                conn.CreateTable<Printer>();
-                conn.CreateTable<Status>();
                 userRequest = conn.Table<User>().ToList();
                 printerRequest = conn.Table<Printer>().ToList();
                 statusRequest = conn.Table<Status>().ToList();

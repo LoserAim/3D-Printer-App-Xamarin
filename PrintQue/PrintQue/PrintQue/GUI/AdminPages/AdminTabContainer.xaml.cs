@@ -56,11 +56,11 @@ namespace PrintQue
             using (SQLiteConnection conn = new SQLiteConnection(App.DatabaseLocation))
             {
                 conn.DropTable<Printer>();
-               // conn.DropTable<User>();
-                //conn.DropTable<Request>();
+                conn.DropTable<User>();
+                conn.DropTable<Request>();
 
-                //conn.DropTable<PrintColor>();
-                //conn.DropTable<Status>();
+                conn.DropTable<PrintColor>();
+                conn.DropTable<Status>();
 
             }
         }

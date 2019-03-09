@@ -85,7 +85,6 @@ namespace PrintQue.GUI.AdminPages
                     foundprintcolor.Printers.Add(printer);
                 using (SQLiteConnection conn = new SQLiteConnection(App.DatabaseLocation))
                 {
-                    conn.CreateTable<Printer>();
                     conn.Insert(printer);
                     conn.UpdateWithChildren(foundprintcolor);
                     conn.UpdateWithChildren(foundstatus);

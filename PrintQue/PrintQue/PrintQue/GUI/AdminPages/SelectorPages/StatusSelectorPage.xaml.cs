@@ -20,13 +20,15 @@ namespace PrintQue.GUI.AdminPages.SelectorPages
 		}
         List<Status> GetStatuses()
         {
+            var status = new List<Status>();
             using (SQLiteConnection conn = new SQLiteConnection(App.DatabaseLocation))
             {
-                conn.CreateTable<Status>();
 
 
-                return conn.Table<Status>().ToList();
+
+                status =conn.Table<Status>().ToList();
             }
+            return status;
         }
 
         protected override void OnAppearing()

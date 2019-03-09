@@ -32,7 +32,17 @@ namespace PrintQue
                 {
                     Command = new Command(() =>
                     {
+
                         Navigation.PushAsync(new RegisterPage());
+                        using (SQLiteConnection conn = new SQLiteConnection(App.DatabaseLocation))
+                        {
+                            conn.CreateTable<User>();
+                            conn.CreateTable<Request>();
+                            conn.CreateTable<Printer>();
+                            conn.CreateTable<Status>();
+                            conn.CreateTable<PrintColor>();
+
+                        }
                     }
                     )
             });

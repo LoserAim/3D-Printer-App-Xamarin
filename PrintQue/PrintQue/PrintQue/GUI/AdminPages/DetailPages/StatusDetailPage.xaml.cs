@@ -21,25 +21,24 @@ namespace PrintQue.GUI.AdminPages.DetailPages
 
         private void ToolbarItem_Save_Activated(object sender, EventArgs e)
         {
+            var status = new Status()
+            {
+                Name = ent_Name.Text,
+            };
+            int rows = 0;
             using (SQLiteConnection conn = new SQLiteConnection(App.DatabaseLocation))
             {
-                conn.CreateTable<Status>();
-                var status = new Status()
-                {
-                    Name = ent_Name.Text,
-                };
-                var rows = conn.Insert(status);
-                if (rows > 0)
-                {
-                    DisplayAlert("Success!", "Status was successfully save!", "OK");
-                    Navigation.PopAsync();
-                }
-                else
-                {
-                    DisplayAlert("Failure", "Status was not saved!", "OK");
-                }
-
-
+         
+                rows = conn.Insert(status);
+            }
+            if (rows > 0)
+            {
+                DisplayAlert("Success!", "Status was successfully save!", "OK");
+                Navigation.PopAsync();
+            }
+            else
+            {
+                DisplayAlert("Failure", "Status was not saved!", "OK");
             }
         }
     }
