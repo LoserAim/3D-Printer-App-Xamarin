@@ -1,16 +1,32 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+<ContentPage 
+    NavigationPage.HasNavigationBar="False"
+            xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="PrintQue.LoginPage">
 
-    <StackLayout VerticalOptions="Center" Margin="30,10">
+    <StackLayout VerticalOptions="Center" 
+                 Margin="30,10">
 
-        <Entry x:Name="userNameEntry" Placeholder="Username or Email Adress" Keyboard="Email"/>
-        <Entry x:Name="userPasswordEntry" Placeholder="Password" IsPassword="True"/>
-        <Button x:Name="LoginButton" Text="Log in" Clicked="LoginButton_Clicked" Margin="0,35"  BackgroundColor="DodgerBlue" TextColor="White"/>
+        <Entry x:Name="userNameEntry" 
+               Placeholder="Username or Email Adress" 
+               Keyboard="Email"/>
+        <Entry x:Name="userPasswordEntry" 
+               Placeholder="Password" 
+               IsPassword="True"/>
+        <Button x:Name="LoginButton" 
+                Text="Log in" 
+                Clicked="LoginButton_Clicked" 
+                Margin="0,35"  
+                BackgroundColor="DodgerBlue" 
+                TextColor="White"/>
 
-        <Label Text="Don't have an account?" HorizontalOptions="Center"/>
-        <Label x:Name="RegisterLabel" Text="Register" HorizontalOptions="Center" TextColor="CadetBlue"/>
+        <Label Text="Don't have an account?" 
+               HorizontalOptions="Center"/>
+        <Label x:Name="RegisterLabel" 
+               Text="Register" 
+               HorizontalOptions="Center" 
+               TextColor="CadetBlue"/>
 
     </StackLayout>
 

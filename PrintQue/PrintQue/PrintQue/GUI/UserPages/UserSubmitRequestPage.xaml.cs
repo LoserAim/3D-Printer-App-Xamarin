@@ -57,8 +57,8 @@ namespace PrintQue.UserPages
                 {
                     ProjectName     = ProjectName.Text,
                     Description     = ProjectDescription.Text,
-                    DateRequestMade = DateTime.Now,
-                    DateRequestSet  = new DateTime(_dateRequestSet.Year, (int)_dateRequestSet.Month, _dateRequestSet.CalendarDay)
+                    DateMade        = DateTime.Now,
+                    DateRequested   = new DateTime(_dateRequestSet.Year, (int)_dateRequestSet.Month, _dateRequestSet.CalendarDay)
                 });                
             }
 
