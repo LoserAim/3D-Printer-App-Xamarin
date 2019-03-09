@@ -20,26 +20,25 @@ namespace PrintQue.GUI.AdminPages.DetailPages
 		}
         private void ToolbarItem_Save_Activated(object sender, EventArgs e)
         {
+            var printcolor = new PrintColor()
+            {
+                Name = ent_Name.Text,
+                HexValue = ent_HexValue.Text,
+            };
+            int rows = 0;
             using (SQLiteConnection conn = new SQLiteConnection(App.DatabaseLocation))
             {
-                conn.CreateTable<PrintColor>();
-                var printcolor = new PrintColor()
-                {
-                    Name = ent_Name.Text,
-                    HexValue = ent_HexValue.Text,
-                };
-                var rows = conn.Insert(printcolor);
-                if (rows > 0)
-                {
-                    DisplayAlert("Success!", "Print Color was successfully save!", "OK");
-                    Navigation.PopAsync();
-                }
-                else
-                {
-                    DisplayAlert("Failure", "Print Color was not saved!", "OK");
 
-                }
-
+                rows = conn.Insert(printcolor);
+            }
+            if (rows > 0)
+            {
+                DisplayAlert("Success!", "Print Color was successfully save!", "OK");
+                Navigation.PopAsync();
+            }
+            else
+            {
+                DisplayAlert("Failure", "Print Color was not saved!", "OK");
 
             }
 

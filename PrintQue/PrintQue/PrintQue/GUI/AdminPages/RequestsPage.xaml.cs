@@ -19,12 +19,11 @@ namespace PrintQue
         List<Request> GetRequests(string searchText = null)
         {
             List<Request> requests = new List<Request>();
+
             using (SQLiteConnection conn = new SQLiteConnection(App.DatabaseLocation))
             {
-                conn.CreateTable<Request>();
-
                 requests = conn.GetAllWithChildren<Request>().ToList();
-                var test = conn.Table<Request>();
+
             }
             var sortedRequests = requests.Where(g => g.status != null 
             || !g.status.Name.Contains("Approved") 
