@@ -24,7 +24,7 @@ namespace PrintQue
                 conn.CreateTable<Request>();
 
                 requests = conn.GetAllWithChildren<Request>().ToList();
-                var test = conn.Table<Request>
+                var test = conn.Table<Request>();
             }
             var sortedRequests = requests.Where(g => g.status != null 
             || !g.status.Name.Contains("Approved") 
