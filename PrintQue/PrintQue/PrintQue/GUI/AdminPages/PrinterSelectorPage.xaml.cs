@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using SQLiteNetExtensions.Extensions;
 
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -18,10 +19,10 @@ namespace PrintQue.GUI.AdminPages
         {
             using (SQLiteConnection conn = new SQLiteConnection(App.DatabaseLocation))
             {
-                conn.CreateTable<Printer>();
 
 
-                return conn.Table<Printer>().ToList();
+
+                return conn.GetAllWithChildren<Printer>().ToList();
             }
         }
         public PrinterSelectorPage ()

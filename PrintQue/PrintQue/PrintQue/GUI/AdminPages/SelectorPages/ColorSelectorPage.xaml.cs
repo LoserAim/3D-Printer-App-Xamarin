@@ -36,8 +36,9 @@ namespace PrintQue.GUI.AdminPages.SelectorPages
             foreach (var p in GetPrintColors())
             {
                 StringList.Add(p.Name);
-                Color_ListView.ItemsSource = StringList;
+                
             }
+            Color_ListView.ItemsSource = StringList;
         }
         public ListView ColorNames { get { return Color_ListView; } }
     }
