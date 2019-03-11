@@ -22,7 +22,7 @@
 
                 <Frame Padding="0,10,0,0">
                     <StackLayout>
-                        <Label x:Name="PrintTimeLabel" HorizontalTextAlignment="Center" BackgroundColor="White" Text="Print Time: ASAP"></Label>
+                        <Label x:Name="PrintDateTimeLabel" HorizontalTextAlignment="Center" BackgroundColor="White" Text="Print Time: ASAP"></Label>
                         <Button Text="Want to schedule your print?" Clicked="ScheduleDay_Clicked"></Button>
                     </StackLayout>
                 </Frame>
