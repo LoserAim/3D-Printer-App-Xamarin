@@ -23,6 +23,12 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Update="GUI\UserPages\UserScheduleDateTimePage.xaml.cs">
+      <DependentUpon>UserScheduleDateTimePage.xaml</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
     <EmbeddedResource Update="GUI\AdminPages\AdminMessagesPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
@@ -56,7 +62,7 @@
     <EmbeddedResource Update="GUI\UserPages\UserMessagesPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="GUI\UserPages\UserScheduleDayPage.xaml">
+    <EmbeddedResource Update="GUI\UserPages\UserScheduleDateTimePage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="GUI\UserPages\UserSubmitRequestPage.xaml">
