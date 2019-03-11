@@ -26,5 +26,12 @@ namespace PrintQue
         {
             Navigation.PushAsync(new UserPages.UserSubmitRequestPage());
         }
+        async private void ToolbarItem_Run_Activated(object sender, EventArgs e)
+        {
+            var response = await DisplayAlert("Warning", "You are about to logout. Are you sure?", "Yes", "No");
+            if (response)
+                await Navigation.PopAsync();
+
+        }
     }
 }

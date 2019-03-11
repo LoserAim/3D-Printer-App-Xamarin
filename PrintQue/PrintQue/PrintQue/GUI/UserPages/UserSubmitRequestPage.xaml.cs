@@ -58,6 +58,7 @@ namespace PrintQue.UserPages
                     Description     = ProjectDescription.Text,
                     DateRequestMade = DateTime.Now,
                     DateRequestSet  = _scheduledDateTime
+
                 });                
             }
 

@@ -5,78 +5,96 @@
     xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="PrintQue.GUI.AdminPages.RequestDetailPage">
-
-    <TableView Intent="Form">
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Icon="save.png" Activated="ToolbarItem_Save_Activated" Order="Primary"/>
+        <ToolbarItem x:Name="tool_Message" Icon="message.png" Activated="ToolbarItem_Message_Activated" Order="Primary"/>
+        <ToolbarItem x:Name="tool_Delete" Icon="delete.png" Activated="ToolbarItem_Delete_Activated" Order="Primary"/>
+    </ContentPage.ToolbarItems>
+    <TableView Intent="Form" 
+               HasUnevenRows="True"
+               IsTabStop="False">
             <TableRoot>
-                <TableSection Title="Requests Details">
-                    <ViewCell>
-                        <StackLayout Orientation="Horizontal">
-                            <Label x:Name="lbl_Message" Text="Message" VerticalOptions="Center" HorizontalOptions="StartAndExpand"  TextColor="DeepSkyBlue">
-                                <Label.GestureRecognizers>
-                                    <TapGestureRecognizer Tapped="lbl_Message_Tapped"/>
-                                </Label.GestureRecognizers>
-                            </Label>
-                            <Label x:Name="lbl_Update" Text="Update"   VerticalOptions="Center" HorizontalOptions="CenterAndExpand" TextColor="DeepSkyBlue">
-                                <Label.GestureRecognizers>
-                                    <TapGestureRecognizer Tapped="lbl_Update_Tapped"/>
-                                </Label.GestureRecognizers>
-                            </Label>
-                            <Label x:Name="lbl_Delete" Text="Delete"   VerticalOptions="Center" HorizontalOptions="EndAndExpand"    TextColor="DeepSkyBlue">
-                                <Label.GestureRecognizers>
-                                    <TapGestureRecognizer Tapped="lbl_Delete_Tapped"/>
-                                </Label.GestureRecognizers>
-                            </Label>
-                            
-                        </StackLayout>
-                    </ViewCell>
-                    <TextCell Text="Name" Detail="{Binding user.UserName}"/>
-                    <EntryCell  x:Name="ent_ProjectName" Label="ProjectName" Text="{Binding ProjectName}"/>
-                    
-                    <ViewCell Tapped="Printer_Selector_Tapped">
-                        <StackLayout Orientation="Horizontal" Padding="13, 5">
-                            <Label Text="Assigned Printer" VerticalOptions="Center"/>
-                            <Label 
+            <TableSection Title="Requests Details">
+                <ViewCell Tapped="User_Selector_Tapped">
+                    <StackLayout Orientation="Horizontal" Padding="13, 5">
+                        <Label Text="Assigned User" VerticalOptions="Center"/>
+                        <Label 
+                                x:Name="Users_Picker"
+                                VerticalOptions="Center"
+                                HorizontalOptions="EndAndExpand"
+                                Text="{Binding user.Email}"
+                                TextColor="Gray"/>
+                    </StackLayout>
+                </ViewCell>
+                <EntryCell  x:Name="ent_ProjectName" Label="ProjectName" Text="{Binding ProjectName}"/>
+
+                 <ViewCell Tapped="Printer_Selector_Tapped">
+                    <StackLayout Orientation="Horizontal" Padding="13, 5">
+                        <Label Text="Assigned Printer" VerticalOptions="Center"/>
+                        <Label 
                                 x:Name="Printers_Picker"
                                 VerticalOptions="Center"
                                 HorizontalOptions="EndAndExpand"
-                                Text="None"
+                                Text="{Binding printer.Name}"
                                 TextColor="Gray"/>
-                        </StackLayout>
-                    </ViewCell>
-                    <ViewCell>
-                        <StackLayout Orientation="Vertical" >
+                    </StackLayout>
+                </ViewCell>
+                <ViewCell Tapped="Status_Selector_Tapped">
+                    <StackLayout Orientation="Horizontal" Padding="13, 5">
+                        <Label Text="Assigned Status" VerticalOptions="Center"/>
+                        <Label 
+                                x:Name="Status_Picker"
+                                VerticalOptions="Center"
+                                HorizontalOptions="EndAndExpand"
+                                Text="{Binding status.Name}"
+                                TextColor="Gray"/>
+                    </StackLayout>
+                </ViewCell>
+                <ViewCell>
+                    <StackLayout Padding="0,10,0,0">
+                        <Label x:Name="PrintTimeLabel" HorizontalTextAlignment="Center" Text="Print Time: ASAP"></Label>
+                        <Button Text="Want to schedule your print?" Clicked="ScheduleDay_Clicked"></Button>
+                    </StackLayout>
+                </ViewCell>
+                <ViewCell>
+                    <StackLayout>
+                        <Slider HorizontalOptions="CenterAndExpand" x:Name="sli_Duration"  Maximum="8" Minimum="1" Value="4"/>
+                        <Label x:Name="lbl_sli_duration" 
+                            HorizontalOptions="Center" 
+                               Text="{Binding 
+                                         Source={x:Reference sli_Duration}, 
+                                         Path=Value, 
+                                         StringFormat='{0:N0}'}"/>
+                    </StackLayout>
+                </ViewCell>
+                <ViewCell>
+                    <StackLayout Padding="0,10,0,0" Orientation="Horizontal">
+                        <Label x:Name="SelectedFileLabel" HorizontalTextAlignment="Center" Text="No File Selected"></Label>
+                        <Button x:Name="SelectFile" Clicked="SelectFile_Clicked" Text="Select Model File" HorizontalOptions="FillAndExpand"></Button>
+                    </StackLayout>
+                </ViewCell>
+                <ViewCell>
+                    <StackLayout Padding="0,10,0,0">
+                        <Label Text="Description"/>
                         <Editor x:Name="edi_Description" Text="{Binding Description}" VerticalOptions="FillAndExpand" AutoSize="TextChanges" HeightRequest="100"/>
 
                     </StackLayout>
-                    </ViewCell>
+                </ViewCell>
+                <ViewCell Tapped="PersonalUse_Selector_Tapped">
+                    <StackLayout Orientation="Horizontal" Padding="13, 5">
+                        <Label Text="Assigned PersonalUse" VerticalOptions="Center"/>
+                        <Label 
+                                x:Name="PersonalUse_Picker"
+                                VerticalOptions="Center"
+                                HorizontalOptions="EndAndExpand"
+                                Text="{Binding PersonalUse}"
+                                TextColor="Gray"/>
+                    </StackLayout>
+                </ViewCell>
 
             </TableSection>
-            <TableSection Title="User Detail">
-                
-            </TableSection>
-            </TableRoot>
+        </TableRoot>
     </TableView>
-    <!--<StackLayout>
-        <Label Text="RequestID"/>
-        <Entry x:Name="RequestID_Entry" Placeholder="{Binding RequestID}"/>
-        <Label Text="Request Creator"/>
-        <Entry x:Name="UserName_Entry" Placeholder="{Binding user.UserName}"/>
-        <Label Text="Designated Printer"/>
-        <StackLayout>
-            <Picker x:Name="PrinterSelection" Title="{Binding printer.Name}" SelectedIndexChanged="PrinterSelection_SelectedIndexChanged">
-            </Picker>
-        </StackLayout>
-        <Grid ColumnSpacing="4" HorizontalOptions="FillAndExpand">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="33.33*" />
-                <ColumnDefinition Width="33.33*" />
-                <ColumnDefinition Width="33.33*" />
-            </Grid.ColumnDefinitions>
-            <Button Text="Update" FontSize="Micro" Grid.Column="0" HorizontalOptions="FillAndExpand"/>
-            <Button Text="Message" FontSize="Micro" Grid.Column="1" HorizontalOptions="FillAndExpand"/>
-            <Button Text="Delete" FontSize="Micro" Grid.Column="2" HorizontalOptions="FillAndExpand"/>
-        </Grid>
 
-    </StackLayout>-->
     
 </ContentPage>

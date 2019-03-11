@@ -1,11 +1,21 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<TabbedPage xmlns="http://xamarin.com/schemas/2014/forms"
+<TabbedPage 
+    NavigationPage.HasBackButton="False"
+    xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:local="clr-namespace:PrintQue"
              x:Class="PrintQue.AdminTabContainer"
             xmlns:android="clr-namespace:Xamarin.Forms.PlatformConfiguration.AndroidSpecific;assembly=Xamarin.Forms.Core"
         android:TabbedPage.IsSwipePagingEnabled="False">
-
+    <TabbedPage.ToolbarItems>
+        <ToolbarItem Icon="run.png"  Activated="ToolbarItem_Run_Activated"  Order="Primary" />
+        <ToolbarItem Icon="plus.png" Activated="ToolbarItem_Plus_Activated" Order="Primary"/>
+        
+        <ToolbarItem Text="Add Printer" Activated="ToolbarItem_Add_Printer_Activated" Order="Secondary"/>
+        <ToolbarItem Text="Add Color" Activated="ToolbarItem_Add_Color_Activated" Order="Secondary"/>
+        <ToolbarItem Text="Add Status" Activated="ToolbarItem_Add_Status_Activated" Order="Secondary"/>
+        <ToolbarItem Text="Drop Tables" Activated="ToolbarItem_Drop_Tables_Activated" Order="Secondary"/>
+    </TabbedPage.ToolbarItems>
     <local:ApprovalsPage Title="Apprvls."/>
 
     <local:RequestsPage Title="Requests"/>

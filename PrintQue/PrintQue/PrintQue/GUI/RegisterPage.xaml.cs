@@ -36,16 +36,18 @@ namespace PrintQue
                 //then try register user
                 if (!userPasswordEntry.Text.Equals(PasswordConfirmEntry.Text))
                 {
-                    //then register the user
+                    //passwords are not matching error
+
                     DisplayAlert("Attention", "Passwords do not match", "ok");
                 } 
                  else
                 {
-                    //passwords are not matching error
+                    //then register the user
+
                     User user = new User()
                     {
                         Name = NameEntry.Text,
-                        UserName = userNameEntry.Text,
+                        Email = userNameEntry.Text,
                         Admin = 0,
                         Password = PasswordConfirmEntry.Text
                     };
