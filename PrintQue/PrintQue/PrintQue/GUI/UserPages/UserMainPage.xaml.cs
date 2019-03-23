@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+using PrintQue.GUI.DetailPages;
+using PrintQue.Models;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -17,14 +18,17 @@ namespace PrintQue
 			InitializeComponent ();
 		}
 
-        private void PrinterStatusButton_Clicked(object sender, EventArgs e)
-        {
 
+        protected override void OnAppearing()
+        {
+            base.OnAppearing();
+          
         }
 
         private void CreateRequestButton_Clicked(object sender, EventArgs e)
         {
-            Navigation.PushAsync(new UserPages.UserSubmitRequestPage());
+            Request request = null;
+            Navigation.PushAsync(new RequestDetailPage(request));
         }
         async private void ToolbarItem_Run_Activated(object sender, EventArgs e)
         {

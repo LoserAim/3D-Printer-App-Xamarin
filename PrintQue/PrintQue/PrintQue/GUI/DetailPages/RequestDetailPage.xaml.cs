@@ -24,7 +24,7 @@ namespace PrintQue.GUI.DetailPages
         private List<User>    userRequest;
         private List<Printer> printerRequest;
         private List<Status>  statusRequest;
-        private void Update_RequestWithChildren(Request request)
+        private void Update_RequestWithChildren(Request request = null)
         {
             GetChildren();
             var user = userRequest.SingleOrDefault(
