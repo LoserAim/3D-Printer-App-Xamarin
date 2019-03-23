@@ -18,10 +18,8 @@ namespace PrintQue.GUI.SelectorPages
             var status = new List<Status>();
             using (SQLiteConnection conn = new SQLiteConnection(App.DatabaseLocation))
             {
-
-
-
-                status =conn.Table<Status>().ToList();
+    
+                status = conn.Table<Status>().ToList();
             }
             return status;
         }
@@ -33,8 +31,9 @@ namespace PrintQue.GUI.SelectorPages
             foreach (var p in GetStatuses())
             {
                 StringList.Add(p.Name);
-                Status_ListView.ItemsSource = StringList;
+                
             }
+            Status_ListView.ItemsSource = StringList;
         }
         public ListView StatusNames { get { return Status_ListView; } }
 
