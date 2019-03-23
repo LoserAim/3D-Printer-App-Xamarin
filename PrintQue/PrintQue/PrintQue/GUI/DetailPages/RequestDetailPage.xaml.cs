@@ -1,26 +1,22 @@
 ﻿using Newtonsoft.Json;
 using Plugin.FilePicker;
 using Plugin.FilePicker.Abstractions;
-using PrintQue.GUI.AdminPages.SelectorPages;
+using PrintQue.GUI.SelectorPages;
 using PrintQue.GUI.UserPages;
 using PrintQue.Models;
 using PrintQue.Widgets.CalendarWidget;
 using SQLite;
-using SQLiteNetExtensions.Attributes;
 using SQLiteNetExtensions.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
-namespace PrintQue.GUI.AdminPages
+namespace PrintQue.GUI.DetailPages
 {
-	[XamlCompilation(XamlCompilationOptions.Compile)]
+    [XamlCompilation(XamlCompilationOptions.Compile)]
 	public partial class RequestDetailPage : ContentPage
 	{
         private Date _dateRequestSet;

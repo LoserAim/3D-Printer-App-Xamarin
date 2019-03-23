@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
-namespace PrintQue.GUI.AdminPages.SelectorPages
+namespace PrintQue.GUI.SelectorPages
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
 	public partial class UserSelectorPage : ContentPage

@@ -9,36 +9,36 @@ using System.Threading.Tasks;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
-namespace PrintQue.GUI.AdminPages.SelectorPages
+namespace PrintQue.GUI.SelectorPages
 {
 	[XamlCompilation(XamlCompilationOptions.Compile)]
-	public partial class ColorSelectorPage : ContentPage
+	public partial class PrinterSelectorPage : ContentPage
 	{
-		public ColorSelectorPage ()
-		{
-			InitializeComponent ();
-		}
-        List<PrintColor> GetPrintColors()
+        List<Printer> GetPrinters()
         {
             using (SQLiteConnection conn = new SQLiteConnection(App.DatabaseLocation))
             {
-                conn.CreateTable<PrintColor>();
+                conn.CreateTable<Printer>();
 
 
-                return conn.Table<PrintColor>().ToList();
+                return conn.Table<Printer>().ToList();
             }
         }
-
+        public PrinterSelectorPage ()
+		{
+			InitializeComponent ();
+		}
         protected override void OnAppearing()
         {
             base.OnAppearing();
             var StringList = new List<string>();
-            foreach (var p in GetPrintColors())
+            foreach (var p in GetPrinters())
             {
                 StringList.Add(p.Name);
-                Color_ListView.ItemsSource = StringList;
             }
+            Printer_ListView.ItemsSource = StringList;
         }
-        public ListView ColorNames { get { return Color_ListView; } }
+        public ListView PrinterNames { get { return Printer_ListView; } }
+
     }
 }

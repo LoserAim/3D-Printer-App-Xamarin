@@ -35,31 +35,31 @@
     <EmbeddedResource Update="GUI\AdminPages\DenialsPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="GUI\AdminPages\DetailPages\PrintColorDetailPage.xaml">
+    <EmbeddedResource Update="GUI\DetailPages\PrintColorDetailPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="GUI\AdminPages\DetailPages\StatusDetailPage.xaml">
+    <EmbeddedResource Update="GUI\DetailPages\StatusDetailPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="GUI\AdminPages\PrinterDetailPage.xaml">
+    <EmbeddedResource Update="GUI\DetailPages\PrinterDetailPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="GUI\AdminPages\PrinterSelectorPage.xaml">
+    <EmbeddedResource Update="GUI\SelectorPages\PrinterSelectorPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="GUI\AdminPages\RequestDetailPage.xaml">
+    <EmbeddedResource Update="GUI\DetailPages\RequestDetailPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="GUI\AdminPages\SelectorPages\ColorSelectorPage.xaml">
+    <EmbeddedResource Update="GUI\SelectorPages\ColorSelectorPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="GUI\AdminPages\SelectorPages\PersonalUseSelector.xaml">
+    <EmbeddedResource Update="GUI\SelectorPages\PersonalUseSelector.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="GUI\AdminPages\SelectorPages\StatusSelectorPage.xaml">
+    <EmbeddedResource Update="GUI\SelectorPages\StatusSelectorPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="GUI\AdminPages\SelectorPages\UserSelectorPage.xaml">
+    <EmbeddedResource Update="GUI\SelectorPages\UserSelectorPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="GUI\LoginPage.xaml">

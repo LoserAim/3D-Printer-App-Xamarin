@@ -1,4 +1,4 @@
-﻿using PrintQue.GUI.AdminPages;
+﻿
 using PrintQue.Models;
 using SQLite;
 using System;
@@ -11,7 +11,7 @@ using SQLiteNetExtensions.Extensions;
 
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
-using PrintQue.GUI.AdminPages.DetailPages;
+using PrintQue.GUI.DetailPages;
 
 namespace PrintQue
 {

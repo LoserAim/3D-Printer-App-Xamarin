@@ -4,7 +4,7 @@
     Title="{Binding ProjectName}"
     xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="PrintQue.GUI.AdminPages.RequestDetailPage">
+             x:Class="PrintQue.GUI.DetailPages.RequestDetailPage">
     <ContentPage.ToolbarItems>
         <ToolbarItem Icon="save.png" Activated="ToolbarItem_Save_Activated" Order="Primary"/>
         <ToolbarItem x:Name="tool_Message" Icon="message.png" Activated="ToolbarItem_Message_Activated" Order="Primary"/>
