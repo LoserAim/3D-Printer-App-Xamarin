@@ -59,7 +59,7 @@
     <EmbeddedResource Update="GUI\AdminPages\SelectorPages\StatusSelectorPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="GUI\AdminPages\UserSelectorPage.xaml">
+    <EmbeddedResource Update="GUI\AdminPages\SelectorPages\UserSelectorPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="GUI\LoginPage.xaml">
