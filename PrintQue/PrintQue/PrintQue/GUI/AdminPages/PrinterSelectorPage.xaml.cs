@@ -20,8 +20,6 @@ namespace PrintQue.GUI.AdminPages
             using (SQLiteConnection conn = new SQLiteConnection(App.DatabaseLocation))
             {
 
-
-
                 return conn.GetAllWithChildren<Printer>().ToList();
             }
         }

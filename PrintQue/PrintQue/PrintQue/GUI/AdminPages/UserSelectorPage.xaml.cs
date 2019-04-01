@@ -36,8 +36,9 @@ namespace PrintQue.GUI.AdminPages
             foreach (var p in GetUsers())
             {
                 StringList.Add(p.Email);
-                User_ListView.ItemsSource = StringList;
             }
+            User_ListView.ItemsSource = StringList;
+
         }
         public ListView UserNames { get { return User_ListView; } }
     }
