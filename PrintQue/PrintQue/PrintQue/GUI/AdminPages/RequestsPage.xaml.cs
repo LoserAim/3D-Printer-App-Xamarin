@@ -1,19 +1,17 @@
-﻿using PrintQue.GUI.AdminPages;
+﻿
 using PrintQue.Models;
 using SQLite;
 using SQLiteNetExtensions.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
+using PrintQue.GUI.DetailPages;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
 namespace PrintQue
 {
-	[XamlCompilation(XamlCompilationOptions.Compile)]
+    [XamlCompilation(XamlCompilationOptions.Compile)]
 	public partial class RequestsPage : ContentPage
 	{
         List<Request> GetRequests(string searchText = null)

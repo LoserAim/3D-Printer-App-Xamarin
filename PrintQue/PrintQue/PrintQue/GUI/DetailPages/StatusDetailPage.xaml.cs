@@ -9,39 +9,37 @@ using System.Threading.Tasks;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
-namespace PrintQue.GUI.AdminPages.DetailPages
+namespace PrintQue.GUI.DetailPages
 {
 	[XamlCompilation(XamlCompilationOptions.Compile)]
-	public partial class PrintColorDetailPage : ContentPage
+	public partial class StatusDetailPage : ContentPage
 	{
-		public PrintColorDetailPage ()
+		public StatusDetailPage ()
 		{
 			InitializeComponent ();
 		}
+
         private void ToolbarItem_Save_Activated(object sender, EventArgs e)
         {
-            var printcolor = new PrintColor()
+            var status = new Status()
             {
                 Name = ent_Name.Text,
-                HexValue = ent_HexValue.Text,
             };
             int rows = 0;
             using (SQLiteConnection conn = new SQLiteConnection(App.DatabaseLocation))
             {
-
-                rows = conn.Insert(printcolor);
+         
+                rows = conn.Insert(status);
             }
             if (rows > 0)
             {
-                DisplayAlert("Success!", "Print Color was successfully save!", "OK");
+                DisplayAlert("Success!", "Status was successfully save!", "OK");
                 Navigation.PopAsync();
             }
             else
             {
-                DisplayAlert("Failure", "Print Color was not saved!", "OK");
-
+                DisplayAlert("Failure", "Status was not saved!", "OK");
             }
-
         }
     }
 }

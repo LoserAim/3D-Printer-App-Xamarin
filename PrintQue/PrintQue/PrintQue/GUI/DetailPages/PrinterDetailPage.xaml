@@ -4,7 +4,7 @@
     Title="New Printer"
     xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="PrintQue.GUI.AdminPages.PrinterDetailPage">
+             x:Class="PrintQue.GUI.DetailPages.PrinterDetailPage">
     <ContentPage.ToolbarItems>
         <ToolbarItem Icon="save.png" Activated="ToolbarItem_Save_Activated" Order="Primary"/>
     </ContentPage.ToolbarItems>
