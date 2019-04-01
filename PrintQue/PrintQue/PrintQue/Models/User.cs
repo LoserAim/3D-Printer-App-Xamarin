@@ -2,7 +2,9 @@
 using SQLiteNetExtensions.Attributes;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace PrintQue.Models
 {
@@ -17,9 +19,30 @@ namespace PrintQue.Models
         public int Admin { get; set; }
         [MaxLength(50)]
         public string Password { get; set; }
-        
-        [OneToMany(CascadeOperations = CascadeOperation.All)]
-        public List<Request> Requests { get; set; }
+        public static async Task<int> Insert(User user)
+        {
+            SQLiteAsyncConnection conn = new SQLiteAsyncConnection(App.DatabaseLocation);
+
+            var rows = await conn.InsertAsync(user);
+            await conn.CloseAsync();
+            return rows;
+        }
+        public static async Task<List<User>> GetAll()
+        {
+            List<User> users = new List<User>();
+            SQLiteAsyncConnection conn = new SQLiteAsyncConnection(App.DatabaseLocation);
+
+            users = await conn.Table<User>().ToListAsync();
+
+            await conn.CloseAsync();
+            return users;
+        }
+        public static async Task<User> SearchByID(int ID)
+        {
+            List<User> users = await GetAll();
+            return users.FirstOrDefault(u => u.ID == ID);
+
+        }
 
     }
 }
