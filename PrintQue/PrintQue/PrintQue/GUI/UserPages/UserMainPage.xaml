@@ -9,7 +9,7 @@
     </ContentPage.ToolbarItems>
     <StackLayout>
         <SearchBar Placeholder="Search..." TextChanged="SearchBar_TextChanged"/>
-        <ListView x:Name="RequestListView" HasUnevenRows="True" IsPullToRefreshEnabled="true" Refreshing="RequestListView_Refreshing" ItemSelected="RequestListView_ItemSelected">
+        <ListView x:Name="PrinterListView" HasUnevenRows="True" IsPullToRefreshEnabled="true" Refreshing="RequestListView_Refreshing" ItemSelected="RequestListView_ItemSelected">
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <ViewCell>
