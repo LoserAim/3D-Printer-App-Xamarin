@@ -21,7 +21,7 @@ namespace PrintQue.GUI.DetailPages
 
         private async void ToolbarItem_Save_Activated(object sender, EventArgs e)
         {
-            var exists = Status.SearchByName(ent_Name.Text);
+            var exists = await Status.SearchByName(ent_Name.Text);
             if (exists == null)
             {
                 var status = new Status()

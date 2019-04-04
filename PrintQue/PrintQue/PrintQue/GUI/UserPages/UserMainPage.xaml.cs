@@ -10,21 +10,70 @@ using Xamarin.Forms.Xaml;
 
 namespace PrintQue
 {
-	[XamlCompilation(XamlCompilationOptions.Compile)]
+
+
+[XamlCompilation(XamlCompilationOptions.Compile)]
 	public partial class UserMainPage : ContentPage
 	{
+        
+
 		public UserMainPage ()
 		{
 			InitializeComponent ();
 		}
 
+        private List<PrinterWithChildren> printers;
+
+        public async void GetAllChildren()
+        {
+            var pri = await Printer.GetAll();
+
+            var printer = new List<PrinterWithChildren>();
+            foreach (Printer p in pri)
+            {
+                var printerchild = new PrinterWithChildren()
+                {
+                    printer = p,
+                    status = await Status.SearchByID(p.StatusID),
+                    printColor = await PrintColor.SearchByID(p.ColorID),
+                };
+                printer.Add(printerchild);
+
+            }
+            printers = printer;
+
+        }
 
         protected override void OnAppearing()
         {
             base.OnAppearing();
-          
+            GetAllChildren();
+            PrinterListView.ItemsSource = printers;
+        }
+        private async void SearchBar_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            GetAllChildren();
+
+            PrinterListView.ItemsSource = printers.Where(p => p.printer.Name.Contains(e.NewTextValue)).ToList();
+
+        }
+        async private void PrinterListView_ItemSelected(object sender, SelectedItemChangedEventArgs e)
+        {
+            if (e.SelectedItem == null)
+                return;
+            var prichild = e.SelectedItem as PrinterWithChildren;
+            Request request = new Request() { PrinterID = prichild.printer.ID };
+            await Navigation.PushAsync(new RequestDetailPage(request));
+            PrinterListView.SelectedItem = null;
         }
 
+        private void PrinterListView_Refreshing(object sender, EventArgs e)
+        {
+            GetAllChildren();
+            PrinterListView.ItemsSource = printers;
+            PrinterListView.IsRefreshing = false;
+            PrinterListView.EndRefresh();
+        }
         private void CreateRequestButton_Clicked(object sender, EventArgs e)
         {
             Request request = null;

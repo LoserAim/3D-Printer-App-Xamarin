@@ -12,8 +12,8 @@ using Xamarin.Forms.Xaml;
 namespace PrintQue
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-	public partial class RequestsPage : ContentPage
-	{
+    public partial class RequestsPage : ContentPage
+    {
 
         public RequestsPage ()
 		{

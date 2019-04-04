@@ -23,10 +23,20 @@ namespace PrintQue.GUI.DetailPages
 		{
 
 			InitializeComponent ();
+            
             if (request == null)
             {
                 ToolbarItems.RemoveAt(1);
                 ToolbarItems.RemoveAt(1);
+            }
+            else
+            {
+                var exists = Printer.SearchByID(request.PrinterID);
+                if(exists != null)
+                {
+                    ToolbarItems.RemoveAt(1);
+                    ToolbarItems.RemoveAt(1);
+                }
             }
             BindingContext = request;
             _request = request;
@@ -64,9 +74,9 @@ namespace PrintQue.GUI.DetailPages
             if (exists == null)
             {
 
-                var user = User.SearchByEmail(Users_Picker.Text);
-                var printer = Printer.SearchByName(Printers_Picker.Text);
-                var status = Status.SearchByName(Status_Picker.Text);
+                var user =      await User.SearchByEmail(Users_Picker.Text);
+                var printer =   await Printer.SearchByName(Printers_Picker.Text);
+                var status =    await Status.SearchByName(Status_Picker.Text);
                 var request = new Request()
                 {
                     ProjectName = ent_ProjectName.Text,
@@ -74,9 +84,9 @@ namespace PrintQue.GUI.DetailPages
                     DateRequested = new DateTime(_dateRequestSet.Year, (int)_dateRequestSet.Month, _dateRequestSet.CalendarDay),
                     Duration = Convert.ToInt32(lbl_sli_duration.Text),
                     DateMade = DateTime.Now,
-                    UserID = user.Id,
-                    PrinterID = printer.Id,
-                    StatusID = status.Id,
+                    UserID = user.ID,
+                    PrinterID = printer.ID,
+                    StatusID = status.ID,
                     Personal = PersonalUse_Picker.Text,
                     Description = edi_Description.Text,
                 };
@@ -87,6 +97,7 @@ namespace PrintQue.GUI.DetailPages
             }
             else
             {
+                
                 await DisplayAlert("ERROR", "Project Name already Used. Please choose another", "OK");
 
             }

@@ -53,7 +53,7 @@ namespace PrintQue.GUI.DetailPages
             var response = await DisplayAlert("Warning", "Are you sure you want to Create this Printer?", "Yes", "No");
             if (response)
             {
-                var exists = Printer.SearchByName(ent_Name.Text);
+                var exists = await Printer.SearchByName(ent_Name.Text);
                 if (exists != null)
                 {
                     await DisplayAlert("ERROR", "Name already Used. Please choose another", "OK");

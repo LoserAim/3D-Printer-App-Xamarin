@@ -20,7 +20,7 @@ namespace PrintQue.GUI.DetailPages
 		}
         private async void ToolbarItem_Save_Activated(object sender, EventArgs e)
         {
-            var exists = PrintColor.SearchByName(ent_Name.Text);
+            var exists = await PrintColor.SearchByName(ent_Name.Text);
             if (exists == null)
             {
                 var printcolor = new PrintColor()

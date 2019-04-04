@@ -53,47 +53,36 @@ namespace PrintQue
 
         }
 
-        private void LoginButton_Clicked(object sender, EventArgs e)
+        private async void LoginButton_Clicked(object sender, EventArgs e)
         {
             bool isUsernameEmpty = string.IsNullOrEmpty(userNameEntry.Text);
             bool isPasswordEmpty = string.IsNullOrEmpty(userPasswordEntry.Text);
             if (isUsernameEmpty || isPasswordEmpty)
             {
                 //then show error
-                DisplayAlert("Attention", "Please fill out all forms", "ok");
+                await DisplayAlert("Attention", "Please fill out all forms", "ok");
             }
             else
             {
                 if (userNameEntry.Text.Equals("admin"))
                 {
                     //admin
-                    Navigation.PushAsync(new AdminTabContainer());
+                    await Navigation.PushAsync(new AdminTabContainer());
                 }
                 else
                 {
-                    using (SQLiteConnection conn = new SQLiteConnection(App.DatabaseLocation))
-                    {
-                        conn.CreateTable<User>();
-                        var users = conn.Table<User>().ToList();
- 
-                        var loguser = users.SingleOrDefault(g => g.Email == userNameEntry.Text);
-                        if (loguser != null)
-                        {
-                            if (loguser.Password == userPasswordEntry.Text)
-                            {
-                                Navigation.PushAsync(new UserTabContainer());
-                            }
-                            else
-                            {
-                                DisplayAlert("Failure", "The password does not match with the user.", "OK");
-                            }
-                        }
-                        else
-                        {
-                            DisplayAlert("Failure", "There is no user with this username stored in the local database", "OK");
-                        }
 
+                    var user = await User.SearchByEmail(userNameEntry.Text);
+                    if(user != null)
+                    {
+                        if (user.Password.Contains(userPasswordEntry.Text))
+                        {
+                            await Navigation.PushAsync(new UserTabContainer());
+                        }
                     }
+                    
+
+                    
                 }
 
                 ////then try to log in user

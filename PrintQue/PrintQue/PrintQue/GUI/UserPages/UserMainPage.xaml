@@ -9,18 +9,14 @@
     </ContentPage.ToolbarItems>
     <StackLayout>
         <SearchBar Placeholder="Search..." TextChanged="SearchBar_TextChanged"/>
-        <ListView x:Name="PrinterListView" HasUnevenRows="True" IsPullToRefreshEnabled="true" Refreshing="RequestListView_Refreshing" ItemSelected="RequestListView_ItemSelected">
+        <ListView x:Name="PrinterListView" HasUnevenRows="True" IsPullToRefreshEnabled="true" Refreshing="PrinterListView_Refreshing" ItemSelected="PrinterListView_ItemSelected">
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <ViewCell>
-                        <ViewCell.ContextActions>
-                            <MenuItem Text="Approve" Clicked="Clicked_Approve" CommandParameter="{Binding .}"/>
-                            <MenuItem Text="Deny" Clicked="Clicked_Deny" CommandParameter="{Binding .}"/>
-                        </ViewCell.ContextActions>
                         <StackLayout Orientation="Horizontal" Padding="5">
                             <StackLayout HorizontalOptions="StartAndExpand">
-                                <Label Text="{Binding Name}" TextColor="Black"/>
-                                <Label Text="{Binding status.name}"/>
+                                <Label Text="{Binding printer.Name}" TextColor="Black"/>
+                                <Label Text="{Binding status.Name}"/>
                             </StackLayout>
                             <Button x:Name="PrinterButton" CommandParameter="{Binding .}" Clicked="CreateRequestButton_Clicked" Text="Request"/>
 
