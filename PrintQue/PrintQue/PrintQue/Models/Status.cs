@@ -22,7 +22,7 @@ namespace PrintQue.Models
             await conn.CloseAsync();
             return rows;
         }
-        public static async Task<List<Status>> GetStatuses()
+        public static async Task<List<Status>> GetAll()
         {
             List<Status> statuses = new List<Status>();
             SQLiteAsyncConnection conn = new SQLiteAsyncConnection(App.DatabaseLocation);
@@ -32,11 +32,17 @@ namespace PrintQue.Models
             await conn.CloseAsync();
             return statuses;
         }
-        public static async Task<Status> SearchStatuses(string searchText = null)
+        public static async Task<Status> SearchByName(string searchText = null)
         {
-            List<Status> statuses = await GetStatuses();
+            List<Status> statuses = await GetAll();
 
             return statuses.FirstOrDefault(g => g.Name == searchText);
+        }
+        public static async Task<Status> SearchByID(int ID)
+        {
+            List<Status> statuses = await GetAll();
+
+            return statuses.FirstOrDefault(g => g.ID == ID);
         }
 
     }

@@ -13,22 +13,13 @@ namespace PrintQue.GUI.SelectorPages
         {
             InitializeComponent();
         }
-        List<User> GetUsers()
-        {
-            using (SQLiteConnection conn = new SQLiteConnection(App.DatabaseLocation))
-            {
-                conn.CreateTable<User>();
 
 
-                return conn.Table<User>().ToList();
-            }
-        }
-
-        protected override void OnAppearing()
+        protected override async void OnAppearing()
         {
             base.OnAppearing();
             var StringList = new List<string>();
-            foreach (var p in GetUsers())
+            foreach (var p in await User.GetAll())
             {
                 StringList.Add(p.Email);
             }

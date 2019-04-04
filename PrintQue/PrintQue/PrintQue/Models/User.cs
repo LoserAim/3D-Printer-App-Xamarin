@@ -43,6 +43,12 @@ namespace PrintQue.Models
             return users.FirstOrDefault(u => u.ID == ID);
 
         }
+        public static async Task<User> SearchByEmail(string email)
+        {
+            List<User> users = await GetAll();
+            return users.FirstOrDefault(u => u.Email.Contains(email));
+
+        }
 
     }
 }

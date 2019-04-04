@@ -13,22 +13,13 @@ namespace PrintQue.GUI.SelectorPages
 		{
 			InitializeComponent ();
 		}
-        List<Status> GetStatuses()
-        {
-            var status = new List<Status>();
-            using (SQLiteConnection conn = new SQLiteConnection(App.DatabaseLocation))
-            {
-    
-                status = conn.Table<Status>().ToList();
-            }
-            return status;
-        }
 
-        protected override void OnAppearing()
+
+        protected override async void OnAppearing()
         {
             base.OnAppearing();
             var StringList = new List<string>();
-            foreach (var p in GetStatuses())
+            foreach (var p in await Status.GetAll())
             {
                 StringList.Add(p.Name);
                 

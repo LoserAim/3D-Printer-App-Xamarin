@@ -33,13 +33,13 @@ namespace PrintQue
         {
             var menuItem = sender as MenuItem;
             var request = menuItem.CommandParameter as Request;
-            DisplayAlert("Approve", request.ProjectName, "OK");
+            DisplayAlert("Approved", request.ProjectName, "OK");
         }
 
         public void Clicked_Deny(object sender, EventArgs e)
         {
             var request = (sender as MenuItem).CommandParameter as Request;
-            DisplayAlert("Deny", request.ProjectName, "OK");
+            DisplayAlert("Denied", request.ProjectName, "OK");
         }
 
         private async void RequestListView_Refreshing(object sender, EventArgs e)
@@ -52,8 +52,11 @@ namespace PrintQue
         private async void SearchBar_TextChanged(object sender, TextChangedEventArgs e)
         {
             var requests = await Request.SortByStatus("nostatus");
-           
-            RequestListView.ItemsSource = requests.Where(r => r.ProjectName.Contains(e.NewTextValue));
+            var users = await User.GetAll();
+            
+            RequestListView.ItemsSource = requests.Where(r => r.ProjectName.Contains(e.NewTextValue) 
+                || (users.SingleOrDefault(u => u.ID == r.UserID).Name.Contains(e.NewTextValue)));
+
         }
 
         async private void RequestListView_ItemSelected(object sender, SelectedItemChangedEventArgs e)

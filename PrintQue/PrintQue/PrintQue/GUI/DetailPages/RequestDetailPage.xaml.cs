@@ -5,12 +5,8 @@ using PrintQue.GUI.SelectorPages;
 using PrintQue.GUI.UserPages;
 using PrintQue.Models;
 using PrintQue.Widgets.CalendarWidget;
-using SQLite;
-using SQLiteNetExtensions.Extensions;
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -21,52 +17,8 @@ namespace PrintQue.GUI.DetailPages
 	{
         private Date _dateRequestSet;
         private Request _request;
-        private List<User>    userRequest;
-        private List<Printer> printerRequest;
-        private List<Status>  statusRequest;
-        private void Update_RequestWithChildren(Request request = null)
-        {
-            GetChildren();
-            var user = userRequest.SingleOrDefault(
-                    su => su.Email.Contains(Users_Picker.Text));
-            var printer = printerRequest.SingleOrDefault(
-                    sp => sp.Name.Contains(Printers_Picker.Text));
-             var status = statusRequest.SingleOrDefault(
-                    ss => ss.Name.Contains(Status_Picker.Text));
-            //For some reason Requests is initialized as null
-            if (user.Requests == null)
-                user.Requests = new List<Request>() { request };
-            else
-                user.Requests.Add(request);
-
-            if(printer.Requests == null)
-                printer.Requests = new List<Request>() { request };
-            else
-                printer.Requests.Add(request);
-
-            if(status.Requests == null)
-                status.Requests = new List<Request>() { request };
-            else
-                status.Requests.Add(request);
 
 
-            using (SQLiteConnection conn = new SQLiteConnection(App.DatabaseLocation))
-            {
-                conn.Insert(request);
-                conn.UpdateWithChildren(user);
-                conn.UpdateWithChildren(printer);
-                conn.UpdateWithChildren(status);
-            }
-        }
-        private void GetChildren()
-        {
-            using (SQLiteConnection conn = new SQLiteConnection(App.DatabaseLocation))
-            {
-                userRequest = conn.Table<User>().ToList();
-                printerRequest = conn.Table<Printer>().ToList();
-                statusRequest = conn.Table<Status>().ToList();
-            }
-        }
         public RequestDetailPage (Request request)
 		{
 
@@ -106,23 +58,38 @@ namespace PrintQue.GUI.DetailPages
         {
             DisplayAlert("Delete Clicked!", "W00t!", "OK");
         }
-        private void ToolbarItem_Save_Activated(object sender, EventArgs e)
+        private async void ToolbarItem_Save_Activated(object sender, EventArgs e)
         {
-            var request = new Request()
+            var exists = Request.SearchByName(ent_ProjectName.Text);
+            if (exists == null)
             {
-                ProjectName = ent_ProjectName.Text,
-                //File = _request.File,
-                DateRequested = new DateTime(_dateRequestSet.Year, (int)_dateRequestSet.Month, _dateRequestSet.CalendarDay),
-                Duration = Convert.ToInt32(lbl_sli_duration.Text),
-                DateMade = DateTime.Now,
-                Personal = PersonalUse_Picker.Text,
-                Description = edi_Description.Text,
-            };
 
-            
-            Update_RequestWithChildren(request);
+                var user = User.SearchByEmail(Users_Picker.Text);
+                var printer = Printer.SearchByName(Printers_Picker.Text);
+                var status = Status.SearchByName(Status_Picker.Text);
+                var request = new Request()
+                {
+                    ProjectName = ent_ProjectName.Text,
+                    //File = _request.File,
+                    DateRequested = new DateTime(_dateRequestSet.Year, (int)_dateRequestSet.Month, _dateRequestSet.CalendarDay),
+                    Duration = Convert.ToInt32(lbl_sli_duration.Text),
+                    DateMade = DateTime.Now,
+                    UserID = user.Id,
+                    PrinterID = printer.Id,
+                    StatusID = status.Id,
+                    Personal = PersonalUse_Picker.Text,
+                    Description = edi_Description.Text,
+                };
+                await Request.Update(request);
 
-            Navigation.PopAsync();
+                await Navigation.PopAsync();
+
+            }
+            else
+            {
+                await DisplayAlert("ERROR", "Project Name already Used. Please choose another", "OK");
+
+            }
         }
         private void OnDateSubmitted(Date date)
         {

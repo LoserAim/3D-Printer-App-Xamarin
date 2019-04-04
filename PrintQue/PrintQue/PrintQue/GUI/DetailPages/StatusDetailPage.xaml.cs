@@ -19,26 +19,29 @@ namespace PrintQue.GUI.DetailPages
 			InitializeComponent ();
 		}
 
-        private void ToolbarItem_Save_Activated(object sender, EventArgs e)
+        private async void ToolbarItem_Save_Activated(object sender, EventArgs e)
         {
-            var status = new Status()
+            var exists = Status.SearchByName(ent_Name.Text);
+            if (exists == null)
             {
-                Name = ent_Name.Text,
-            };
-            int rows = 0;
-            using (SQLiteConnection conn = new SQLiteConnection(App.DatabaseLocation))
-            {
-         
-                rows = conn.Insert(status);
-            }
-            if (rows > 0)
-            {
-                DisplayAlert("Success!", "Status was successfully save!", "OK");
-                Navigation.PopAsync();
+                var status = new Status()
+                {
+                    Name = ent_Name.Text,
+                };
+                int rows = await Status.Insert(status);
+                if (rows > 0)
+                {
+                    await DisplayAlert("Success!", "Status was successfully save!", "OK");
+                    await Navigation.PopAsync();
+                }
+                else
+                {
+                    await DisplayAlert("Failure", "Status was not saved!", "OK");
+                }
             }
             else
             {
-                DisplayAlert("Failure", "Status was not saved!", "OK");
+                await DisplayAlert("ERROR", "Name already Used. Please choose another", "OK");
             }
         }
     }

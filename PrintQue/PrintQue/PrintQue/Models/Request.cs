@@ -40,6 +40,15 @@ namespace PrintQue.Models
             }
         }
 
+        public static async Task<int> Update(Request request)
+        {
+            SQLiteAsyncConnection conn = new SQLiteAsyncConnection(App.DatabaseLocation);
+
+            var rows = await conn.UpdateAsync(request);
+            await conn.CloseAsync();
+            return rows;
+        }
+
         //This function gets all requests in the SQLite Database
         public static async Task<List<Request>> GetAll()
         {
@@ -52,35 +61,36 @@ namespace PrintQue.Models
             
             return requests;
         }
+        public static async Task<User> GetChildUser(Request request)
+        {
+            return await User.SearchByID(request.UserID);
+        }
 
+        public static async Task<Status> GetChildStatus(Request request)
+        {
+            return await Status.SearchByID(request.StatusID);
+        }
+
+        public static async Task<Printer> GetChildPrinter(Request request)
+        {
+            return await Printer.SearchByID(request.PrinterID);
+        }
 
         //This function sorts the requests by statusID
         public static async Task<List<Request>> SortByStatus(string searchText = null)
         {
             List<Request> requests = await GetAll();
-            Status app = await Status.SearchStatuses("Approved");
-            Status den = await Status.SearchStatuses("Denied");
-
-            List<Request> sortedRequests = new List<Request>();
-
-
-            if (searchText.Contains("Approved"))
-            {
-                 sortedRequests = requests.Where(g => g.StatusID != app.ID).ToList();
-            }
-            else if(searchText.Contains("Denied"))
-            {
-                 sortedRequests = requests.Where(g => g.StatusID != den.ID).ToList();
-            }
-            else
-            {
-                 sortedRequests = requests.Where(g => g.StatusID != app.ID
-                                || g.StatusID != den.ID).ToList();
-            }
+            var status = Status.SearchByName(searchText);
+            List<Request> sortedRequests = requests.Where(r => r.StatusID == status.Id).ToList();
+            return sortedRequests;
+            
+        }
+        public static async Task<Request> SearchByName(string searchText = null)
+        {
+            List<Request> requests = await GetAll();
+            var sortedRequests = requests.FirstOrDefault(r => r.ProjectName.Contains(searchText));
             return sortedRequests;
 
-        
-            
         }
 
     }
