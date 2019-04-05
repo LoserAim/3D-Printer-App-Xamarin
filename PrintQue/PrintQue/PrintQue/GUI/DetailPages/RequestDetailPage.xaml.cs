@@ -70,7 +70,7 @@ namespace PrintQue.GUI.DetailPages
         }
         private async void ToolbarItem_Save_Activated(object sender, EventArgs e)
         {
-            var exists = Request.SearchByName(ent_ProjectName.Text);
+            var exists = await Request.SearchByName(ent_ProjectName.Text);
             if (exists == null)
             {
 
@@ -90,7 +90,7 @@ namespace PrintQue.GUI.DetailPages
                     Personal = PersonalUse_Picker.Text,
                     Description = edi_Description.Text,
                 };
-                await Request.Update(request);
+                await Request.Insert(request);
 
                 await Navigation.PopAsync();
 

@@ -61,7 +61,7 @@ namespace PrintQue
             await conn.DropTableAsync<Request>();
             await conn.DropTableAsync<PrintColor>();
             await conn.DropTableAsync<Status>();
-            await conn.CloseAsync();
+            
             
         }
 

@@ -34,7 +34,7 @@ namespace PrintQue
             await conn.CreateTableAsync<Printer>();
             await conn.CreateTableAsync<Status>();
             await conn.CreateTableAsync<PrintColor>();
-            await conn.CloseAsync();
+            
         }
         private void RegisterLabel_Clicked()
              {

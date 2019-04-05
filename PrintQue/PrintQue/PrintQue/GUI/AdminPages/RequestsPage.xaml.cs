@@ -8,13 +8,14 @@ using System.Linq;
 using PrintQue.GUI.DetailPages;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
+using System.Collections.ObjectModel;
 
 namespace PrintQue
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class RequestsPage : ContentPage
     {
-
+        public ObservableCollection<Request> _request;
         public RequestsPage ()
 		{
 			InitializeComponent ();

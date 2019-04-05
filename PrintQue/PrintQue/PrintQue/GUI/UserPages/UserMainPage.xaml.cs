@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -20,9 +21,10 @@ namespace PrintQue
 		public UserMainPage ()
 		{
 			InitializeComponent ();
-		}
 
-        private List<PrinterWithChildren> printers;
+        }
+
+        private ObservableCollection<PrinterWithChildren> _printers;
 
         public async void GetAllChildren()
         {
@@ -40,7 +42,7 @@ namespace PrintQue
                 printer.Add(printerchild);
 
             }
-            printers = printer;
+            _printers = new ObservableCollection<PrinterWithChildren>(printer);
 
         }
 
@@ -48,13 +50,13 @@ namespace PrintQue
         {
             base.OnAppearing();
             GetAllChildren();
-            PrinterListView.ItemsSource = printers;
+            PrinterListView.ItemsSource = _printers;
         }
-        private async void SearchBar_TextChanged(object sender, TextChangedEventArgs e)
+        private void SearchBar_TextChanged(object sender, TextChangedEventArgs e)
         {
             GetAllChildren();
 
-            PrinterListView.ItemsSource = printers.Where(p => p.printer.Name.Contains(e.NewTextValue)).ToList();
+            PrinterListView.ItemsSource = _printers.Where(p => p.printer.Name.Contains(e.NewTextValue)).ToList();
 
         }
         async private void PrinterListView_ItemSelected(object sender, SelectedItemChangedEventArgs e)
@@ -70,7 +72,7 @@ namespace PrintQue
         private void PrinterListView_Refreshing(object sender, EventArgs e)
         {
             GetAllChildren();
-            PrinterListView.ItemsSource = printers;
+            PrinterListView.ItemsSource = _printers;
             PrinterListView.IsRefreshing = false;
             PrinterListView.EndRefresh();
         }

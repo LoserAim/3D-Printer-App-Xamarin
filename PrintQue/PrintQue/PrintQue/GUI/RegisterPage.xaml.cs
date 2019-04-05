@@ -51,7 +51,7 @@ namespace PrintQue
                         Admin = 0,
                         Password = PasswordConfirmEntry.Text
                     };
-                    var exists = User.SearchByEmail(user.Email);
+                    var exists = await User.SearchByEmail(user.Email);
                     if(exists != null)
                     {
                         await DisplayAlert("ERROR", "Email already Used. Please choose another", "OK");

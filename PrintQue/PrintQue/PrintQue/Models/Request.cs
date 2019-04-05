@@ -6,10 +6,11 @@ using SQLiteNetExtensions.Attributes;
 using Newtonsoft.Json;
 using System.Threading.Tasks;
 using System.Linq;
+using System.ComponentModel;
 
 namespace PrintQue.Models
 {
-    public class Request
+    public class Request 
     {
         [PrimaryKey, AutoIncrement]
         public int ID { get; set; }
@@ -35,7 +36,7 @@ namespace PrintQue.Models
                 SQLiteAsyncConnection conn = new SQLiteAsyncConnection(App.DatabaseLocation);
 
                 var rows = await conn.InsertAsync(request);
-                await conn.CloseAsync();
+                
                 return rows;
             }
         }
@@ -45,7 +46,7 @@ namespace PrintQue.Models
             SQLiteAsyncConnection conn = new SQLiteAsyncConnection(App.DatabaseLocation);
 
             var rows = await conn.UpdateAsync(request);
-            await conn.CloseAsync();
+            
             return rows;
         }
 
@@ -53,11 +54,11 @@ namespace PrintQue.Models
         public static async Task<List<Request>> GetAll()
         {
             List<Request> requests = new List<Request>();
-
-            SQLiteAsyncConnection conn = new SQLiteAsyncConnection(App.DatabaseLocation);
             
+            SQLiteAsyncConnection conn = new SQLiteAsyncConnection(App.DatabaseLocation);
+            await conn.CreateTableAsync<Request>();
             requests = await conn.Table<Request>().ToListAsync();
-            await conn.CloseAsync();
+            
             
             return requests;
         }

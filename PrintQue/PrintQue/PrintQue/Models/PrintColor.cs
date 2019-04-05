@@ -21,17 +21,17 @@ namespace PrintQue.Models
             SQLiteAsyncConnection conn = new SQLiteAsyncConnection(App.DatabaseLocation);
 
             var rows = await conn.InsertAsync(printcolor);
-            await conn.CloseAsync();
+            
             return rows;
         }
         public static async Task<List<PrintColor>> GetAll()
         {
             List<PrintColor> printColors = new List<PrintColor>();
             SQLiteAsyncConnection conn = new SQLiteAsyncConnection(App.DatabaseLocation);
+            await conn.CreateTableAsync<PrintColor>();
 
             printColors = await conn.Table<PrintColor>().ToListAsync();
 
-            await conn.CloseAsync();
             return printColors;
         }
         public static async Task<PrintColor> SearchByID(int ID)

@@ -24,17 +24,18 @@ namespace PrintQue.Models
             SQLiteAsyncConnection conn = new SQLiteAsyncConnection(App.DatabaseLocation);
 
             var rows = await conn.InsertAsync(user);
-            await conn.CloseAsync();
+            
             return rows;
         }
         public static async Task<List<User>> GetAll()
         {
             List<User> users = new List<User>();
             SQLiteAsyncConnection conn = new SQLiteAsyncConnection(App.DatabaseLocation);
+            await conn.CreateTableAsync<User>();
 
             users = await conn.Table<User>().ToListAsync();
 
-            await conn.CloseAsync();
+            
             return users;
         }
         public static async Task<User> SearchByID(int ID)
