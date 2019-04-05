@@ -48,9 +48,11 @@ namespace PrintQue
 
         protected override void OnAppearing()
         {
-            base.OnAppearing();
+
             GetAllChildren();
             PrinterListView.ItemsSource = _printers;
+            base.OnAppearing();
+
         }
         private void SearchBar_TextChanged(object sender, TextChangedEventArgs e)
         {
