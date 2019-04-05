@@ -43,9 +43,9 @@ namespace PrintQue
                 {
                     Command = new Command(() =>
                     {
-
-                        Navigation.PushAsync(new RegisterPage());
                         CreateTables();
+                        Navigation.PushAsync(new RegisterPage());
+                        
                         
                     }
                     )
