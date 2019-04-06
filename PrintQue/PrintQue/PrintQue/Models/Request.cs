@@ -24,7 +24,9 @@ namespace PrintQue.Models
         public string Description { get; set; }
         public string File { get; set; }
         public string Personal { get; set; }
-
+        public User user { get; set; }
+        public Status status { get; set; }
+        public Printer printer { get; set; }
         public static async Task<int> Insert(Request request)
         {
             if (request.PrinterID == 0 || request.UserID == 0)
@@ -58,8 +60,13 @@ namespace PrintQue.Models
             SQLiteAsyncConnection conn = new SQLiteAsyncConnection(App.DatabaseLocation);
             await conn.CreateTableAsync<Request>();
             requests = await conn.Table<Request>().ToListAsync();
-            
-            
+            foreach (Request p in requests)
+            {
+                p.user = await User.SearchByID(p.UserID);
+                p.printer = await Printer.SearchByID(p.PrinterID);
+                p.status = await Status.SearchByID(p.StatusID);
+            }
+
             return requests;
         }
         public static async Task<User> GetChildUser(Request request)

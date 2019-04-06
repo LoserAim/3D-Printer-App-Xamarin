@@ -15,7 +15,7 @@ namespace PrintQue
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class RequestsPage : ContentPage
     {
-        public ObservableCollection<RequestWithChildren> _requests;
+        public ObservableCollection<Request> _requests;
         public RequestsPage ()
 		{
 			InitializeComponent ();
@@ -33,20 +33,7 @@ namespace PrintQue
         {
             var req = await Request.GetAll();
 
-            var request = new List<RequestWithChildren>();
-            foreach (Request p in req)
-            {
-                var requestWithChildren = new RequestWithChildren()
-                {
-                    request = p,
-                    status = await Status.SearchByID(p.StatusID),
-                    printer = await Printer.SearchByID(p.PrinterID),
-                    user = await User.SearchByID(p.UserID),
-                };
-                request.Add(requestWithChildren);
-
-            }
-            _requests = new ObservableCollection<RequestWithChildren>(request);
+            _requests = new ObservableCollection<Request>(req);
         }
 
         public void Clicked_Approve(object sender, EventArgs e)
@@ -74,7 +61,7 @@ namespace PrintQue
         {
             RefreshRequestsView();
             
-            RequestListView.ItemsSource = _requests.Where(r => r.request.ProjectName.Contains(e.NewTextValue) 
+            RequestListView.ItemsSource = _requests.Where(r => r.ProjectName.Contains(e.NewTextValue) 
                 || r.user.Name.Contains(e.NewTextValue));
 
         }
