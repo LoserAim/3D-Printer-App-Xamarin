@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace PrintQue.Models
 {
@@ -13,12 +14,9 @@ namespace PrintQue.Models
         public int ID { get; set; }
         [MaxLength(50), Unique]
         public string Name { get; set; }
-        [ForeignKey(typeof(Status))]
         public int StatusID { get; set; }
-        [ForeignKey(typeof(PrintColor))]
         public int ColorID { get; set; }
         public int ProjectsQueued { get; set; }
-<<<<<<< HEAD
         public static async Task<int> Insert(Printer printer)
         {
             SQLiteAsyncConnection conn = new SQLiteAsyncConnection(App.DatabaseLocation);
@@ -59,15 +57,7 @@ namespace PrintQue.Models
             return printers.FirstOrDefault(u => u.ID == ID);
 
         }
-=======
->>>>>>> parent of e8b7215... Implementing async features
 
-        [OneToMany(CascadeOperations = CascadeOperation.All)]
-        public List<Request> Requests { get; set; }
-        [ManyToOne]
-        public Status status { get; set; }
 
-        [ManyToOne]
-        public PrintColor color { get; set; }
     }
 }

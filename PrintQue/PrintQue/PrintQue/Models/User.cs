@@ -2,7 +2,9 @@
 using SQLiteNetExtensions.Attributes;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace PrintQue.Models
 {
@@ -17,7 +19,6 @@ namespace PrintQue.Models
         public int Admin { get; set; }
         [MaxLength(50)]
         public string Password { get; set; }
-<<<<<<< HEAD
         public static async Task<int> Insert(User user)
         {
             SQLiteAsyncConnection conn = new SQLiteAsyncConnection(App.DatabaseLocation);
@@ -49,11 +50,6 @@ namespace PrintQue.Models
             return users.FirstOrDefault(u => u.Email.Contains(email));
 
         }
-=======
-        
-        [OneToMany(CascadeOperations = CascadeOperation.All)]
-        public List<Request> Requests { get; set; }
->>>>>>> parent of e8b7215... Implementing async features
 
     }
 }

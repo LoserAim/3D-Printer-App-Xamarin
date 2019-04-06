@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace PrintQue.Models
 {
@@ -14,8 +15,11 @@ namespace PrintQue.Models
         [Unique, NotNull]
         public string Name { get; set; }
         [Unique, NotNull]
+        public string HexValue { get; set; }
+        public static async Task<int> Insert(PrintColor printcolor)
+        {
+            SQLiteAsyncConnection conn = new SQLiteAsyncConnection(App.DatabaseLocation);
 
-<<<<<<< HEAD
             var rows = await conn.InsertAsync(printcolor);
             
             return rows;
@@ -43,10 +47,5 @@ namespace PrintQue.Models
             return printColors.FirstOrDefault(g => g.Name == searchText);
         }
 
-=======
-        public string HexValue { get; set; }
-        [OneToMany(CascadeOperations = CascadeOperation.All)]
-        public List<Printer> Printers { get; set; }
->>>>>>> parent of e8b7215... Implementing async features
     }
 }
