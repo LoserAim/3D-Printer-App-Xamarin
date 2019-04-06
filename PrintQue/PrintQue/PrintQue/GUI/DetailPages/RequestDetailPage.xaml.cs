@@ -15,8 +15,8 @@ namespace PrintQue.GUI.DetailPages
     [XamlCompilation(XamlCompilationOptions.Compile)]
 	public partial class RequestDetailPage : ContentPage
 	{
-        private Date _dateRequestSet;
-        private Request _request;
+        private DateTime _dateTimeRequestSet;
+        private Request  _request;
 
 
         public RequestDetailPage (Request request)
@@ -81,7 +81,7 @@ namespace PrintQue.GUI.DetailPages
                 {
                     ProjectName = ent_ProjectName.Text,
                     //File = _request.File,
-                    DateRequested = new DateTime(_dateRequestSet.Year, (int)_dateRequestSet.Month, _dateRequestSet.CalendarDay),
+                    DateRequested = new DateTime(_dateTimeRequestSet.Year, _dateTimeRequestSet.Month, _dateTimeRequestSet.Day),
                     Duration = Convert.ToInt32(lbl_sli_duration.Text),
                     DateMade = DateTime.Now,
                     UserID = user.ID,
@@ -102,15 +102,15 @@ namespace PrintQue.GUI.DetailPages
 
             }
         }
-        private void OnDateSubmitted(Date date)
+        private void OnDateTimeSubmitted(DateTime datetime)
         {
-            _dateRequestSet = date;
-            PrintTimeLabel.Text = "Print Time: " + date.ToString();
+            _dateTimeRequestSet = datetime;
+            PrintTimeLabel.Text = "Print Time: " + datetime.ToString();
         }
         private async void ScheduleDay_Clicked(object sender, EventArgs e)
         {
-            var page = new UserScheduleDayPage();
-            page.OnDateSubmitted += OnDateSubmitted;
+            var page = new UserScheduleDateTimePage();
+            page.OnDateTimeSubmitted += OnDateTimeSubmitted;
             await Navigation.PushAsync(page);
         }
         async void Printer_Selector_Tapped(object sender, EventArgs e)
