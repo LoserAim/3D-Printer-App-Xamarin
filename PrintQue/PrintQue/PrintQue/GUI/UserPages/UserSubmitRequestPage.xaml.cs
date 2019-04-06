@@ -2,11 +2,10 @@
 using Plugin.FilePicker.Abstractions;
 using PrintQue.GUI.UserPages;
 using PrintQue.Models;
-using PrintQue.Widgets.CalendarWidget;
 using SQLite;
 using System;
 using System.Diagnostics;
-
+using System.Globalization;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -15,7 +14,7 @@ namespace PrintQue.UserPages
     [XamlCompilation(XamlCompilationOptions.Compile)]
 	public partial class UserSubmitRequestPage : ContentPage
 	{
-        private Date _dateRequestSet;
+        private DateTime _scheduledDateTime = DateTime.Now;
 
         public UserSubmitRequestPage()
 		{
@@ -42,8 +41,8 @@ namespace PrintQue.UserPages
 
         private async void ScheduleDay_Clicked(object sender, EventArgs e)
         {
-            var page = new UserScheduleDayPage();
-            page.OnDateSubmitted += OnDateSubmitted;
+            var page = new UserScheduleDateTimePage();
+            page.OnDateTimeSubmitted += OnDateTimeSubmitted;
             await Navigation.PushAsync(page);
         }
 
@@ -57,18 +56,19 @@ namespace PrintQue.UserPages
                 {
                     ProjectName     = ProjectName.Text,
                     Description     = ProjectDescription.Text,
-                    DateMade        = DateTime.Now,
-                    DateRequested   = new DateTime(_dateRequestSet.Year, (int)_dateRequestSet.Month, _dateRequestSet.CalendarDay)
+                    DateMade = DateTime.Now,
+                    DateRequested  = _scheduledDateTime
+
                 });                
             }
 
             await Navigation.PopAsync();
         }
         
-        private void OnDateSubmitted(Date date)
+        private void OnDateTimeSubmitted(DateTime datetime)
         {
-            _dateRequestSet = date;
-            PrintTimeLabel.Text = "Print Time: " + date.ToString();
+            _scheduledDateTime = datetime;
+            PrintDateTimeLabel.Text = "Print Time: " + datetime.ToString("f", CultureInfo.CreateSpecificCulture("en-US"));
         }
     }
 }
