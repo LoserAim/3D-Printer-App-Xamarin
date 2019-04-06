@@ -1,39 +1,22 @@
-﻿using PrintQue.GUI.AdminPages;
+﻿
 using PrintQue.Models;
 using SQLite;
 using SQLiteNetExtensions.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
+using PrintQue.GUI.DetailPages;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
+using System.Collections.ObjectModel;
 
 namespace PrintQue
 {
-	[XamlCompilation(XamlCompilationOptions.Compile)]
-	public partial class RequestsPage : ContentPage
-	{
-        List<Request> GetRequests(string searchText = null)
-        {
-            List<Request> requests = new List<Request>();
-
-            using (SQLiteConnection conn = new SQLiteConnection(App.DatabaseLocation))
-            {
-                requests = conn.GetAllWithChildren<Request>().ToList();
-
-            }
-            var sortedRequests = requests.Where(g => g.status != null 
-            || !g.status.Name.Contains("Approved") 
-            || !g.status.Name.Contains ("Denied")).ToList();
-            if (string.IsNullOrWhiteSpace(searchText))
-                return sortedRequests;
-
-            return sortedRequests.Where(g => g.ProjectName.StartsWith(searchText) || g.user.Email.StartsWith(searchText)).ToList();
-
-        }
+    [XamlCompilation(XamlCompilationOptions.Compile)]
+    public partial class RequestsPage : ContentPage
+    {
+        private ObservableCollection<RequestWithChildren> _requests;
+        private bool isDataLoaded;
         public RequestsPage ()
 		{
 			InitializeComponent ();
@@ -42,43 +25,70 @@ namespace PrintQue
 
         protected override void OnAppearing()
         {
+
+            if (isDataLoaded)
+                return;
+            isDataLoaded = true;
+            RefreshRequestsView();
+
             base.OnAppearing();
-            RequestListView.ItemsSource = GetRequests();
         }
 
-
+        public async void RefreshRequestsView()
+        {
+            var req = await Request.GetAll();
+            var requ = new List<RequestWithChildren>();
+            foreach (Request p in req)
+            {
+                var child = new RequestWithChildren()
+                {
+                    request = p,
+                    user = await User.SearchByID(p.UserID),
+                    printer = await Printer.SearchByID(p.PrinterID),
+                    status = await Status.SearchByID(p.StatusID),
+                };
+                requ.Add(child);
+            }
+            _requests = new ObservableCollection<RequestWithChildren>(requ);
+            RequestListView.ItemsSource = _requests;
+        }
 
         public void Clicked_Approve(object sender, EventArgs e)
         {
             var menuItem = sender as MenuItem;
-            var request = menuItem.CommandParameter as Request;
-            DisplayAlert("Approve", request.ProjectName, "OK");
+            var request = menuItem.CommandParameter as RequestWithChildren;
+            DisplayAlert("Approved", request.request.ProjectName, "OK");
         }
 
         public void Clicked_Deny(object sender, EventArgs e)
         {
-            var request = (sender as MenuItem).CommandParameter as Request;
-            DisplayAlert("Deny", request.ProjectName, "OK");
+            var request = (sender as MenuItem).CommandParameter as RequestWithChildren;
+            DisplayAlert("Denied", request.request.ProjectName, "OK");
         }
 
         private void RequestListView_Refreshing(object sender, EventArgs e)
         {
-            RequestListView.ItemsSource = GetRequests();
+            RefreshRequestsView();
+            RequestListView.ItemsSource = _requests;
             RequestListView.IsRefreshing = false;
             RequestListView.EndRefresh();
         }
 
         private void SearchBar_TextChanged(object sender, TextChangedEventArgs e)
         {
-            RequestListView.ItemsSource = GetRequests(e.NewTextValue);
+            RefreshRequestsView();
+            
+            RequestListView.ItemsSource = _requests.Where(r => r.request.ProjectName.Contains(e.NewTextValue) 
+                || r.user.Name.Contains(e.NewTextValue));
+
         }
 
         async private void RequestListView_ItemSelected(object sender, SelectedItemChangedEventArgs e)
         {
             if (e.SelectedItem == null)
                 return;
-            var request = e.SelectedItem as Request;
-            await Navigation.PushAsync(new RequestDetailPage(request));
+            var request = e.SelectedItem as RequestWithChildren;
+            await Navigation.PushAsync(new RequestDetailPage(request.request));
             RequestListView.SelectedItem = null;
         }
     }
