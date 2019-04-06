@@ -43,7 +43,7 @@ namespace PrintQue
                 var child = new RequestWithChildren()
                 {
                     request = p,
-                    user = await User.SearchByID(p.UserID),
+                    user = await Request.GetChildUser(p),
                     printer = await Printer.SearchByID(p.PrinterID),
                     status = await Status.SearchByID(p.StatusID),
                 };
@@ -88,7 +88,7 @@ namespace PrintQue
             if (e.SelectedItem == null)
                 return;
             var request = e.SelectedItem as RequestWithChildren;
-            await Navigation.PushAsync(new RequestDetailPage(request.request));
+            await Navigation.PushAsync(new RequestDetailPage(request));
             RequestListView.SelectedItem = null;
         }
     }

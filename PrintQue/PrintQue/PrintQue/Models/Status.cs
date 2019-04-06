@@ -8,6 +8,17 @@ using System.Threading.Tasks;
 
 namespace PrintQue.Models
 {
+
+    /*
+     Default Statuses:
+     Approved
+     Denied
+     nostatus
+     Busy
+     Open
+     Closed
+         
+         */
     public class Status
     {
         [PrimaryKey, AutoIncrement]
