@@ -2,9 +2,7 @@
 using SQLiteNetExtensions.Attributes;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace PrintQue.Models
 {
@@ -14,6 +12,7 @@ namespace PrintQue.Models
         public int ID { get; set; }
         [Unique,NotNull,MaxLength(10)]
         public string Name { get; set; }
+<<<<<<< HEAD
         public static async Task<int> Insert(Status status)
         {
             SQLiteAsyncConnection conn = new SQLiteAsyncConnection(App.DatabaseLocation);
@@ -46,5 +45,11 @@ namespace PrintQue.Models
             return statuses.FirstOrDefault(g => g.ID == ID);
         }
 
+=======
+        [OneToMany(CascadeOperations = CascadeOperation.All)]
+        public List<Printer> Printers { get; set; }
+        [OneToMany(CascadeOperations = CascadeOperation.All)]
+        public List<Request> Requests { get; set; }
+>>>>>>> parent of e8b7215... Implementing async features
     }
 }

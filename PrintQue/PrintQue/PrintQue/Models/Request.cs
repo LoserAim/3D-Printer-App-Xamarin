@@ -4,9 +4,12 @@ using System.Collections.Generic;
 using System.Text;
 using SQLiteNetExtensions.Attributes;
 using Newtonsoft.Json;
+<<<<<<< HEAD
 using System.Threading.Tasks;
 using System.Linq;
 using System.ComponentModel;
+=======
+>>>>>>> parent of e8b7215... Implementing async features
 
 namespace PrintQue.Models
 {
@@ -14,8 +17,11 @@ namespace PrintQue.Models
     {
         [PrimaryKey, AutoIncrement]
         public int ID { get; set; }
+        [ForeignKey(typeof(Printer))]
         public int PrinterID { get; set; }
+        [ForeignKey(typeof(Status))]
         public int StatusID { get; set; }
+        [ForeignKey(typeof(User))]
         public int UserID { get; set; }
         public DateTime DateMade { get; set; }
         public DateTime DateRequested { get; set; }
@@ -24,6 +30,7 @@ namespace PrintQue.Models
         public string Description { get; set; }
         public string File { get; set; }
         public string Personal { get; set; }
+<<<<<<< HEAD
         public User user { get; set; }
         public Status status { get; set; }
         public Printer printer { get; set; }
@@ -101,5 +108,13 @@ namespace PrintQue.Models
 
         }
 
+=======
+        [ManyToOne]
+        public User user { get; set; }
+        [ManyToOne]
+        public Status status { get; set; }
+        [ManyToOne]
+        public Printer printer { get; set; }
+>>>>>>> parent of e8b7215... Implementing async features
     }
 }
