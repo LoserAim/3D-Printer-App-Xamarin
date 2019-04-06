@@ -110,7 +110,7 @@ namespace PrintQue.GUI.DetailPages
         private async void ScheduleDay_Clicked(object sender, EventArgs e)
         {
             var page = new UserScheduleDateTimePage();
-            //page.OnDateSubmitted += OnDateSubmitted;
+            page.OnDateSubmitted += OnDateSubmitted;
             await Navigation.PushAsync(page);
         }
         async void Printer_Selector_Tapped(object sender, EventArgs e)
