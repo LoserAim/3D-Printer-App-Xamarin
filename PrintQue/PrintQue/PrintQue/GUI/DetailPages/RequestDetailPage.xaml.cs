@@ -16,10 +16,10 @@ namespace PrintQue.GUI.DetailPages
 	public partial class RequestDetailPage : ContentPage
 	{
         private DateTime _dateTimeRequestSet;
-        private Request  _request;
+        private RequestWithChildren  _request;
 
 
-        public RequestDetailPage (Request request)
+        public RequestDetailPage (RequestWithChildren request)
 		{
 
 			InitializeComponent ();
@@ -31,8 +31,8 @@ namespace PrintQue.GUI.DetailPages
             }
             else
             {
-                var exists = Printer.SearchByID(request.PrinterID);
-                if(exists != null)
+                
+                if(request.printer != null)
                 {
                     ToolbarItems.RemoveAt(1);
                     ToolbarItems.RemoveAt(1);
@@ -52,7 +52,7 @@ namespace PrintQue.GUI.DetailPages
                 // User cancelled file selection
                 if (fileData == null)
                     return;
-                _request.File = JsonConvert.SerializeObject(fileData);
+                _request.request.File = JsonConvert.SerializeObject(fileData);
                 SelectedFileLabel.Text = fileData.FileName;
             }
             catch (Exception ex)
@@ -110,7 +110,9 @@ namespace PrintQue.GUI.DetailPages
         private async void ScheduleDay_Clicked(object sender, EventArgs e)
         {
             var page = new UserScheduleDateTimePage();
+
             page.OnDateTimeSubmitted += OnDateTimeSubmitted;
+
             await Navigation.PushAsync(page);
         }
         async void Printer_Selector_Tapped(object sender, EventArgs e)

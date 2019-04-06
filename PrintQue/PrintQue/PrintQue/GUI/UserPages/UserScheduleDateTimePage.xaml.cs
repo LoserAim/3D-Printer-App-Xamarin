@@ -7,8 +7,8 @@ namespace PrintQue.GUI.UserPages
     [XamlCompilation(XamlCompilationOptions.Compile)]
 	public partial class UserScheduleDateTimePage : ContentPage
 	{
-        public Action<DateTime> OnDateTimeSubmitted { get; set; }
         
+        public Action<DateTime> OnDateTimeSubmitted { get; set; }
         public UserScheduleDateTimePage()
 		{
 			InitializeComponent();         

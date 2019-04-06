@@ -27,6 +27,7 @@ namespace PrintQue.Models
             
             return rows;
         }
+        
         public static async Task<List<User>> GetAll()
         {
             List<User> users = new List<User>();
