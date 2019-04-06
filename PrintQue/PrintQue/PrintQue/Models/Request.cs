@@ -3,10 +3,10 @@ using SQLite;
 using System.Collections.Generic;
 using System.Text;
 using SQLiteNetExtensions.Attributes;
-using Newtonsoft.Json;
+
 using System.Threading.Tasks;
 using System.Linq;
-using System.ComponentModel;
+
 
 namespace PrintQue.Models
 {
@@ -14,8 +14,11 @@ namespace PrintQue.Models
     {
         [PrimaryKey, AutoIncrement]
         public int ID { get; set; }
+        [ForeignKey(typeof(Printer))]
         public int PrinterID { get; set; }
+        [ForeignKey(typeof(Status))]
         public int StatusID { get; set; }
+        [ForeignKey(typeof(User))]
         public int UserID { get; set; }
         public DateTime DateMade { get; set; }
         public DateTime DateRequested { get; set; }
@@ -24,9 +27,7 @@ namespace PrintQue.Models
         public string Description { get; set; }
         public string File { get; set; }
         public string Personal { get; set; }
-        public User user { get; set; }
-        public Status status { get; set; }
-        public Printer printer { get; set; }
+
         public static async Task<int> Insert(Request request)
         {
             if (request.PrinterID == 0 || request.UserID == 0)
@@ -60,12 +61,7 @@ namespace PrintQue.Models
             SQLiteAsyncConnection conn = new SQLiteAsyncConnection(App.DatabaseLocation);
             await conn.CreateTableAsync<Request>();
             requests = await conn.Table<Request>().ToListAsync();
-            foreach (Request p in requests)
-            {
-                p.user = await User.SearchByID(p.UserID);
-                p.printer = await Printer.SearchByID(p.PrinterID);
-                p.status = await Status.SearchByID(p.StatusID);
-            }
+
 
             return requests;
         }

@@ -15,7 +15,8 @@ namespace PrintQue
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class RequestsPage : ContentPage
     {
-        public ObservableCollection<Request> _requests;
+        private ObservableCollection<RequestWithChildren> _requests;
+        private bool isDataLoaded;
         public RequestsPage ()
 		{
 			InitializeComponent ();
@@ -24,16 +25,32 @@ namespace PrintQue
 
         protected override void OnAppearing()
         {
+
+            if (isDataLoaded)
+                return;
+            isDataLoaded = true;
             RefreshRequestsView();
-            RequestListView.ItemsSource = _requests;
+
             base.OnAppearing();
         }
 
         public async void RefreshRequestsView()
         {
             var req = await Request.GetAll();
-
-            _requests = new ObservableCollection<Request>(req);
+            var requ = new List<RequestWithChildren>();
+            foreach (Request p in req)
+            {
+                var child = new RequestWithChildren()
+                {
+                    request = p,
+                    user = await User.SearchByID(p.UserID),
+                    printer = await Printer.SearchByID(p.PrinterID),
+                    status = await Status.SearchByID(p.StatusID),
+                };
+                requ.Add(child);
+            }
+            _requests = new ObservableCollection<RequestWithChildren>(requ);
+            RequestListView.ItemsSource = _requests;
         }
 
         public void Clicked_Approve(object sender, EventArgs e)
@@ -61,7 +78,7 @@ namespace PrintQue
         {
             RefreshRequestsView();
             
-            RequestListView.ItemsSource = _requests.Where(r => r.ProjectName.Contains(e.NewTextValue) 
+            RequestListView.ItemsSource = _requests.Where(r => r.request.ProjectName.Contains(e.NewTextValue) 
                 || r.user.Name.Contains(e.NewTextValue));
 
         }
