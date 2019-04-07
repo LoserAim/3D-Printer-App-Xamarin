@@ -15,6 +15,7 @@ namespace PrintQue
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class RequestsPage : ContentPage
     {
+        private string _searchFilter = "All";
         private ObservableCollection<RequestWithChildren> _requests;
         private bool isDataLoaded;
         public RequestsPage ()
@@ -47,7 +48,11 @@ namespace PrintQue
                     printer = await Printer.SearchByID(p.PrinterID),
                     status = await Status.SearchByID(p.StatusID),
                 };
-                requ.Add(child);
+
+                if (child.status.Name.Equals(_searchFilter) || _searchFilter == "All")
+                {
+                    requ.Add(child);
+                }
             }
             _requests = new ObservableCollection<RequestWithChildren>(requ);
             RequestListView.ItemsSource = _requests;
@@ -90,6 +95,12 @@ namespace PrintQue
             var request = e.SelectedItem as RequestWithChildren;
             await Navigation.PushAsync(new RequestDetailPage(request));
             RequestListView.SelectedItem = null;
+        }
+
+        private void SearchFilterPicker_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            _searchFilter = SearchFilterPicker.SelectedItem.ToString();
+            RefreshRequestsView();
         }
     }
 }
