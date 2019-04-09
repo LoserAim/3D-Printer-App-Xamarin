@@ -51,7 +51,7 @@ namespace PrintQue.UserPages
             using (SQLiteConnection conn = new SQLiteConnection(App.DatabaseLocation))
             {
                 conn.CreateTable<Request>();
-
+                
                 conn.Insert(new Request()
                 {
                     ProjectName     = ProjectName.Text,
