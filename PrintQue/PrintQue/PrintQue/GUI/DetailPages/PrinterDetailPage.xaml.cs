@@ -67,20 +67,13 @@ namespace PrintQue.GUI.DetailPages
                         Name = ent_Name.Text,
                         StatusID = status.ID,
                         ColorID = printColor.ID,
+                        status = status,
+                        printColor = printColor,
                         ProjectsQueued = 0,
                     };
 
-                    var rows = await Printer.Insert(printer);
-                    if (rows > 0)
-                    {
-                        await DisplayAlert("Success!", "Printer was successfully save!", "OK");
-                        await Navigation.PopAsync();
-                    }
-                    else
-                    {
-                        await DisplayAlert("Failure", "Printer was not saved!", "OK");
+                    await Printer.Insert(printer);
 
-                    }
                 }
 
 

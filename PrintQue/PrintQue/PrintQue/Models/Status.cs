@@ -25,6 +25,16 @@ namespace PrintQue.Models
         public int ID { get; set; }
         [Unique,NotNull,MaxLength(10)]
         public string Name { get; set; }
+        [OneToMany(CascadeOperations = CascadeOperation.All)]
+        public List<Printer> printers { get; set; }
+        [OneToMany(CascadeOperations = CascadeOperation.All)]
+        public List<Request> requests { get; set; }
+
+        public Status()
+        {
+            this.printers = new List<Printer>();
+            this.requests = new List<Request>();
+        }
         public static async Task<int> Insert(Status status)
         {
             SQLiteAsyncConnection conn = new SQLiteAsyncConnection(App.DatabaseLocation);

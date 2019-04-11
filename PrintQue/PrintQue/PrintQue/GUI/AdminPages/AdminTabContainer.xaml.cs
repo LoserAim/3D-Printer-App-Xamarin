@@ -18,6 +18,89 @@ namespace PrintQue
 	[XamlCompilation(XamlCompilationOptions.Compile)]
 	public partial class AdminTabContainer : TabbedPage
 	{
+
+
+
+        private List<PrintColor> printColors = new List<PrintColor>()
+        {
+            new PrintColor()
+            {
+                Name = "Red",
+                HexValue = "#ff0000",
+            },
+            new PrintColor()
+            {
+                Name = "Green",
+                HexValue = "#008000",
+            },
+            new PrintColor()
+            {
+                Name = "Orange",
+                HexValue = "#FFA500",
+            },
+        };
+
+        public List<Status> statuses = new List<Status>()
+        {
+            new Status()
+            {
+                Name = "Approved",
+            },
+            new Status()
+            {
+                Name = "Denied",
+            },
+            new Status()
+            {
+                Name = "nostatus",
+            },
+            new Status()
+            {
+                Name = "Busy",
+            },
+            new Status()
+            {
+                Name = "Open",
+            },
+            new Status()
+            {
+                Name = "Closed",
+            },
+        };
+        private List<Printer> printers = new List<Printer>()
+        {
+            new Printer() {
+                Name = "Demilovato",
+                
+            },
+            new Printer() {
+                Name = "Prince",
+
+            },
+            new Printer() {
+                Name = "Corpus",
+
+            },
+        };
+        private List<User> users = new List<User>()
+        {
+            new User()
+            {
+                Email = "drew.doser@gmail.com",
+                Password = "1234",
+                Name = "Andrew",
+                Admin = 0,
+            },
+            new User()
+            {
+                Email = "Brad.Bergstrom@gmail.com",
+                Password = "1234",
+                Name = "Brad",
+                Admin = 0,
+            },
+
+        };
+
 		public AdminTabContainer ()
 		{
 			InitializeComponent ();
@@ -53,6 +136,9 @@ namespace PrintQue
 
         private async void ToolbarItem_Drop_Tables_Activated(object sender, EventArgs e)
         {
+
+
+
             SQLiteAsyncConnection conn = new SQLiteAsyncConnection(App.DatabaseLocation);
             
                 
