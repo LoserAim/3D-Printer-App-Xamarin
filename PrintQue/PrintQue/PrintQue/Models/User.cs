@@ -12,8 +12,13 @@ namespace PrintQue.Models
     {
         [PrimaryKey, AutoIncrement]
         public int ID { get; set; }
+
+
+
         [MaxLength(50), Unique]
         public string Email { get; set; }
+
+
         [MaxLength(50)]
         public string Name { get; set; }
         public int Admin { get; set; }

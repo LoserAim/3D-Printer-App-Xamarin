@@ -9,6 +9,8 @@ using PrintQue.GUI.DetailPages;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using System.Collections.ObjectModel;
+using System.Threading.Tasks;
+using System.Threading;
 
 namespace PrintQue
 {
@@ -20,7 +22,7 @@ namespace PrintQue
         public RequestsPage ()
 		{
 			InitializeComponent ();
-
+            
         }
 
         protected override void OnAppearing()

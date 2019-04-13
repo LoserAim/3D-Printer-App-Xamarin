@@ -16,13 +16,22 @@ namespace PrintQue.Models
         public int ID { get; set; }
         [MaxLength(50), Unique]
         public string Name { get; set; }
+
+
         [ForeignKey(typeof(Status))]
         public int StatusID { get; set; }
+
+
         [ForeignKey(typeof(PrintColor))]
         public int ColorID { get; set; }
+
         public int ProjectsQueued { get; set; }
+
+
         [ManyToOne]
         public Status status { get; set; }
+
+
         [ManyToOne]
         public PrintColor printColor { get; set;}
 
@@ -31,7 +40,7 @@ namespace PrintQue.Models
 
         public Printer()
         {
-            this.requests = new List<Request>();
+            requests = new List<Request>();
         }
 
         public static async Task Insert(Printer printer)
@@ -55,7 +64,7 @@ namespace PrintQue.Models
             SQLiteAsyncConnection conn = new SQLiteAsyncConnection(App.DatabaseLocation);
             await conn.CreateTableAsync<Printer>();
 
-            printers = await conn.Table<Printer>().ToListAsync();
+            printers = await conn.GetAllWithChildrenAsync<Printer>();
 
             
             return printers;
