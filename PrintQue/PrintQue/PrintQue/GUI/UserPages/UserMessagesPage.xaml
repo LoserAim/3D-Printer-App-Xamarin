@@ -9,8 +9,8 @@
                     <DataTemplate>
                         <ViewCell>
                             <StackLayout>
-                                <Label Text="{Binding sender}"/>
-                                <Label Text="{Binding body}"/>
+                                <Label Text="{Binding Sender}"/>
+                                <Label Text="{Binding Body}"/>
                             </StackLayout>
                         </ViewCell>
                     </DataTemplate>

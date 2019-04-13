@@ -25,8 +25,8 @@ namespace PrintQue
         private void sendButton_Clicked(object sender, EventArgs e)
         {
             Message message = new Message();
-            message.sender = "replace@this.com";
-            message.body = messageEntry.Text;
+            message.Sender = "replace@this.com";
+            message.Body = messageEntry.Text;
             messageViewModel.messages.Add(message);
         }
     }

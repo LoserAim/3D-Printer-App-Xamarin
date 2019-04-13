@@ -16,29 +16,29 @@ namespace PrintQue.Models
             //test
 
             MessageHub MockMessageHub = new MessageHub();
-            MockMessageHub.email = "mock@gmail.com";
-            MockMessageHub.hubTitle = "Mock Message Hub";
-            MockMessageHub.messageHubId = 1;
+            MockMessageHub.Email = "mock@gmail.com";
+            MockMessageHub.HubTitle = "Mock Message Hub";
+            MockMessageHub.ID = 1;
             MockMessageHub.Messages = messages;
 
             this.messages.Add(new Message
             {
-                messageHubId = MockMessageHub.messageHubId,
-                messageHub = MockMessageHub,
-                messageId = 1,
-                sender = "Sender #1",
-                body = "Message #1",
-                timeSent = DateTime.Now
+                ID = MockMessageHub.ID,
+                MessageHub = MockMessageHub,
+                MessageHubId = 1,
+                Sender = "Sender #1",
+                Body = "Message #1",
+                TimeSent = DateTime.Now
             });
 
             this.messages.Add(new Message
             {
-                messageHubId = MockMessageHub.messageHubId,
-                messageHub = MockMessageHub,
-                messageId = 1,
-                sender = "Sender #1",
-                body = "Message #2",
-                timeSent = DateTime.Now
+                ID = MockMessageHub.ID,
+                MessageHub = MockMessageHub,
+                MessageHubId = 1,
+                Sender = "Sender #1",
+                Body = "Message #2",
+                TimeSent = DateTime.Now
             });
 
             //end test
