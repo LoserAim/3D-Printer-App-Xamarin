@@ -1,10 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage 
 
-    Title="{Binding ProjectName}"
+    Title="{Binding request.ProjectName}"
     xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="PrintQue.GUI.AdminPages.RequestDetailPage">
+             x:Class="PrintQue.GUI.DetailPages.RequestDetailPage">
     <ContentPage.ToolbarItems>
         <ToolbarItem Icon="save.png" Activated="ToolbarItem_Save_Activated" Order="Primary"/>
         <ToolbarItem x:Name="tool_Message" Icon="message.png" Activated="ToolbarItem_Message_Activated" Order="Primary"/>
@@ -26,7 +26,7 @@
                                 TextColor="Gray"/>
                     </StackLayout>
                 </ViewCell>
-                <EntryCell  x:Name="ent_ProjectName" Label="ProjectName" Text="{Binding ProjectName}"/>
+                <EntryCell  x:Name="ent_ProjectName" Label="ProjectName" Text="{Binding request.ProjectName}"/>
 
                  <ViewCell Tapped="Printer_Selector_Tapped">
                     <StackLayout Orientation="Horizontal" Padding="13, 5">
@@ -76,7 +76,7 @@
                 <ViewCell>
                     <StackLayout Padding="0,10,0,0">
                         <Label Text="Description"/>
-                        <Editor x:Name="edi_Description" Text="{Binding Description}" VerticalOptions="FillAndExpand" AutoSize="TextChanges" HeightRequest="100"/>
+                        <Editor x:Name="edi_Description" Text="{Binding request.Description}" VerticalOptions="FillAndExpand" AutoSize="TextChanges" HeightRequest="100"/>
 
                     </StackLayout>
                 </ViewCell>
@@ -87,7 +87,7 @@
                                 x:Name="PersonalUse_Picker"
                                 VerticalOptions="Center"
                                 HorizontalOptions="EndAndExpand"
-                                Text="{Binding PersonalUse}"
+                                Text="{Binding request.PersonalUse}"
                                 TextColor="Gray"/>
                     </StackLayout>
                 </ViewCell>

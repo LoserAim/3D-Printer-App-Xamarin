@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
-namespace PrintQue.GUI.AdminPages.SelectorPages
+namespace PrintQue.GUI.SelectorPages
 {
 	[XamlCompilation(XamlCompilationOptions.Compile)]
 	public partial class ColorSelectorPage : ContentPage
@@ -18,22 +18,12 @@ namespace PrintQue.GUI.AdminPages.SelectorPages
 		{
 			InitializeComponent ();
 		}
-        List<PrintColor> GetPrintColors()
-        {
-            using (SQLiteConnection conn = new SQLiteConnection(App.DatabaseLocation))
-            {
-                conn.CreateTable<PrintColor>();
 
-
-                return conn.Table<PrintColor>().ToList();
-            }
-        }
-
-        protected override void OnAppearing()
+        protected override async void OnAppearing()
         {
             base.OnAppearing();
             var StringList = new List<string>();
-            foreach (var p in GetPrintColors())
+            foreach (var p in await PrintColor.GetAll())
             {
                 StringList.Add(p.Name);
                 

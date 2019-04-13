@@ -19,7 +19,7 @@ namespace PrintQue
             InitializeComponent();
         }
 
-        private void RegisterButton_Clicked(object sender, EventArgs e)
+        async private void RegisterButton_Clicked(object sender, EventArgs e)
         {
             bool isNameEmpty = string.IsNullOrEmpty(NameEntry.Text);
             bool isUsernameEmpty = string.IsNullOrEmpty(userNameEntry.Text);
@@ -29,7 +29,7 @@ namespace PrintQue
             if (isUsernameEmpty || isPasswordEmpty || isNameEmpty || isConfirmEmpty)
             {
                 //then show error
-                DisplayAlert("Attention", "Please fill out all forms", "ok");
+                await DisplayAlert("Attention", "Please fill out all forms", "ok");
             }
             else
             {
@@ -38,7 +38,7 @@ namespace PrintQue
                 {
                     //passwords are not matching error
 
-                    DisplayAlert("Attention", "Passwords do not match", "ok");
+                    await DisplayAlert("Attention", "Passwords do not match", "ok");
                 } 
                  else
                 {
@@ -51,21 +51,26 @@ namespace PrintQue
                         Admin = 0,
                         Password = PasswordConfirmEntry.Text
                     };
-
-                    using (SQLiteConnection conn = new SQLiteConnection(App.DatabaseLocation))
+                    var exists = await User.SearchByEmail(user.Email);
+                    if(exists != null)
                     {
-                        conn.CreateTable<User>();
-                        var Num = conn.Insert(user);
-                        if(Num >0)
+                        await DisplayAlert("ERROR", "Email already Used. Please choose another", "OK");
+                    }
+                    else
+                    {
+                        var Num = await User.Insert(user);
+                        if (Num > 0)
                         {
-                            DisplayAlert("Success", "You have been Registered", "OK");
-                            Navigation.PushAsync(new LoginPage());
+                            await DisplayAlert("Success", "You have been Registered", "OK");
+                            await Navigation.PushAsync(new LoginPage());
                         }
                         else
                         {
-                            DisplayAlert("Failure", "You Have not been Registered", "OK");
+                            await DisplayAlert("Failure", "You Have not been Registered", "OK");
                         }
                     }
+
+                    
                 }
 
             }
