@@ -64,9 +64,10 @@ namespace PrintQue
             }
             else
             {
+                //admin
                 if (userNameEntry.Text.Equals("admin"))
                 {
-                    //admin
+                    // TODO(VorpW): Assign App.LoggedInUserID when an admin logs in
                     await Navigation.PushAsync(new AdminTabContainer());
                 }
                 else
@@ -77,6 +78,7 @@ namespace PrintQue
                     {
                         if (user.Password.Contains(userPasswordEntry.Text))
                         {
+                            App.LoggedInUserID = user.ID;
                             await Navigation.PushAsync(new UserTabContainer());
                         }
                     }
