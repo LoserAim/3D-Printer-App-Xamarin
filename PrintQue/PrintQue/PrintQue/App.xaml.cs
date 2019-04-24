@@ -8,6 +8,8 @@ namespace PrintQue
     public partial class App : Application
     {
         public static string DatabaseLocation = string.Empty;
+        public static int    LoggedInUserID   = -1;
+
         public App()
         {
             InitializeComponent();
