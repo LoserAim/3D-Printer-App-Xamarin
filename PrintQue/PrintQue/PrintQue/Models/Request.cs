@@ -77,25 +77,12 @@ namespace PrintQue.Models
             
             SQLiteAsyncConnection conn = new SQLiteAsyncConnection(App.DatabaseLocation);
             await conn.CreateTableAsync<Request>();
-            requests = await conn.Table<Request>().ToListAsync();
+            requests = await conn.GetAllWithChildrenAsync<Request>();
 
 
             return requests;
         }
-        public static async Task<User> GetChildUser(Request request)
-        {
-            return await User.SearchByID(request.UserID);
-        }
 
-        public static async Task<Status> GetChildStatus(Request request)
-        {
-            return await Status.SearchByID(request.StatusID);
-        }
-
-        public static async Task<Printer> GetChildPrinter(Request request)
-        {
-            return await Printer.SearchByID(request.PrinterID);
-        }
 
         //This function sorts the requests by statusID
         public static async Task<List<Request>> SortByStatus(string searchText = null)

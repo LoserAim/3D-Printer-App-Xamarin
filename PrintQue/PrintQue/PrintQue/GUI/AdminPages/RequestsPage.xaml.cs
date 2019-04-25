@@ -80,6 +80,7 @@ namespace PrintQue
             if (e.SelectedItem == null)
                 return;
             var request = e.SelectedItem as Request;
+            request = await Request.SearchByName(request.ProjectName);
             await Navigation.PushAsync(new RequestDetailPage(request));
             RequestListView.SelectedItem = null;
         }

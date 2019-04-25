@@ -85,8 +85,11 @@ namespace PrintQue.GUI.DetailPages
                     Duration = Convert.ToInt32(lbl_sli_duration.Text),
                     DateMade = DateTime.Now,
                     UserID = user.ID,
+                    user = user,
                     PrinterID = printer.ID,
+                    printer = printer,
                     StatusID = status.ID,
+                    status = status,
                     Personal = PersonalUse_Picker.Text,
                     Description = edi_Description.Text,
                 };

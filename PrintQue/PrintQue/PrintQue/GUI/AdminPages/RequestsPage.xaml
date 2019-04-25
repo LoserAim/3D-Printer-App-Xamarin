@@ -18,7 +18,7 @@
                         </ViewCell.ContextActions>
                         <StackLayout Orientation="Horizontal" Padding="5">
                             <StackLayout HorizontalOptions="StartAndExpand">
-                                <Label Text="{Binding request.ProjectName}" TextColor="Black"/>
+                                <Label Text="{Binding ProjectName}" TextColor="Black"/>
                                 <Label Text="{Binding user.Email}"/>
                             </StackLayout>
                             
