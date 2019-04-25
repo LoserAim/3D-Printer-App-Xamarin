@@ -18,14 +18,14 @@
                         <ViewCell>
                             <StackLayout Orientation="Horizontal" Padding="5">
                                 <StackLayout HorizontalOptions="StartAndExpand">
-                                    <Label Text="{Binding request.ProjectName}" TextColor="Black"/>
+                                    <Label Text="{Binding ProjectName}" TextColor="Black"/>
                                     <StackLayout Orientation="Horizontal">
                                         <Label Text="Requested:"></Label>
-                                        <Label Text="{Binding request.DateMade}"></Label>
+                                        <Label Text="{Binding DateMade}"></Label>
                                     </StackLayout>
                                     <StackLayout Orientation="Horizontal">
                                         <Label Text="Status:"></Label>
-                                        <Label Text="{Binding request.StatusID, Converter={StaticResource StatusToStatusNameConverter}, ConverterParameter=request.StatusID}"></Label>
+                                        <Label Text="{Binding StatusID, Converter={StaticResource StatusToStatusNameConverter}, ConverterParameter=StatusID}"></Label>
                                     </StackLayout>
                                 </StackLayout>
                             </StackLayout>

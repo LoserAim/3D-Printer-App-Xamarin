@@ -44,8 +44,21 @@ namespace PrintQue
         {
             var req = await Request.GetAll();
 
+            if(_searchFilter.Contains("Pending"))
+            {
+                _requests = new ObservableCollection<Request>(req.Where(r => r.status.Name.Contains("nostatus")).ToList());
 
-            _requests = new ObservableCollection<Request>(req);
+            }
+            else if(!_searchFilter.Contains("All"))
+            {
+                _requests = new ObservableCollection<Request>(req.Where(r => r.status.Name.Contains(_searchFilter)).ToList());
+
+            }
+            else
+            {
+                _requests = new ObservableCollection<Request>(req);
+            }
+            
 
             RequestListView.ItemsSource = _requests;
         }

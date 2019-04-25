@@ -41,7 +41,7 @@ namespace PrintQue.GUI.UserPages
     [XamlCompilation(XamlCompilationOptions.Compile)]
 	public partial class UserSubmissionsPage : ContentPage
 	{
-        private ObservableCollection<RequestWithChildren> _requests;
+        private ObservableCollection<Request> _requests;
         
         public UserSubmissionsPage()
 		{
@@ -56,24 +56,10 @@ namespace PrintQue.GUI.UserPages
 
         public async void RefreshRequestsView()
         {
-            var requestsWithoutChildren = await Request.GetAll();
-            var requestsWithChildren    = new List<RequestWithChildren>();
-
-            foreach (var request in requestsWithoutChildren)
-            {
-                var requestWithChildren = new RequestWithChildren()
-                {
-                    request = request,
-                    user    = await Request.GetChildUser(request),
-                    printer = await Printer.SearchByID(request.PrinterID),
-                    status  = await Status.SearchByID(request.StatusID),
-                };
-
-                if (request.UserID == App.LoggedInUserID)            
-                    requestsWithChildren.Add(requestWithChildren);
-            }
-
-            _requests = new ObservableCollection<RequestWithChildren>(requestsWithChildren);
+            var requests = await Request.GetAll();
+            var UserRequests = new List<Request>();
+            UserRequests = requests.Where(u => u.UserID == App.LoggedInUserID).ToList();
+            _requests = new ObservableCollection<Request>(UserRequests);
             RequestListView.ItemsSource = _requests;
         }
 
@@ -90,7 +76,7 @@ namespace PrintQue.GUI.UserPages
             if (e.SelectedItem == null)
                 return;
 
-            var request = e.SelectedItem as RequestWithChildren;
+            var request = e.SelectedItem as Request;
             await Navigation.PushAsync(new RequestDetailPage(request));
             RequestListView.SelectedItem = null;
         }
