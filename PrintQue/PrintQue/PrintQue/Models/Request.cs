@@ -3,6 +3,7 @@ using SQLite;
 using System.Collections.Generic;
 using System.Text;
 using SQLiteNetExtensions.Attributes;
+using SQLiteNetExtensionsAsync.Extensions;
 
 using System.Threading.Tasks;
 using System.Linq;
@@ -16,10 +17,16 @@ namespace PrintQue.Models
         public int ID { get; set; }
         [ForeignKey(typeof(Printer))]
         public int PrinterID { get; set; }
+        [ManyToOne]
+        public Printer printer { get; set; }
         [ForeignKey(typeof(Status))]
         public int StatusID { get; set; }
+        [ManyToOne]
+        public Status status { get; set; }
         [ForeignKey(typeof(User))]
         public int UserID { get; set; }
+        [ManyToOne]
+        public User user { get; set; }
         public DateTime DateMade { get; set; }
         public DateTime DateRequested { get; set; }
         public int Duration { get; set; }
@@ -36,10 +43,20 @@ namespace PrintQue.Models
             }
             else
             {
+                var status = request.status;
+                var user = request.user;
+                var printer = request.printer;
+                status.requests.Add(request);
+                user.requests.Add(request);
+                printer.requests.Add(request);
                 SQLiteAsyncConnection conn = new SQLiteAsyncConnection(App.DatabaseLocation);
 
                 var rows = await conn.InsertAsync(request);
-                
+                await conn.UpdateWithChildrenAsync(status);
+                await conn.UpdateWithChildrenAsync(printer);
+                await conn.UpdateWithChildrenAsync(user);
+
+
                 return rows;
             }
         }

@@ -55,7 +55,7 @@ namespace PrintQue.Models
             SQLiteAsyncConnection conn = new SQLiteAsyncConnection(App.DatabaseLocation);
             await conn.CreateTableAsync<Printer>();
 
-            printers = await conn.Table<Printer>().ToListAsync();
+            printers = await conn.GetAllWithChildrenAsync<Printer>();
 
             
             return printers;

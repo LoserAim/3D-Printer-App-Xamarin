@@ -19,6 +19,10 @@ namespace PrintQue.Models
         public int Admin { get; set; }
         [MaxLength(50)]
         public string Password { get; set; }
+
+        [OneToMany(CascadeOperations = CascadeOperation.All)]
+        public List<Request> requests { get; set; }
+
         public static async Task<int> Insert(User user)
         {
             SQLiteAsyncConnection conn = new SQLiteAsyncConnection(App.DatabaseLocation);

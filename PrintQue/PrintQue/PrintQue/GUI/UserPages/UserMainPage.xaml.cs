@@ -66,7 +66,7 @@ namespace PrintQue
             if (e.SelectedItem == null)
                 return;
             var prichild = e.SelectedItem as PrinterWithChildren;
-            var request = new RequestWithChildren() { printer = prichild.printer };
+            var request = new Request() { printer = prichild.printer };
             await Navigation.PushAsync(new RequestDetailPage(request));
             PrinterListView.SelectedItem = null;
         }
@@ -80,7 +80,7 @@ namespace PrintQue
         }
         private void CreateRequestButton_Clicked(object sender, EventArgs e)
         {
-            RequestWithChildren request = null;
+            Request request = null;
             Navigation.PushAsync(new RequestDetailPage(request));
         }
         async private void ToolbarItem_Run_Activated(object sender, EventArgs e)

@@ -16,10 +16,10 @@ namespace PrintQue.GUI.DetailPages
 	public partial class RequestDetailPage : ContentPage
 	{
         private DateTime _dateTimeRequestSet;
-        private RequestWithChildren  _request;
+        private Request  _request;
 
 
-        public RequestDetailPage (RequestWithChildren request)
+        public RequestDetailPage (Request request)
 		{
 
 			InitializeComponent ();
@@ -52,7 +52,7 @@ namespace PrintQue.GUI.DetailPages
                 // User cancelled file selection
                 if (fileData == null)
                     return;
-                _request.request.File = JsonConvert.SerializeObject(fileData);
+                _request.File = JsonConvert.SerializeObject(fileData);
                 SelectedFileLabel.Text = fileData.FileName;
             }
             catch (Exception ex)

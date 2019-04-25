@@ -15,7 +15,7 @@ namespace PrintQue
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class RequestsPage : ContentPage
     {
-        private ObservableCollection<RequestWithChildren> _requests;
+        private ObservableCollection<Request> _requests;
         private bool isDataLoaded;
         public RequestsPage ()
 		{
@@ -37,33 +37,23 @@ namespace PrintQue
         public async void RefreshRequestsView()
         {
             var req = await Request.GetAll();
-            var requ = new List<RequestWithChildren>();
-            foreach (Request p in req)
-            {
-                var child = new RequestWithChildren()
-                {
-                    request = p,
-                    user = await Request.GetChildUser(p),
-                    printer = await Printer.SearchByID(p.PrinterID),
-                    status = await Status.SearchByID(p.StatusID),
-                };
-                requ.Add(child);
-            }
-            _requests = new ObservableCollection<RequestWithChildren>(requ);
+
+
+            _requests = new ObservableCollection<Request>(req);
             RequestListView.ItemsSource = _requests;
         }
 
         public void Clicked_Approve(object sender, EventArgs e)
         {
             var menuItem = sender as MenuItem;
-            var request = menuItem.CommandParameter as RequestWithChildren;
-            DisplayAlert("Approved", request.request.ProjectName, "OK");
+            var request = menuItem.CommandParameter as Request;
+            DisplayAlert("Approved", request.ProjectName, "OK");
         }
 
         public void Clicked_Deny(object sender, EventArgs e)
         {
-            var request = (sender as MenuItem).CommandParameter as RequestWithChildren;
-            DisplayAlert("Denied", request.request.ProjectName, "OK");
+            var request = (sender as MenuItem).CommandParameter as Request;
+            DisplayAlert("Denied", request.ProjectName, "OK");
         }
 
         private void RequestListView_Refreshing(object sender, EventArgs e)
@@ -78,7 +68,7 @@ namespace PrintQue
         {
             RefreshRequestsView();
             
-            RequestListView.ItemsSource = _requests.Where(r => r.request.ProjectName.Contains(e.NewTextValue) 
+            RequestListView.ItemsSource = _requests.Where(r => r.ProjectName.Contains(e.NewTextValue) 
                 || r.user.Name.Contains(e.NewTextValue));
 
         }
@@ -87,7 +77,7 @@ namespace PrintQue
         {
             if (e.SelectedItem == null)
                 return;
-            var request = e.SelectedItem as RequestWithChildren;
+            var request = e.SelectedItem as Request;
             await Navigation.PushAsync(new RequestDetailPage(request));
             RequestListView.SelectedItem = null;
         }

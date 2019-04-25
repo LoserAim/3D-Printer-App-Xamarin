@@ -109,7 +109,7 @@ namespace PrintQue
 
         private void ToolbarItem_Plus_Activated(object sender, EventArgs e)
         {
-            var request = new RequestWithChildren();
+            var request = new Request();
             request = null;
             Navigation.PushAsync(new RequestDetailPage(request));
         }
@@ -121,7 +121,7 @@ namespace PrintQue
 
         private void ToolbarItem_Add_Request_Activated(object sender, EventArgs e)
         {
-            var request = new RequestWithChildren();
+            var request = new Request();
             request = null;
             Navigation.PushAsync(new RequestDetailPage(request));
         }
