@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Text;
+using SQLiteNetExtensionsAsync.Extensions;
 using System.Threading.Tasks;
 using SQLiteNetExtensions.Extensions;
 
@@ -15,9 +16,9 @@ using PrintQue.GUI.DetailPages;
 
 namespace PrintQue
 {
-	[XamlCompilation(XamlCompilationOptions.Compile)]
-	public partial class AdminTabContainer : TabbedPage
-	{
+    [XamlCompilation(XamlCompilationOptions.Compile)]
+    public partial class AdminTabContainer : TabbedPage
+    {
 
 
 
@@ -71,7 +72,6 @@ namespace PrintQue
         {
             new Printer() {
                 Name = "Demilovato",
-                
             },
             new Printer() {
                 Name = "Prince",
@@ -101,9 +101,10 @@ namespace PrintQue
 
         };
 
-		public AdminTabContainer ()
-		{
-			InitializeComponent ();
+        public AdminTabContainer()
+        {
+            InitializeComponent();
+            attachChildren();
 
         }
 
@@ -129,26 +130,72 @@ namespace PrintQue
         async private void ToolbarItem_Run_Activated(object sender, EventArgs e)
         {
             var response = await DisplayAlert("Warning", "You are about to logout. Are you sure?", "Yes", "No");
-            if(response)
+            if (response)
                 await Navigation.PopAsync();
 
         }
 
         private async void ToolbarItem_Drop_Tables_Activated(object sender, EventArgs e)
         {
+            await DropTables();
+            await PopulateTables();
 
 
+
+
+        }
+        private async Task PopulateStatus()
+        {
+            SQLiteAsyncConnection conn = new SQLiteAsyncConnection(App.DatabaseLocation);
+            var srow = await conn.InsertAllAsync(statuses);
+
+        }
+        private async Task PopulatePrintColor()
+        {
+            SQLiteAsyncConnection conn = new SQLiteAsyncConnection(App.DatabaseLocation);
+            var srow = await conn.InsertAllAsync(printColors);
+
+        }
+        private async Task PopulateUser()
+        {
+            SQLiteAsyncConnection conn = new SQLiteAsyncConnection(App.DatabaseLocation);
+            var srow = await conn.InsertAllAsync(users);
+
+        }
+        private async Task PopulateTables()
+        {
+            await PopulateStatus();
+            await PopulatePrintColor();
+            await PopulateUser();
 
             SQLiteAsyncConnection conn = new SQLiteAsyncConnection(App.DatabaseLocation);
-            
-                
+            await conn.InsertAllAsync(printers);
+            await conn.UpdateWithChildrenAsync(statuses[3]);
+            await conn.UpdateWithChildrenAsync(printColors[0]);
+        }
+        private void attachChildren()
+        {
+            foreach (Printer p in printers)
+            {
+                statuses[3].printers.Add(p);
+                printColors[0].printers.Add(p);
+            }
+        }
+        async private Task DropTables()
+        {
+            SQLiteAsyncConnection conn = new SQLiteAsyncConnection(App.DatabaseLocation);
+
             await conn.DropTableAsync<Printer>();
             await conn.DropTableAsync<User>();
             await conn.DropTableAsync<Request>();
             await conn.DropTableAsync<PrintColor>();
             await conn.DropTableAsync<Status>();
-            
-            
+            await conn.CreateTableAsync<Printer>();
+            await conn.CreateTableAsync<User>();
+            await conn.CreateTableAsync<Request>();
+            await conn.CreateTableAsync<PrintColor>();
+            await conn.CreateTableAsync<Status>();
+
         }
 
         async private void ToolbarItem_Add_Color_Activated(object sender, EventArgs e)
