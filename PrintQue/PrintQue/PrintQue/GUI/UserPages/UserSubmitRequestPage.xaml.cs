@@ -56,9 +56,8 @@ namespace PrintQue.UserPages
                 {
                     ProjectName     = ProjectName.Text,
                     Description     = ProjectDescription.Text,
-                    DateMade = DateTime.Now,
-                    DateRequested  = _scheduledDateTime
-
+                    DateMade        = DateTime.Now,
+                    DateRequested   = _scheduledDateTime
                 });                
             }
 

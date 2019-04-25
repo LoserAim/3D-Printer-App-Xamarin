@@ -131,8 +131,12 @@ namespace PrintQue
         {
             var response = await DisplayAlert("Warning", "You are about to logout. Are you sure?", "Yes", "No");
             if (response)
-                await Navigation.PopAsync();
 
+            {
+                App.LoggedInUserID = -1;
+
+                await Navigation.PopAsync();
+            }
         }
 
         private async void ToolbarItem_Drop_Tables_Activated(object sender, EventArgs e)

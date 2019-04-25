@@ -1,0 +1,38 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="PrintQue.GUI.UserPages.UserSubmissionsPage"
+             xmlns:userpages="clr-namespace:PrintQue.GUI.UserPages">
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <userpages:StatusToStatusNameConverter x:Key="StatusToStatusNameConverter" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <ContentPage.Content>
+        <StackLayout>
+            <ListView x:Name="RequestListView" HasUnevenRows="True" IsPullToRefreshEnabled="True" Refreshing="RequestListView_Refreshing" ItemSelected="RequestListView_ItemSelected">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <StackLayout Orientation="Horizontal" Padding="5">
+                                <StackLayout HorizontalOptions="StartAndExpand">
+                                    <Label Text="{Binding request.ProjectName}" TextColor="Black"/>
+                                    <StackLayout Orientation="Horizontal">
+                                        <Label Text="Requested:"></Label>
+                                        <Label Text="{Binding request.DateMade}"></Label>
+                                    </StackLayout>
+                                    <StackLayout Orientation="Horizontal">
+                                        <Label Text="Status:"></Label>
+                                        <Label Text="{Binding request.StatusID, Converter={StaticResource StatusToStatusNameConverter}, ConverterParameter=request.StatusID}"></Label>
+                                    </StackLayout>
+                                </StackLayout>
+                            </StackLayout>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

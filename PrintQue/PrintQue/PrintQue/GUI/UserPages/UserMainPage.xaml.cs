@@ -30,7 +30,8 @@ namespace PrintQue
         {
             var pri = await Printer.GetAll();
 
-            var printer = new List<PrinterWithChildren>();
+            _printers = new ObservableCollection<PrinterWithChildren>();
+
             foreach (Printer p in pri)
             {
                 var printerchild = new PrinterWithChildren()
@@ -39,11 +40,10 @@ namespace PrintQue
                     status = await Status.SearchByID(p.StatusID),
                     printColor = await PrintColor.SearchByID(p.ColorID),
                 };
-                printer.Add(printerchild);
 
-            }
-            _printers = new ObservableCollection<PrinterWithChildren>(printer);
-
+                _printers.Add(printerchild);
+                PrinterListView.ItemsSource = _printers;
+            }        
         }
 
         protected override void OnAppearing()
@@ -87,8 +87,10 @@ namespace PrintQue
         {
             var response = await DisplayAlert("Warning", "You are about to logout. Are you sure?", "Yes", "No");
             if (response)
+            {
+                App.LoggedInUserID = -1;
                 await Navigation.PopAsync();
-
+            }
         }
     }
 }
