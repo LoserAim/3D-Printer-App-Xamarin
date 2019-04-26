@@ -30,7 +30,7 @@
                         <StackLayout Orientation="Horizontal" Padding="5">
                             <StackLayout HorizontalOptions="StartAndExpand">
                                 <Label Text="{Binding ProjectName}" TextColor="Black"/>
-                                <Label Text="{Binding user.Email}"/>
+                                <Label Text="{Binding User.Email}"/>
                             </StackLayout>
                             
                         </StackLayout>

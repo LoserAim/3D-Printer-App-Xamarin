@@ -69,7 +69,7 @@ namespace PrintQue.Models
             List<Request> requests = new List<Request>();
             
             SQLiteAsyncConnection conn = new SQLiteAsyncConnection(App.DatabaseLocation);
-            await conn.CreateTableAsync<Request>();
+
             requests = await conn.GetAllWithChildrenAsync<Request>();
 
 
