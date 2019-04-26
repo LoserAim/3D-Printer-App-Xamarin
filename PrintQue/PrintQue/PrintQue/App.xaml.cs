@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.WindowsAzure.MobileServices;
+using System;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -9,7 +10,7 @@ namespace PrintQue
     {
         public static string DatabaseLocation = string.Empty;
         public static int    LoggedInUserID   = -1;
-
+        public static MobileServiceClient MobileService = new MobileServiceClient("https://3dprintqueue.azurewebsites.net");
         public App()
         {
             InitializeComponent();

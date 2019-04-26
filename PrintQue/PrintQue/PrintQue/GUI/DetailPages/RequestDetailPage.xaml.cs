@@ -17,7 +17,7 @@ namespace PrintQue.GUI.DetailPages
 	{
         private DateTime _dateTimeRequestSet;
         private Request  _request;
-
+        private bool insert = false;
 
         public RequestDetailPage (Request request)
 		{
@@ -28,6 +28,7 @@ namespace PrintQue.GUI.DetailPages
             {
                 ToolbarItems.RemoveAt(1);
                 ToolbarItems.RemoveAt(1);
+                insert = true;
             }
             else
             {
@@ -36,6 +37,12 @@ namespace PrintQue.GUI.DetailPages
                 {
                     ToolbarItems.RemoveAt(1);
                     ToolbarItems.RemoveAt(1);
+                    insert = true;
+
+                }
+                else
+                {
+                    insert = false;
                 }
             }
             BindingContext = request;
@@ -70,38 +77,45 @@ namespace PrintQue.GUI.DetailPages
         }
         private async void ToolbarItem_Save_Activated(object sender, EventArgs e)
         {
+            var user = await User.SearchByEmail(Users_Picker.Text);
+            var printer = await Printer.SearchByName(Printers_Picker.Text);
+            var status = await Status.SearchByName(Status_Picker.Text);
+            var request = new Request()
+            {
+                ProjectName = ent_ProjectName.Text,
+                //File = _request.File,
+                DateRequested = new DateTime(_dateTimeRequestSet.Year, _dateTimeRequestSet.Month, _dateTimeRequestSet.Day),
+                Duration = Convert.ToInt32(lbl_sli_duration.Text),
+                DateMade = DateTime.Now,
+                UserID = user.ID,
+                User = user,
+                PrinterID = printer.ID,
+                Printer = printer,
+                StatusID = status.ID,
+                Status = status,
+                Personal = PersonalUse_Picker.Text,
+                Description = edi_Description.Text,
+            };
             var exists = await Request.SearchByName(ent_ProjectName.Text);
             if (exists == null)
             {
-
-                var user =      await User.SearchByEmail(Users_Picker.Text);
-                var printer =   await Printer.SearchByName(Printers_Picker.Text);
-                var status =    await Status.SearchByName(Status_Picker.Text);
-                var request = new Request()
-                {
-                    ProjectName = ent_ProjectName.Text,
-                    //File = _request.File,
-                    DateRequested = new DateTime(_dateTimeRequestSet.Year, _dateTimeRequestSet.Month, _dateTimeRequestSet.Day),
-                    Duration = Convert.ToInt32(lbl_sli_duration.Text),
-                    DateMade = DateTime.Now,
-                    UserID = user.ID,
-                    User = user,
-                    PrinterID = printer.ID,
-                    Printer = printer,
-                    StatusID = status.ID,
-                    Status = status,
-                    Personal = PersonalUse_Picker.Text,
-                    Description = edi_Description.Text,
-                };
                 await Request.Insert(request);
-
                 await Navigation.PopAsync();
+            }
+            else if (!insert)
+            {
+                await Request.Update(request);
+                await Navigation.PopAsync();
+            }
+            else if (exists != null && insert == true)
+            {
+
+                await DisplayAlert("ERROR", "Project Name already Used. Please choose another", "OK");
 
             }
             else
             {
-                
-                await DisplayAlert("ERROR", "Project Name already Used. Please choose another", "OK");
+                await DisplayAlert("ERROR", "Could not Update Request", "OK");
 
             }
         }
