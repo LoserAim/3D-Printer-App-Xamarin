@@ -24,26 +24,13 @@ namespace PrintQue
 
         }
 
-        private ObservableCollection<PrinterWithChildren> _printers;
+        private ObservableCollection<Printer> _printers;
 
         public async void GetAllChildren()
         {
             var pri = await Printer.GetAll();
-
-            _printers = new ObservableCollection<PrinterWithChildren>();
-
-            foreach (Printer p in pri)
-            {
-                var printerchild = new PrinterWithChildren()
-                {
-                    printer = p,
-                    status = await Status.SearchByID(p.StatusID),
-                    printColor = await PrintColor.SearchByID(p.ColorID),
-                };
-
-                _printers.Add(printerchild);
-                PrinterListView.ItemsSource = _printers;
-            }        
+            _printers = new ObservableCollection<Printer>(pri);
+    
         }
 
         protected override void OnAppearing()
@@ -58,15 +45,15 @@ namespace PrintQue
         {
             GetAllChildren();
 
-            PrinterListView.ItemsSource = _printers.Where(p => p.printer.Name.Contains(e.NewTextValue)).ToList();
+            PrinterListView.ItemsSource = _printers.Where(p => p.Name.Contains(e.NewTextValue)).ToList();
 
         }
         async private void PrinterListView_ItemSelected(object sender, SelectedItemChangedEventArgs e)
         {
             if (e.SelectedItem == null)
                 return;
-            var prichild = e.SelectedItem as PrinterWithChildren;
-            var request = new Request() { printer = prichild.printer };
+            var prichild = e.SelectedItem as Printer;
+            var request = new Request() { Printer = prichild, PrinterID = prichild.ID };
             await Navigation.PushAsync(new RequestDetailPage(request));
             PrinterListView.SelectedItem = null;
         }

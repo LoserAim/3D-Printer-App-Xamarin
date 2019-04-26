@@ -46,12 +46,12 @@ namespace PrintQue
 
             if(_searchFilter.Contains("Pending"))
             {
-                _requests = new ObservableCollection<Request>(req.Where(r => r.status.Name.Contains("nostatus")).ToList());
+                _requests = new ObservableCollection<Request>(req.Where(r => r.Status.Name.Contains("nostatus")).ToList());
 
             }
             else if(!_searchFilter.Contains("All"))
             {
-                _requests = new ObservableCollection<Request>(req.Where(r => r.status.Name.Contains(_searchFilter)).ToList());
+                _requests = new ObservableCollection<Request>(req.Where(r => r.Status.Name.Contains(_searchFilter)).ToList());
 
             }
             else
@@ -89,7 +89,7 @@ namespace PrintQue
             RefreshRequestsView();
             
             RequestListView.ItemsSource = _requests.Where(r => r.ProjectName.Contains(e.NewTextValue) 
-                || r.user.Name.Contains(e.NewTextValue));
+                || r.User.Name.Contains(e.NewTextValue));
 
         }
 

@@ -67,8 +67,8 @@ namespace PrintQue.GUI.DetailPages
                         Name = ent_Name.Text,
                         StatusID = status.ID,
                         ColorID = printColor.ID,
-                        status = status,
-                        printColor = printColor,
+                        Status = status,
+                        PrintColor = printColor,
                         ProjectsQueued = 0,
                     };
 

@@ -32,7 +32,7 @@ namespace PrintQue.GUI.DetailPages
             else
             {
                 
-                if(request.printer != null)
+                if(request.Printer != null)
                 {
                     ToolbarItems.RemoveAt(1);
                     ToolbarItems.RemoveAt(1);
@@ -85,11 +85,11 @@ namespace PrintQue.GUI.DetailPages
                     Duration = Convert.ToInt32(lbl_sli_duration.Text),
                     DateMade = DateTime.Now,
                     UserID = user.ID,
-                    user = user,
+                    User = user,
                     PrinterID = printer.ID,
-                    printer = printer,
+                    Printer = printer,
                     StatusID = status.ID,
-                    status = status,
+                    Status = status,
                     Personal = PersonalUse_Picker.Text,
                     Description = edi_Description.Text,
                 };

@@ -1,11 +1,8 @@
 ﻿using SQLite;
 using SQLiteNetExtensions.Attributes;
-using SQLiteNetExtensionsAsync;
 using SQLiteNetExtensionsAsync.Extensions;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace PrintQue.Models
@@ -29,25 +26,25 @@ namespace PrintQue.Models
 
 
         [ManyToOne]
-        public Status status { get; set; }
+        public Status Status { get; set; }
 
 
         [ManyToOne]
-        public PrintColor printColor { get; set;}
+        public PrintColor PrintColor { get; set;}
 
         [OneToMany(CascadeOperations = CascadeOperation.All)]
-        public List<Request> requests { get; set; }
+        public List<Request> Requests { get; set; }
 
         public Printer()
         {
-            requests = new List<Request>();
+            Requests = new List<Request>();
         }
 
         public static async Task Insert(Printer printer)
         {
-            var status = printer.status;
-            var printColor = printer.printColor;
-            status.printers.Add(printer);
+            var status = printer.Status;
+            var printColor = printer.PrintColor;
+            status.Printers.Add(printer);
             printColor.printers.Add(printer);
 
             SQLiteAsyncConnection conn = new SQLiteAsyncConnection(App.DatabaseLocation);

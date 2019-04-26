@@ -26,14 +26,14 @@ namespace PrintQue.Models
         [Unique,NotNull,MaxLength(10)]
         public string Name { get; set; }
         [OneToMany(CascadeOperations = CascadeOperation.All)]
-        public List<Printer> printers { get; set; }
+        public List<Printer> Printers { get; set; }
         [OneToMany(CascadeOperations = CascadeOperation.All)]
-        public List<Request> requests { get; set; }
+        public List<Request> Requests { get; set; }
 
         public Status()
         {
-            this.printers = new List<Printer>();
-            this.requests = new List<Request>();
+            this.Printers = new List<Printer>();
+            this.Requests = new List<Request>();
         }
         public static async Task<int> Insert(Status status)
         {

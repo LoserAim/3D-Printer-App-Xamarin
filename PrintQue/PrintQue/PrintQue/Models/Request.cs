@@ -18,15 +18,15 @@ namespace PrintQue.Models
         [ForeignKey(typeof(Printer))]
         public int PrinterID { get; set; }
         [ManyToOne]
-        public Printer printer { get; set; }
+        public Printer Printer { get; set; }
         [ForeignKey(typeof(Status))]
         public int StatusID { get; set; }
         [ManyToOne]
-        public Status status { get; set; }
+        public Status Status { get; set; }
         [ForeignKey(typeof(User))]
         public int UserID { get; set; }
         [ManyToOne]
-        public User user { get; set; }
+        public User User { get; set; }
         public DateTime DateMade { get; set; }
         public DateTime DateRequested { get; set; }
         public int Duration { get; set; }
@@ -43,12 +43,12 @@ namespace PrintQue.Models
             }
             else
             {
-                var status = request.status;
-                var user = request.user;
-                var printer = request.printer;
-                status.requests.Add(request);
+                var status = request.Status;
+                var user = request.User;
+                var printer = request.Printer;
+                status.Requests.Add(request);
                 user.requests.Add(request);
-                printer.requests.Add(request);
+                printer.Requests.Add(request);
                 SQLiteAsyncConnection conn = new SQLiteAsyncConnection(App.DatabaseLocation);
 
                 var rows = await conn.InsertAsync(request);
@@ -61,14 +61,7 @@ namespace PrintQue.Models
             }
         }
 
-        public static async Task<int> Update(Request request)
-        {
-            SQLiteAsyncConnection conn = new SQLiteAsyncConnection(App.DatabaseLocation);
 
-            var rows = await conn.UpdateAsync(request);
-            
-            return rows;
-        }
 
         //This function gets all requests in the SQLite Database
         public static async Task<List<Request>> GetAll()
@@ -83,7 +76,21 @@ namespace PrintQue.Models
             return requests;
         }
 
+        public static async Task<int> Update(Request request)
+        {
+            var test = await SearchByName(request.ProjectName);
+            if(test != null)
+            {
+                SQLiteAsyncConnection conn = new SQLiteAsyncConnection(App.DatabaseLocation);
+                await conn.UpdateWithChildrenAsync(request);
+                return 1;
+            }
+            else
+            {
+                return 0;
+            }
 
+        }
         //This function sorts the requests by statusID
         public static async Task<List<Request>> SortByStatus(string searchText = null)
         {

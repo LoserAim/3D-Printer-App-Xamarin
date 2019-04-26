@@ -15,7 +15,7 @@
                     <ViewCell>
                         <StackLayout Orientation="Horizontal" Padding="5">
                             <StackLayout HorizontalOptions="StartAndExpand">
-                                <Label Text="{Binding printer.Name}" TextColor="Black"/>
+                                <Label Text="{Binding Name}" TextColor="Black"/>
                                 <Label Text="{Binding status.Name}"/>
                             </StackLayout>
                             <Button x:Name="PrinterButton" CommandParameter="{Binding .}" Clicked="CreateRequestButton_Clicked" Text="Request"/>

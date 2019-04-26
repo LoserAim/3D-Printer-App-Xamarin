@@ -104,7 +104,7 @@ namespace PrintQue
         public AdminTabContainer()
         {
             InitializeComponent();
-            attachChildren();
+            AttachChildren();
 
         }
 
@@ -177,11 +177,11 @@ namespace PrintQue
             await conn.UpdateWithChildrenAsync(statuses[3]);
             await conn.UpdateWithChildrenAsync(printColors[0]);
         }
-        private void attachChildren()
+        private void AttachChildren()
         {
             foreach (Printer p in printers)
             {
-                statuses[3].printers.Add(p);
+                statuses[3].Printers.Add(p);
                 printColors[0].printers.Add(p);
             }
         }
