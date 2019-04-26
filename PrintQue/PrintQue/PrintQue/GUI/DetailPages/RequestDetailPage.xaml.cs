@@ -13,29 +13,36 @@ using Xamarin.Forms.Xaml;
 namespace PrintQue.GUI.DetailPages
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-	public partial class RequestDetailPage : ContentPage
-	{
+    public partial class RequestDetailPage : ContentPage
+    {
         private DateTime _dateTimeRequestSet;
-        private Request  _request;
+        private Request _request;
+        private bool insert = false;
 
+        public RequestDetailPage(Request request)
+        {
 
-        public RequestDetailPage (Request request)
-		{
+            InitializeComponent();
 
-			InitializeComponent ();
-            
             if (request == null)
             {
                 ToolbarItems.RemoveAt(1);
                 ToolbarItems.RemoveAt(1);
+                insert = true;
             }
             else
             {
-                
-                if(request.Printer != null)
+
+                if (request.Printer != null)
                 {
                     ToolbarItems.RemoveAt(1);
                     ToolbarItems.RemoveAt(1);
+                    insert = true;
+
+                }
+                else
+                {
+                    insert = false;
                 }
             }
             BindingContext = request;
@@ -70,38 +77,48 @@ namespace PrintQue.GUI.DetailPages
         }
         private async void ToolbarItem_Save_Activated(object sender, EventArgs e)
         {
+            var user = await User.SearchByEmail(Users_Picker.Text);
+            var printer = await Printer.SearchByName(Printers_Picker.Text);
+            var status = await Status.SearchByName(Status_Picker.Text);
+            var request = new Request()
+            {
+                
+                ProjectName = ent_ProjectName.Text,
+                //File = _request.File,
+                DateRequested = new DateTime(_dateTimeRequestSet.Year, _dateTimeRequestSet.Month, _dateTimeRequestSet.Day),
+                Duration = Convert.ToInt32(lbl_sli_duration.Text),
+                DateMade = DateTime.Now,
+                UserID = user.ID,
+                User = user,
+                PrinterID = printer.ID,
+                Printer = printer,
+                StatusID = status.ID,
+                Status = status,
+                Personal = PersonalUse_Picker.Text,
+                Description = edi_Description.Text,
+            };
             var exists = await Request.SearchByName(ent_ProjectName.Text);
-            if (exists == null)
+            if (exists == null && insert == true)
+            {
+                await Request.Insert(request);
+                await Navigation.PopAsync();
+            }
+            else if (!insert)
+            {
+                request.ID = _request.ID;
+                await Request.Update(request);
+                await Navigation.PopAsync();
+
+            }
+            else if (exists != null && insert == true)
             {
 
-                var user =      await User.SearchByEmail(Users_Picker.Text);
-                var printer =   await Printer.SearchByName(Printers_Picker.Text);
-                var status =    await Status.SearchByName(Status_Picker.Text);
-                var request = new Request()
-                {
-                    ProjectName = ent_ProjectName.Text,
-                    //File = _request.File,
-                    DateRequested = new DateTime(_dateTimeRequestSet.Year, _dateTimeRequestSet.Month, _dateTimeRequestSet.Day),
-                    Duration = Convert.ToInt32(lbl_sli_duration.Text),
-                    DateMade = DateTime.Now,
-                    UserID = user.ID,
-                    User = user,
-                    PrinterID = printer.ID,
-                    Printer = printer,
-                    StatusID = status.ID,
-                    Status = status,
-                    Personal = PersonalUse_Picker.Text,
-                    Description = edi_Description.Text,
-                };
-                await Request.Insert(request);
-
-                await Navigation.PopAsync();
+                await DisplayAlert("ERROR", "Project Name already Used. Please choose another", "OK");
 
             }
             else
             {
-                
-                await DisplayAlert("ERROR", "Project Name already Used. Please choose another", "OK");
+                await DisplayAlert("ERROR", "Could not Update Request", "OK");
 
             }
         }
@@ -148,7 +165,7 @@ namespace PrintQue.GUI.DetailPages
             };
             await Navigation.PushAsync(page);
         }
-        
+
         async void PersonalUse_Selector_Tapped(object sender, EventArgs e)
         {
             var page = new PersonalUseSelector();

@@ -22,7 +22,7 @@
                                 x:Name="Users_Picker"
                                 VerticalOptions="Center"
                                 HorizontalOptions="EndAndExpand"
-                                Text="{Binding user.Email}"
+                                Text="{Binding User.Email}"
                                 TextColor="Gray"/>
                     </StackLayout>
                 </ViewCell>
@@ -35,7 +35,7 @@
                                 x:Name="Printers_Picker"
                                 VerticalOptions="Center"
                                 HorizontalOptions="EndAndExpand"
-                                Text="{Binding printer.Name}"
+                                Text="{Binding Printer.Name}"
                                 TextColor="Gray"/>
                     </StackLayout>
                 </ViewCell>
@@ -46,7 +46,7 @@
                                 x:Name="Status_Picker"
                                 VerticalOptions="Center"
                                 HorizontalOptions="EndAndExpand"
-                                Text="{Binding status.Name}"
+                                Text="{Binding Status.Name}"
                                 TextColor="Gray"/>
                     </StackLayout>
                 </ViewCell>
