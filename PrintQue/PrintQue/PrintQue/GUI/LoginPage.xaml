@@ -9,7 +9,7 @@
                  Margin="30,10">
 
         <Entry x:Name="userNameEntry" 
-               Placeholder="Username or Email Adress" 
+               Placeholder="Email Address" 
                Keyboard="Email"/>
         <Entry x:Name="userPasswordEntry" 
                Placeholder="Password" 

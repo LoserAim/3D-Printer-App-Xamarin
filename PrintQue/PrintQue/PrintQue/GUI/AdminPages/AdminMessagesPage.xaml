@@ -4,9 +4,32 @@
              x:Class="PrintQue.AdminMessagesPage">
     <ContentPage.Content>
         <StackLayout>
-            <Label Text="Welcome to the Admin Messages Page!"
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" />
+            <ListView ItemsSource="{Binding messages}">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <StackLayout>
+                                <Label Text="{Binding Sender}"/>
+                                <Label Text="{Binding Body}"/>
+                            </StackLayout>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+            <Grid>
+                <Entry x:Name="messageEntry"
+                       Placeholder="Send a message"
+                       Grid.Column="0"
+                       Grid.ColumnSpan="3"/>
+                <Button x:Name="sendButton"
+                        Text="Send"
+                        Clicked="sendButton_Clicked"
+                        BackgroundColor="DodgerBlue"
+                        TextColor="White"
+                        FontSize="25"
+                        FontAttributes="Bold"
+                        Grid.Column="3"/>
+            </Grid>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

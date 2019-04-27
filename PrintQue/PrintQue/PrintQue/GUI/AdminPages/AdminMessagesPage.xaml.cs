@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PrintQue.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,9 +13,20 @@ namespace PrintQue
 	[XamlCompilation(XamlCompilationOptions.Compile)]
 	public partial class AdminMessagesPage : ContentPage
 	{
-		public AdminMessagesPage ()
+        MessageViewModel messageViewModel;
+        public AdminMessagesPage ()
 		{
-			InitializeComponent ();
-		}
-	}
+            InitializeComponent();
+            messageViewModel = new MessageViewModel();
+            BindingContext = messageViewModel;
+        }
+
+        private void sendButton_Clicked(object sender, EventArgs e)
+        {
+            Message message = new Message();
+            message.Sender = "replace@this.com";
+            message.Body = messageEntry.Text;
+            messageViewModel.messages.Add(message);
+        }
+    }
 }
