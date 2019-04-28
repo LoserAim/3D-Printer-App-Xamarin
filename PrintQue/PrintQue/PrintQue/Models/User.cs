@@ -1,6 +1,8 @@
 ﻿using SQLite;
 using SQLiteNetExtensions.Attributes;
 using System;
+using SQLiteNetExtensionsAsync.Extensions;
+
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -26,7 +28,7 @@ namespace PrintQue.Models
         public string Password { get; set; }
 
         [OneToMany(CascadeOperations = CascadeOperation.All)]
-        public List<Request> requests { get; set; }
+        public List<Request> requests { get; set; } = new List<Request>();
 
         public static async Task<int> Insert(User user)
         {
@@ -43,7 +45,7 @@ namespace PrintQue.Models
             SQLiteAsyncConnection conn = new SQLiteAsyncConnection(App.DatabaseLocation);
             await conn.CreateTableAsync<User>();
 
-            users = await conn.Table<User>().ToListAsync();
+            users = await conn.GetAllWithChildrenAsync<User>();
 
             
             return users;
