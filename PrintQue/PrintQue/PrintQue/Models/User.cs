@@ -28,7 +28,7 @@ namespace PrintQue.Models
         public string Password { get; set; }
 
         [OneToMany(CascadeOperations = CascadeOperation.All)]
-        public List<Request> requests { get; set; } = new List<Request>();
+        public List<Request> Requests { get; set; } = new List<Request>();
 
         public static async Task<int> Insert(User user)
         {

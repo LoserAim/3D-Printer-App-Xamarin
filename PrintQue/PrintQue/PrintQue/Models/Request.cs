@@ -47,7 +47,7 @@ namespace PrintQue.Models
                 var user = request.User;
                 var printer = request.Printer;
                 status.Requests.Add(request);
-                user.requests.Add(request);
+                user.Requests.Add(request);
                 printer.Requests.Add(request);
                 SQLiteAsyncConnection conn = new SQLiteAsyncConnection(App.DatabaseLocation);
 

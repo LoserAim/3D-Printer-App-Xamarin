@@ -76,7 +76,7 @@ namespace PrintQue.GUI.DetailPages
         }
         private void ToolbarItem_Delete_Activated(object sender, EventArgs e)
         {
-            DisplayAlert("Delete Clicked!", "W00t!", "OK");
+           
         }
         private async void ToolbarItem_Save_Activated(object sender, EventArgs e)
         {

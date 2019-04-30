@@ -16,5 +16,14 @@ namespace PrintQue
 		{
 			InitializeComponent ();
 		}
-	}
+        async private void ToolbarItem_Run_Activated(object sender, EventArgs e)
+        {
+            var response = await DisplayAlert("Warning", "You are about to logout. Are you sure?", "Yes", "No");
+            if (response)
+            {
+                App.LoggedInUserID = -1;
+                await Navigation.PopAsync();
+            }
+        }
+    }
 }
