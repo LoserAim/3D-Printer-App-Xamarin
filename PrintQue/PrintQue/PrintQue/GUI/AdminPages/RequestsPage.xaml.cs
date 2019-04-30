@@ -63,17 +63,22 @@ namespace PrintQue
             RequestListView.ItemsSource = _requests;
         }
 
-        public void Clicked_Approve(object sender, EventArgs e)
-        {
-            var menuItem = sender as MenuItem;
-            var request = menuItem.CommandParameter as Request;
-            DisplayAlert("Approved", request.ProjectName, "OK");
-        }
-
-        public void Clicked_Deny(object sender, EventArgs e)
+        public async void Clicked_Approve(object sender, EventArgs e)
         {
             var request = (sender as MenuItem).CommandParameter as Request;
-            DisplayAlert("Denied", request.ProjectName, "OK");
+            request.Status = await Status.SearchByName("Approved");
+            request.StatusID = request.Status.ID;
+            await Request.Update(request);
+            await DisplayAlert("Approved", request.ProjectName, "OK");
+        }
+
+        public async void Clicked_Deny(object sender, EventArgs e)
+        {
+            var request = (sender as MenuItem).CommandParameter as Request;
+            request.Status = await Status.SearchByName("Denied");
+            request.StatusID = request.Status.ID;
+            await Request.Update(request);
+            await DisplayAlert("Denied", request.ProjectName, "OK");
         }
 
         private void RequestListView_Refreshing(object sender, EventArgs e)

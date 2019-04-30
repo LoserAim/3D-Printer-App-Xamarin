@@ -12,7 +12,8 @@
     </ContentPage.ToolbarItems>
     <TableView Intent="Form" 
                HasUnevenRows="True"
-               IsTabStop="False">
+               IsTabStop="False"
+               x:Name="RequestDetails">
             <TableRoot>
             <TableSection Title="Requests Details">
                 <ViewCell Tapped="User_Selector_Tapped">
@@ -28,7 +29,7 @@
                 </ViewCell>
                 <EntryCell  x:Name="ent_ProjectName" Label="ProjectName" Text="{Binding ProjectName}"/>
 
-                 <ViewCell Tapped="Printer_Selector_Tapped">
+                <ViewCell Tapped="Printer_Selector_Tapped">
                     <StackLayout Orientation="Horizontal" Padding="13, 5">
                         <Label Text="Assigned Printer" VerticalOptions="Center"/>
                         <Label 
@@ -39,17 +40,21 @@
                                 TextColor="Gray"/>
                     </StackLayout>
                 </ViewCell>
-                <ViewCell Tapped="Status_Selector_Tapped">
-                    <StackLayout Orientation="Horizontal" Padding="13, 5">
-                        <Label Text="Assigned Status" VerticalOptions="Center"/>
-                        <Label 
-                                x:Name="Status_Picker"
-                                VerticalOptions="Center"
-                                HorizontalOptions="EndAndExpand"
-                                Text="{Binding Status.Name}"
-                                TextColor="Gray"/>
-                    </StackLayout>
-                </ViewCell>
+            </TableSection>
+            <TableSection x:Name="StatusEditor">
+                    <ViewCell Tapped="Status_Selector_Tapped">
+                        <StackLayout Orientation="Horizontal" Padding="13, 5">
+                            <Label Text="Assigned Status" VerticalOptions="Center"/>
+                            <Label 
+                                    x:Name="Status_Picker"
+                                    VerticalOptions="Center"
+                                    HorizontalOptions="EndAndExpand"
+                                    Text="{Binding Status.Name}"
+                                    TextColor="Gray"/>
+                        </StackLayout>
+                    </ViewCell>
+                </TableSection>
+            <TableSection>
                 <ViewCell>
                     <StackLayout Padding="0,10,0,0">
                         <Label x:Name="PrintTimeLabel" HorizontalTextAlignment="Center" Text="Print Time: ASAP"></Label>

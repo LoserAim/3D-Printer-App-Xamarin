@@ -68,6 +68,8 @@ namespace PrintQue
         private void CreateRequestButton_Clicked(object sender, EventArgs e)
         {
             Request request = null;
+            
+
             Navigation.PushAsync(new RequestDetailPage(request));
         }
         async private void ToolbarItem_Run_Activated(object sender, EventArgs e)

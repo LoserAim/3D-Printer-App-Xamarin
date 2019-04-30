@@ -7,9 +7,10 @@
 
 
     <StackLayout>
-        <StackLayout Orientation="Vertical">
+        <StackLayout Orientation="Horizontal">
+            
             <SearchBar Placeholder="Search..." TextChanged="SearchBar_TextChanged"/>
-            <Picker x:Name="SearchFilterPicker" Title="Filter" SelectedIndexChanged="SearchFilterPicker_SelectedIndexChanged">
+            <Picker x:Name="SearchFilterPicker" Title="Filter" SelectedIndexChanged="SearchFilterPicker_SelectedIndexChanged" HorizontalOptions="FillAndExpand">
                 <Picker.Items>
                     <x:String>Approved</x:String>
                     <x:String>Pending</x:String>

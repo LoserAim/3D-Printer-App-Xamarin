@@ -9,8 +9,8 @@
 
 
     <local:UserMainPage Title="schedule"/>
-
-    <local:UserMessagesPage Title="Messages"/>
     <local1:UserSubmissionsPage Title="Submissions"/>
+    <local:UserMessagesPage Title="Messages"/>
+
 
 </TabbedPage>

@@ -19,11 +19,14 @@ namespace PrintQue.GUI.DetailPages
         private Request _request;
         private bool insert = false;
 
-        public RequestDetailPage(Request request)
+        public RequestDetailPage(Request request, int status =0)
         {
 
             InitializeComponent();
-
+            if (status == 1)
+            {
+                RequestDetails.Root.Remove(StatusEditor);
+            }
             if (request == null)
             {
                 ToolbarItems.RemoveAt(1);
