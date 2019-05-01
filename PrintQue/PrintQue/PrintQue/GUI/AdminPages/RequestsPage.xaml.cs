@@ -84,7 +84,7 @@ namespace PrintQue
             RefreshRequestsView();
             
             RequestListView.ItemsSource = _requests.Where(r => r.request.ProjectName.Contains(e.NewTextValue) 
-                || r.user.Name.Contains(e.NewTextValue));
+                || r.user.LastName.Contains(e.NewTextValue));
 
         }
 

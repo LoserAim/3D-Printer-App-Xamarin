@@ -15,10 +15,15 @@ namespace PrintQue.Models
         [MaxLength(50), Unique]
         public string Email { get; set; }
         [MaxLength(50)]
-        public string Name { get; set; }
+        public string FirstName { get; set; }
+        [MaxLength(50)]
+        public string LastName { get; set; }
         public int Admin { get; set; }
         [MaxLength(50)]
         public string Password { get; set; }
+        [ManyToOne(CascadeOperations = CascadeOperation.All)]
+        public List<Request> Requests { get; set; }
+        public List<Message> Messages { get; set; }
         public static async Task<int> Insert(User user)
         {
             SQLiteAsyncConnection conn = new SQLiteAsyncConnection(App.DatabaseLocation);
