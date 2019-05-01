@@ -76,9 +76,16 @@ namespace PrintQue.Models
             return requests;
         }
 
+        public static async Task<int> Remove(Request request)
+        {
+            SQLiteAsyncConnection conn = new SQLiteAsyncConnection(App.DatabaseLocation);
+            var num = await conn.DeleteAsync<Request>(request);
+            return num;
+        }
+
         public static async Task<int> Update(Request request)
         {
-            var test = await SearchByName(request.ProjectName);
+            var test = await SearchByID(request);
             if(test != null)
             {
                 SQLiteAsyncConnection conn = new SQLiteAsyncConnection(App.DatabaseLocation);
@@ -104,6 +111,13 @@ namespace PrintQue.Models
         {
             List<Request> requests = await GetAll();
             var sortedRequests = requests.FirstOrDefault(r => r.ProjectName.Contains(searchText));
+            return sortedRequests;
+
+        }
+        public static async Task<Request> SearchByID(Request request)
+        {
+            List<Request> requests = await GetAll();
+            var sortedRequests = requests.FirstOrDefault(r => r.ID == request.ID);
             return sortedRequests;
 
         }
