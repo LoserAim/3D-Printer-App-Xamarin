@@ -30,6 +30,44 @@ namespace PrintQue.Models
         [OneToMany(CascadeOperations = CascadeOperation.All)]
         public List<Request> Requests { get; set; } = new List<Request>();
 
+
+        public static async Task<int> Login(string email, string password)
+        {
+            bool isUsernameEmpty = string.IsNullOrEmpty(email);
+            bool isPasswordEmpty = string.IsNullOrEmpty(password);
+            if (isUsernameEmpty || isPasswordEmpty)
+            {
+                //then show error
+                return 0;
+            }
+            else
+            {
+                //admin
+                if (email.Equals("admin"))
+                {
+                    // TODO(VorpW): Assign App.LoggedInUserID when an admin logs in
+                    return 1;
+                }
+                else
+                {
+
+                    var user = await SearchByEmail(email.ToString());
+                    if (user != null)
+                    {
+                        if (user.Password.Contains(password.ToString()))
+                        {
+                            App.LoggedInUserID = user.ID;
+                            return 2;
+                        }
+                    }
+
+
+
+                }
+                return 0;
+
+            }
+        }
         public static async Task<int> Insert(User user)
         {
             SQLiteAsyncConnection conn = new SQLiteAsyncConnection(App.DatabaseLocation);

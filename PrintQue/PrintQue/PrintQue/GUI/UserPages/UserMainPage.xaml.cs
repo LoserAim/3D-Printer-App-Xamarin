@@ -5,7 +5,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using PrintQue.GUI.DetailPages;
+using PrintQue.Helper;
 using PrintQue.Models;
+using PrintQue.ViewModel;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -16,12 +18,13 @@ namespace PrintQue
 [XamlCompilation(XamlCompilationOptions.Compile)]
 	public partial class UserMainPage : ContentPage
 	{
-        
+        UserMainViewModel viewModel;
 
 		public UserMainPage ()
 		{
 			InitializeComponent ();
-
+            viewModel = new UserMainViewModel();
+            BindingContext = viewModel;
         }
 
         private ObservableCollection<Printer> _printers;
@@ -33,9 +36,9 @@ namespace PrintQue
     
         }
 
-        protected override void OnAppearing()
+        protected override async void OnAppearing()
         {
-
+            await AzureAppServiceHelper.SyncAsync();
             GetAllChildren();
             PrinterListView.ItemsSource = _printers;
             base.OnAppearing();
@@ -58,8 +61,10 @@ namespace PrintQue
             PrinterListView.SelectedItem = null;
         }
 
-        private void PrinterListView_Refreshing(object sender, EventArgs e)
+        private async void  PrinterListView_Refreshing(object sender, EventArgs e)
         {
+            await AzureAppServiceHelper.SyncAsync();
+
             GetAllChildren();
             PrinterListView.ItemsSource = _printers;
             PrinterListView.IsRefreshing = false;

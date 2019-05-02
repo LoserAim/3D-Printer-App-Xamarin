@@ -55,51 +55,21 @@ namespace PrintQue
 
         private async void LoginButton_Clicked(object sender, EventArgs e)
         {
-            bool isUsernameEmpty = string.IsNullOrEmpty(userNameEntry.Text);
-            bool isPasswordEmpty = string.IsNullOrEmpty(userPasswordEntry.Text);
-            if (isUsernameEmpty || isPasswordEmpty)
+
+                 
+            int canLogin = await User.Login(userNameEntry.Text, userPasswordEntry.Text);
+            switch (canLogin)
             {
-                //then show error
-                await DisplayAlert("Attention", "Please fill out all forms", "ok");
-            }
-            else
-            {
-                //admin
-                if (userNameEntry.Text.Equals("admin"))
-                {
-                    // TODO(VorpW): Assign App.LoggedInUserID when an admin logs in
+                case 0:
+                    await DisplayAlert("Error", "Try again", "OK");
+                    break;
+                case 1:
                     await Navigation.PushAsync(new AdminTabContainer());
-                }
-                else
-                {
-
-                    var user = await User.SearchByEmail(userNameEntry.Text);
-                    if(user != null)
-                    {
-                        if (user.Password.Contains(userPasswordEntry.Text))
-                        {
-                            App.LoggedInUserID = user.ID;
-                            await Navigation.PushAsync(new UserTabContainer());
-                        }
-                    }
-                    
-
-                    
-                }
-
-                ////then try to log in user
-                //if (userNameEntry.Text.Equals("admin")){
-                //    //admin
-                //    Navigation.PushAsync(new AdminTabContainer());
-                //} else
-                //{
-                //    //student
-                //    Navigation.PushAsync(new UserTabContainer());
-                //}
-
-
+                    break;
+                case 2:
+                    await Navigation.PushAsync(new UserTabContainer());
+                    break;
             }
-
         }
     }
 }
