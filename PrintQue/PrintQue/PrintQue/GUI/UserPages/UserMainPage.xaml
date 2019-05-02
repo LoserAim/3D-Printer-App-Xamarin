@@ -16,9 +16,9 @@
                                 <Label Text="{Binding Name}" TextColor="Black"/>
                                 <Label Text="{Binding status.Name}"/>
                             </StackLayout>
-                            <Button x:Name="PrinterButton" CommandParameter="{Binding .}" 
+                            <Button x:Name="PrinterButton" Command="{Binding NavCommand}" 
                                     
-                                    Clicked="CreateRequestButton_Clicked" Text="Request"/>
+                                     Text="Request"/>
 
                         </StackLayout>
                     </ViewCell>

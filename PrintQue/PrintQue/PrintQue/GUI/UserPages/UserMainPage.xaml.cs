@@ -70,13 +70,13 @@ namespace PrintQue
             PrinterListView.IsRefreshing = false;
             PrinterListView.EndRefresh();
         }
-        private void CreateRequestButton_Clicked(object sender, EventArgs e)
-        {
-            Request request = null;
+        //private void CreateRequestButton_Clicked(object sender, EventArgs e)
+        //{
+        //    Request request = null;
             
 
-            Navigation.PushAsync(new RequestDetailPage(request));
-        }
+        //    Navigation.PushAsync(new RequestDetailPage(request));
+        //}
         
     }
 }

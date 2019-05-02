@@ -20,7 +20,7 @@ namespace PrintQue.ViewModel.Commands
 
         public void Execute(object parameter)
         {
-            throw new NotImplementedException();
+            _UserMainViewModel.Navigate();
         }
     }
 }

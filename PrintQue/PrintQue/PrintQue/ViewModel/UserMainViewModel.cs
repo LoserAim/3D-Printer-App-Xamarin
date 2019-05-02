@@ -1,4 +1,5 @@
-﻿using PrintQue.ViewModel.Commands;
+﻿using PrintQue.GUI.DetailPages;
+using PrintQue.ViewModel.Commands;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -7,7 +8,7 @@ namespace PrintQue.ViewModel
 {
     public class UserMainViewModel
     {
-        public NavigationCommand NavCommand;
+        public NavigationCommand NavCommand { get; set; }
 
         public UserMainViewModel()
         {
@@ -16,7 +17,7 @@ namespace PrintQue.ViewModel
 
         public void Navigate()
         {
-
+            App.Current.MainPage.Navigation.PushAsync(new RequestDetailPage());
         }
     }
 }

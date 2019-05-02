@@ -19,7 +19,7 @@ namespace PrintQue.GUI.DetailPages
         private Request _request;
         private bool insert = false;
 
-        public RequestDetailPage(Request request, int status =0)
+        public RequestDetailPage(Request request=null, int status =0)
         {
 
             InitializeComponent();
