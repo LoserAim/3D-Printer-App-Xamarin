@@ -77,7 +77,7 @@ namespace PrintQue.GUI.UserPages
                 return;
 
             var request = e.SelectedItem as Request;
-            await Navigation.PushAsync(new RequestDetailPage(request, 1));
+            await Navigation.PushAsync(new RequestDetailPage(request, 3));
             RequestListView.SelectedItem = null;
         }
     }

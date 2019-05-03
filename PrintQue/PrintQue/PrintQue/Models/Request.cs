@@ -121,6 +121,13 @@ namespace PrintQue.Models
             return sortedRequests;
 
         }
+        public static async Task<Request> SearchProjectNameByUser(Request request)
+        {
+            List<Request> requests = await GetAll();
+            var sortedRequests = requests.FirstOrDefault(r => r.UserID == request.UserID && r.ProjectName.Contains(request.ProjectName));
+            return sortedRequests;
+
+        }
 
     }
 }

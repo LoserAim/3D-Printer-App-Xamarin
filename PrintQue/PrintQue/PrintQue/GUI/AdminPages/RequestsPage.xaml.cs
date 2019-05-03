@@ -104,7 +104,7 @@ namespace PrintQue
                 return;
             var request = e.SelectedItem as Request;
             request = await Request.SearchByName(request.ProjectName);
-            await Navigation.PushAsync(new RequestDetailPage(request));
+            await Navigation.PushAsync(new RequestDetailPage(request, 2));
             RequestListView.SelectedItem = null;
         }
 
