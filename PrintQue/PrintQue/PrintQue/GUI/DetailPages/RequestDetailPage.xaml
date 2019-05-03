@@ -16,17 +16,21 @@
                x:Name="RequestDetails">
             <TableRoot>
             <TableSection Title="Requests Details">
-                <ViewCell Tapped="User_Selector_Tapped">
-                    <StackLayout Orientation="Horizontal" Padding="13, 5">
-                        <Label Text="Assigned User" VerticalOptions="Center"/>
-                        <Label 
+            </TableSection>
+            <TableSection x:Name="UserSelectorSection">
+                    <ViewCell Tapped="User_Selector_Tapped">
+                        <StackLayout Orientation="Horizontal" Padding="13, 5">
+                            <Label Text="Assigned User" VerticalOptions="Center"/>
+                            <Label 
                                 x:Name="Users_Picker"
                                 VerticalOptions="Center"
                                 HorizontalOptions="EndAndExpand"
                                 Text="{Binding User.Email}"
                                 TextColor="Gray"/>
-                    </StackLayout>
-                </ViewCell>
+                        </StackLayout>
+                    </ViewCell>
+            </TableSection>
+            <TableSection x:Name="PrinterSelectorSection">
                 <EntryCell  x:Name="ent_ProjectName" Label="ProjectName" Text="{Binding ProjectName}"/>
 
                 <ViewCell Tapped="Printer_Selector_Tapped">

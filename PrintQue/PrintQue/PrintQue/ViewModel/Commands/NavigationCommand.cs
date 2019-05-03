@@ -7,12 +7,16 @@ namespace PrintQue.ViewModel.Commands
 {
     public class NavigationCommand : ICommand
     {
-        public event EventHandler CanExecuteChanged;
-        public UserMainViewModel _UserMainViewModel {get; set;}
+        
+        public UserMainViewModel _UserMainViewModel { get; set; }
+
         public NavigationCommand(UserMainViewModel userMainViewModel)
         {
             _UserMainViewModel = userMainViewModel;
         }
+
+        public event EventHandler CanExecuteChanged;
+
         public bool CanExecute(object parameter)
         {
             return true;

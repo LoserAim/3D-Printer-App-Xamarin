@@ -1,4 +1,5 @@
 ﻿using PrintQue.GUI.DetailPages;
+using PrintQue.Models;
 using PrintQue.ViewModel.Commands;
 using System;
 using System.Collections.Generic;
@@ -17,7 +18,8 @@ namespace PrintQue.ViewModel
 
         public void Navigate()
         {
-            App.Current.MainPage.Navigation.PushAsync(new RequestDetailPage());
+            Request request = null;
+            Xamarin.Forms.Application.Current.MainPage.Navigation.PushAsync(new RequestDetailPage(request, 1));
         }
     }
 }

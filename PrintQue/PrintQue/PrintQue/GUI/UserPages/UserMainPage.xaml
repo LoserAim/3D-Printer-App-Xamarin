@@ -6,7 +6,6 @@
              x:Class="PrintQue.UserMainPage">
 
     <StackLayout>
-        <SearchBar Placeholder="Search..." TextChanged="SearchBar_TextChanged"/>
         <ListView x:Name="PrinterListView" HasUnevenRows="True" IsPullToRefreshEnabled="true" Refreshing="PrinterListView_Refreshing" ItemSelected="PrinterListView_ItemSelected">
             <ListView.ItemTemplate>
                 <DataTemplate>
@@ -16,9 +15,9 @@
                                 <Label Text="{Binding Name}" TextColor="Black"/>
                                 <Label Text="{Binding status.Name}"/>
                             </StackLayout>
-                            <Button x:Name="PrinterButton" Command="{Binding NavCommand}" 
-                                    
-                                     Text="Request"/>
+                            <Button x:Name="PrinterButton" Text="Request" Command="{Binding NavCommand}" />
+
+
 
                         </StackLayout>
                     </ViewCell>

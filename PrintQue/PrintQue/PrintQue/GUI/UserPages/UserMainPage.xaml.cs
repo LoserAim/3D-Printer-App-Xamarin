@@ -28,45 +28,40 @@ namespace PrintQue
         }
 
         private ObservableCollection<Printer> _printers;
-
-        public async void GetAllChildren()
+        private bool isDataLoaded;
+        public async void RefreshPrinterListView()
         {
             var pri = await Printer.GetAll();
             _printers = new ObservableCollection<Printer>(pri);
-    
+            PrinterListView.ItemsSource = _printers;
         }
-
-        protected override async void OnAppearing()
+        public async void SyncOfflineDatabase()
         {
             await AzureAppServiceHelper.SyncAsync();
-            GetAllChildren();
-            PrinterListView.ItemsSource = _printers;
+        }
+        protected override void OnAppearing()
+        {
+            if (isDataLoaded)
+                return;
+            isDataLoaded = true;
+            RefreshPrinterListView();
             base.OnAppearing();
 
         }
-        private void SearchBar_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            GetAllChildren();
 
-            PrinterListView.ItemsSource = _printers.Where(p => p.Name.Contains(e.NewTextValue)).ToList();
-
-        }
         async private void PrinterListView_ItemSelected(object sender, SelectedItemChangedEventArgs e)
         {
             if (e.SelectedItem == null)
                 return;
             var prichild = e.SelectedItem as Printer;
             var request = new Request() { Printer = prichild, PrinterID = prichild.ID };
-            await Navigation.PushAsync(new RequestDetailPage(request));
+            await Navigation.PushAsync(new RequestDetailPage(request, 1));
             PrinterListView.SelectedItem = null;
         }
 
-        private async void  PrinterListView_Refreshing(object sender, EventArgs e)
+        private void  PrinterListView_Refreshing(object sender, EventArgs e)
         {
-            await AzureAppServiceHelper.SyncAsync();
-
-            GetAllChildren();
-            PrinterListView.ItemsSource = _printers;
+            RefreshPrinterListView();
             PrinterListView.IsRefreshing = false;
             PrinterListView.EndRefresh();
         }

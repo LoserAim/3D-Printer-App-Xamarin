@@ -59,11 +59,7 @@ namespace PrintQue.Models
         {
             List<Printer> printers = new List<Printer>();
             SQLiteAsyncConnection conn = new SQLiteAsyncConnection(App.DatabaseLocation);
-            await conn.CreateTableAsync<Printer>();
-
             printers = await conn.GetAllWithChildrenAsync<Printer>();
-
-            
             return printers;
         }
         public static async Task<Printer> SearchByName(string searchText = null)

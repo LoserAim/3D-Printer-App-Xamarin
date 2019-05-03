@@ -7,6 +7,7 @@ using PrintQue.Models;
 using PrintQue.Widgets.CalendarWidget;
 using System;
 using System.Diagnostics;
+using System.Linq;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -17,36 +18,45 @@ namespace PrintQue.GUI.DetailPages
     {
         private DateTime _dateTimeRequestSet;
         private Request _request;
-        private bool insert = false;
+        private bool insert;
 
         public RequestDetailPage(Request request=null, int status =0)
         {
 
             InitializeComponent();
-            if (status == 1)
-            {
-                RequestDetails.Root.Remove(StatusEditor);
-            }
-            if (request == null)
-            {
-                ToolbarItems.RemoveAt(1);
-                ToolbarItems.RemoveAt(1);
-                insert = true;
-            }
-            else
-            {
+            /*
+             status:
+             0 Admin insert
+             1 User insert
+             2 Admin Update
+             3 User Update
+             
+             */
 
-                if (request.Printer != null)
-                {
-                    ToolbarItems.RemoveAt(1);
-                    ToolbarItems.RemoveAt(1);
+            switch (status)
+            {
+                case 0:
+
                     insert = true;
-
-                }
-                else
-                {
+                    ToolbarItems.RemoveAt(1);
+                    ToolbarItems.RemoveAt(1);
+                    break;
+                case 1:
+                    RequestDetails.Root.Remove(StatusEditor);
+                    RequestDetails.Root.Remove(UserSelectorSection);
+                    insert = true;
+                    ToolbarItems.RemoveAt(1);
+                    ToolbarItems.RemoveAt(1);
+                    break;
+                case 2:
                     insert = false;
-                }
+                    break;
+                case 3:
+                    RequestDetails.Root.Remove(StatusEditor);
+                    RequestDetails.Root.Remove(UserSelectorSection);
+                    insert = false;
+                    break;
+
             }
             BindingContext = request;
             _request = request;
@@ -100,7 +110,7 @@ namespace PrintQue.GUI.DetailPages
                 Personal = PersonalUse_Picker.Text,
                 Description = edi_Description.Text,
             };
-            var exists = await Request.SearchByName(ent_ProjectName.Text);
+            var exists = await Request.SearchProjectNameByUser(request);
             if (exists == null && insert == true)
             {
                 await Request.Insert(request);
