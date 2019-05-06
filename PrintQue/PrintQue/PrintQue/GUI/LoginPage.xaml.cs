@@ -1,4 +1,5 @@
 ﻿using PrintQue.Models;
+using PrintQue.ViewModel;
 using SQLite;
 using System;
 using System.Collections.Generic;
@@ -14,12 +15,13 @@ namespace PrintQue
 	[XamlCompilation(XamlCompilationOptions.Compile)]
 	public partial class LoginPage : ContentPage
 	{
+        LoginViewModel viewModel;
 		public LoginPage ()
 		{
 			InitializeComponent ();
             RegisterLabel_Clicked();
 
-
+            BindingContext = viewModel;
                 
             
 
@@ -53,23 +55,6 @@ namespace PrintQue
 
         }
 
-        private async void LoginButton_Clicked(object sender, EventArgs e)
-        {
 
-                 
-            int canLogin = await User.Login(userNameEntry.Text, userPasswordEntry.Text);
-            switch (canLogin)
-            {
-                case 0:
-                    await DisplayAlert("Error", "Try again", "OK");
-                    break;
-                case 1:
-                    await Navigation.PushAsync(new AdminTabContainer());
-                    break;
-                case 2:
-                    await Navigation.PushAsync(new UserTabContainer());
-                    break;
-            }
-        }
     }
 }
