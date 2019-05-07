@@ -1,63 +1,81 @@
-﻿using PrintQue.Models;
-using PrintQue.ViewModel.Commands;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
+
+using PrintQue.Models;
+using PrintQue.ViewModel.Commands;
+
+
+
 
 namespace PrintQue.ViewModel
 {
-    public class LoginViewModel
+    public class LoginViewModel : INotifyPropertyChanged
     {
         private User user;
-        public User User { get => user;
+
+        public User User
+        {
+            get { return user; }
             set
             {
                 user = value;
-                OnpropertyChanged("User");
+                OnPropertyChanged("User");
             }
         }
-        public LoginCommand loginCommand { get; set; }
+
+        public LoginCommand LoginCommand { get; set; }
+
         private string email;
-        public string Email { get => email;
+
+        public string Email
+        {
+            get { return email; }
             set
             {
                 email = value;
-                user = new User()
+                User = new User()
                 {
                     Email = this.Email,
-                    Password = this.Password,
+                    Password = this.Password
                 };
-                OnpropertyChanged("Email");
-            }
-        }
-        public string Password { get => password;
-            set
-            {
-                password = value;
-                user = new User()
-                {
-                    Email = this.Email,
-                    Password = this.Password,
-                };
-                OnpropertyChanged("Password");
+                OnPropertyChanged("Email");
             }
         }
 
         private string password;
+
         public event PropertyChangedEventHandler PropertyChanged;
-        private void OnpropertyChanged(string propertyName)
+
+        public string Password
         {
-            if(PropertyChanged != null)
+            get { return password; }
+            set
             {
-                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+                password = value;
+                User = new User()
+                {
+                    Email = this.Email,
+                    Password = this.Password
+                };
+                OnPropertyChanged("Password");
             }
+
         }
-        
+
+        private void OnPropertyChanged(string propertyName)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+
         public LoginViewModel()
         {
             User = new User();
-            loginCommand = new LoginCommand(this);
+            LoginCommand = new LoginCommand(this);
         }
         public async void Login()
         {

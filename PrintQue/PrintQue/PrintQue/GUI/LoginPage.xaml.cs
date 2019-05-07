@@ -20,7 +20,7 @@ namespace PrintQue
 		{
 			InitializeComponent ();
             RegisterLabel_Clicked();
-
+            viewModel = new LoginViewModel();
             BindingContext = viewModel;
                 
             

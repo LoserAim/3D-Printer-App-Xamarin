@@ -6,27 +6,26 @@ using System.Windows.Input;
 
 namespace PrintQue.ViewModel.Commands
 {
-    public class NavigationCommand : ICommand
+    public class UserRequestCommand : ICommand
     {
-        
-        public UserMainViewModel _UserMainViewModel { get; set; }
-
-        public NavigationCommand(UserMainViewModel userMainViewModel)
+        public UserMainRequestPrinterViewModel UserMainRequestPrinterViewModel { get; set; }
+        public UserRequestCommand(UserMainRequestPrinterViewModel userMainRequestPrinterViewModel)
         {
-            _UserMainViewModel = userMainViewModel;
+            UserMainRequestPrinterViewModel = userMainRequestPrinterViewModel;
         }
 
         public event EventHandler CanExecuteChanged;
-
+        
         public bool CanExecute(object parameter)
         {
             return true;
+
         }
 
         public void Execute(object parameter)
         {
             var printer = (Printer)parameter;
-            _UserMainViewModel.Navigate(printer);
+            UserMainRequestPrinterViewModel.CreateRequestDetails(printer);
         }
     }
 }
