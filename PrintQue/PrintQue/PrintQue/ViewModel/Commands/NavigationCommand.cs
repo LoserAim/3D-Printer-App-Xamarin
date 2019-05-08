@@ -25,8 +25,8 @@ namespace PrintQue.ViewModel.Commands
 
         public void Execute(object parameter)
         {
-            var printer = (Printer)parameter;
-            _UserMainViewModel.Navigate(printer);
+            //var printer = (Printer)parameter;
+            //_UserMainViewModel.Navigate(printer);
         }
     }
 }
