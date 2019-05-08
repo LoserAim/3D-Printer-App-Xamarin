@@ -16,11 +16,11 @@
         <ToolbarItem Text="Add Status" Activated="ToolbarItem_Add_Status_Activated" Order="Secondary"/>
         <ToolbarItem Text="Drop Tables" Activated="ToolbarItem_Drop_Tables_Activated" Order="Secondary"/>
     </TabbedPage.ToolbarItems>
-    <local:ApprovalsPage Title="Apprvls."/>
+
 
     <local:RequestsPage Title="Requests"/>
 
-    <local:DenialsPage Title="Denials"/>
+
 
     <local:AdminMessagesPage Title="Messages"/>
 

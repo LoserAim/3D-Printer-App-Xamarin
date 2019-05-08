@@ -1,4 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
+
 <TabbedPage 
             NavigationPage.HasBackButton="False"
             xmlns="http://xamarin.com/schemas/2014/forms"
@@ -7,10 +8,15 @@
     xmlns:local1="clr-namespace:PrintQue.GUI.UserPages"
     x:Class="PrintQue.UserTabContainer">
 
+    <TabbedPage.ToolbarItems>
+        <ToolbarItem Icon="run.png"  Activated="ToolbarItem_Run_Activated"  Order="Primary" />
+        <ToolbarItem Text="Create Request" Icon="plus.png" Command="{Binding NavCommand}" Order="Primary"/>
+
+    </TabbedPage.ToolbarItems>
 
     <local:UserMainPage Title="schedule"/>
-
-    <local:UserMessagesPage Title="Messages"/>
     <local1:UserSubmissionsPage Title="Submissions"/>
+    <local:UserMessagesPage Title="Messages"/>
+
 
 </TabbedPage>

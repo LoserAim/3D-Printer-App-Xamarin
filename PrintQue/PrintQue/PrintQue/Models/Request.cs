@@ -3,6 +3,7 @@ using SQLite;
 using System.Collections.Generic;
 using System.Text;
 using SQLiteNetExtensions.Attributes;
+using SQLiteNetExtensionsAsync.Extensions;
 
 using System.Threading.Tasks;
 using System.Linq;
@@ -16,10 +17,16 @@ namespace PrintQue.Models
         public int ID { get; set; }
         [ForeignKey(typeof(Printer))]
         public int PrinterID { get; set; }
+        [ManyToOne]
+        public Printer Printer { get; set; }
         [ForeignKey(typeof(Status))]
         public int StatusID { get; set; }
+        [ManyToOne]
+        public Status Status { get; set; }
         [ForeignKey(typeof(User))]
         public int UserID { get; set; }
+        [ManyToOne]
+        public User User { get; set; }
         public DateTime DateMade { get; set; }
         public DateTime DateRequested { get; set; }
         public int Duration { get; set; }
@@ -27,7 +34,8 @@ namespace PrintQue.Models
         public string Description { get; set; }
         public string File { get; set; }
         public string Personal { get; set; }
-
+        [OneToMany(CascadeOperations = CascadeOperation.All)]
+        public List<Message> Messages { get; set; } = new List<Message>();
         public static async Task<int> Insert(Request request)
         {
             if (request.PrinterID == 0 || request.UserID == 0)
@@ -36,22 +44,25 @@ namespace PrintQue.Models
             }
             else
             {
+                var status = request.Status;
+                var user = request.User;
+                var printer = request.Printer;
+                status.Requests.Add(request);
+                user.Requests.Add(request);
+                printer.Requests.Add(request);
                 SQLiteAsyncConnection conn = new SQLiteAsyncConnection(App.DatabaseLocation);
 
                 var rows = await conn.InsertAsync(request);
-                
+                await conn.UpdateWithChildrenAsync(status);
+                await conn.UpdateWithChildrenAsync(printer);
+                await conn.UpdateWithChildrenAsync(user);
+
+
                 return rows;
             }
         }
 
-        public static async Task<int> Update(Request request)
-        {
-            SQLiteAsyncConnection conn = new SQLiteAsyncConnection(App.DatabaseLocation);
 
-            var rows = await conn.UpdateAsync(request);
-            
-            return rows;
-        }
 
         //This function gets all requests in the SQLite Database
         public static async Task<List<Request>> GetAll()
@@ -59,27 +70,35 @@ namespace PrintQue.Models
             List<Request> requests = new List<Request>();
             
             SQLiteAsyncConnection conn = new SQLiteAsyncConnection(App.DatabaseLocation);
-            await conn.CreateTableAsync<Request>();
-            requests = await conn.Table<Request>().ToListAsync();
+
+            requests = await conn.GetAllWithChildrenAsync<Request>();
 
 
             return requests;
         }
-        public static async Task<User> GetChildUser(Request request)
+
+        public static async Task<int> Remove(Request request)
         {
-            return await User.SearchByID(request.UserID);
+            SQLiteAsyncConnection conn = new SQLiteAsyncConnection(App.DatabaseLocation);
+            var num = await conn.DeleteAsync<Request>(request);
+            return num;
         }
 
-        public static async Task<Status> GetChildStatus(Request request)
+        public static async Task<int> Update(Request request)
         {
-            return await Status.SearchByID(request.StatusID);
-        }
+            var test = await SearchByID(request);
+            if(test != null)
+            {
+                SQLiteAsyncConnection conn = new SQLiteAsyncConnection(App.DatabaseLocation);
+                await conn.UpdateWithChildrenAsync(request);
+                return 1;
+            }
+            else
+            {
+                return 0;
+            }
 
-        public static async Task<Printer> GetChildPrinter(Request request)
-        {
-            return await Printer.SearchByID(request.PrinterID);
         }
-
         //This function sorts the requests by statusID
         public static async Task<List<Request>> SortByStatus(string searchText = null)
         {
@@ -93,6 +112,20 @@ namespace PrintQue.Models
         {
             List<Request> requests = await GetAll();
             var sortedRequests = requests.FirstOrDefault(r => r.ProjectName.Contains(searchText));
+            return sortedRequests;
+
+        }
+        public static async Task<Request> SearchByID(Request request)
+        {
+            List<Request> requests = await GetAll();
+            var sortedRequests = requests.FirstOrDefault(r => r.ID == request.ID);
+            return sortedRequests;
+
+        }
+        public static async Task<Request> SearchProjectNameByUser(Request request)
+        {
+            List<Request> requests = await GetAll();
+            var sortedRequests = requests.FirstOrDefault(r => r.UserID == request.UserID && r.ProjectName.Contains(request.ProjectName));
             return sortedRequests;
 
         }

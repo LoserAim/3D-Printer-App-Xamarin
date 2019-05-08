@@ -1,4 +1,5 @@
 ﻿using PrintQue.Models;
+using PrintQue.ViewModel;
 using SQLite;
 using System;
 using System.Collections.Generic;
@@ -14,13 +15,13 @@ namespace PrintQue
 	[XamlCompilation(XamlCompilationOptions.Compile)]
 	public partial class LoginPage : ContentPage
 	{
+        LoginViewModel viewModel;
 		public LoginPage ()
 		{
 			InitializeComponent ();
             RegisterLabel_Clicked();
-
-
-                
+            viewModel = new LoginViewModel();
+            BindingContext = viewModel;                
             
 
         }
@@ -53,53 +54,6 @@ namespace PrintQue
 
         }
 
-        private async void LoginButton_Clicked(object sender, EventArgs e)
-        {
-            bool isUsernameEmpty = string.IsNullOrEmpty(userNameEntry.Text);
-            bool isPasswordEmpty = string.IsNullOrEmpty(userPasswordEntry.Text);
-            if (isUsernameEmpty || isPasswordEmpty)
-            {
-                //then show error
-                await DisplayAlert("Attention", "Please fill out all forms", "ok");
-            }
-            else
-            {
-                //admin
-                if (userNameEntry.Text.Equals("admin"))
-                {
-                    // TODO(VorpW): Assign App.LoggedInUserID when an admin logs in
-                    await Navigation.PushAsync(new AdminTabContainer());
-                }
-                else
-                {
 
-                    var user = await User.SearchByEmail(userNameEntry.Text);
-                    if(user != null)
-                    {
-                        if (user.Password.Contains(userPasswordEntry.Text))
-                        {
-                            App.LoggedInUserID = user.ID;
-                            await Navigation.PushAsync(new UserTabContainer());
-                        }
-                    }
-                    
-
-                    
-                }
-
-                ////then try to log in user
-                //if (userNameEntry.Text.Equals("admin")){
-                //    //admin
-                //    Navigation.PushAsync(new AdminTabContainer());
-                //} else
-                //{
-                //    //student
-                //    Navigation.PushAsync(new UserTabContainer());
-                //}
-
-
-            }
-
-        }
     }
 }

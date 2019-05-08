@@ -1,9 +1,8 @@
 ﻿using SQLite;
 using SQLiteNetExtensions.Attributes;
-using System;
+using SQLiteNetExtensionsAsync.Extensions;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace PrintQue.Models
@@ -14,26 +13,53 @@ namespace PrintQue.Models
         public int ID { get; set; }
         [MaxLength(50), Unique]
         public string Name { get; set; }
+
+
+        [ForeignKey(typeof(Status))]
         public int StatusID { get; set; }
+
+
+        [ForeignKey(typeof(PrintColor))]
         public int ColorID { get; set; }
+
         public int ProjectsQueued { get; set; }
-        public static async Task<int> Insert(Printer printer)
+
+
+        [ManyToOne]
+        public Status Status { get; set; }
+
+
+        [ManyToOne]
+        public PrintColor PrintColor { get; set;}
+
+        [OneToMany(CascadeOperations = CascadeOperation.All)]
+        public List<Request> Requests { get; set; }
+
+        public Printer()
         {
+            Requests = new List<Request>();
+        }
+
+        public static async Task Insert(Printer printer)
+        {
+            var status = printer.Status;
+            var printColor = printer.PrintColor;
+            status.Printers.Add(printer);
+            printColor.printers.Add(printer);
+
             SQLiteAsyncConnection conn = new SQLiteAsyncConnection(App.DatabaseLocation);
 
-            var rows = await conn.InsertAsync(printer);
+            await conn.InsertAsync(printer);
+            await conn.UpdateWithChildrenAsync(status);
+            await conn.UpdateWithChildrenAsync(printColor);
             
-            return rows;
+            
         }
         public static async Task<List<Printer>> GetAll()
         {
             List<Printer> printers = new List<Printer>();
             SQLiteAsyncConnection conn = new SQLiteAsyncConnection(App.DatabaseLocation);
-            await conn.CreateTableAsync<Printer>();
-
-            printers = await conn.Table<Printer>().ToListAsync();
-
-            
+            printers = await conn.GetAllWithChildrenAsync<Printer>();
             return printers;
         }
         public static async Task<Printer> SearchByName(string searchText = null)

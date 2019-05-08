@@ -7,36 +7,56 @@ using PrintQue.Models;
 using PrintQue.Widgets.CalendarWidget;
 using System;
 using System.Diagnostics;
+using System.Linq;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
 namespace PrintQue.GUI.DetailPages
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-	public partial class RequestDetailPage : ContentPage
-	{
+    public partial class RequestDetailPage : ContentPage
+    {
         private DateTime _dateTimeRequestSet;
-        private RequestWithChildren  _request;
+        private Request _request;
+        private bool insert;
 
+        public RequestDetailPage(Request request=null, int status =0)
+        {
 
-        public RequestDetailPage (RequestWithChildren request)
-		{
+            InitializeComponent();
+            /*
+             status:
+             0 Admin insert
+             1 User insert
+             2 Admin Update
+             3 User Update
+             
+             */
 
-			InitializeComponent ();
-            
-            if (request == null)
+            switch (status)
             {
-                ToolbarItems.RemoveAt(1);
-                ToolbarItems.RemoveAt(1);
-            }
-            else
-            {
-                
-                if(request.printer != null)
-                {
+                case 0:
+
+                    insert = true;
                     ToolbarItems.RemoveAt(1);
                     ToolbarItems.RemoveAt(1);
-                }
+                    break;
+                case 1:
+                    RequestDetails.Root.Remove(StatusEditor);
+                    RequestDetails.Root.Remove(UserSelectorSection);
+                    insert = true;
+                    ToolbarItems.RemoveAt(1);
+                    ToolbarItems.RemoveAt(1);
+                    break;
+                case 2:
+                    insert = false;
+                    break;
+                case 3:
+                    RequestDetails.Root.Remove(StatusEditor);
+                    RequestDetails.Root.Remove(UserSelectorSection);
+                    insert = false;
+                    break;
+
             }
             BindingContext = request;
             _request = request;
@@ -52,7 +72,7 @@ namespace PrintQue.GUI.DetailPages
                 // User cancelled file selection
                 if (fileData == null)
                     return;
-                _request.request.File = JsonConvert.SerializeObject(fileData);
+                _request.File = JsonConvert.SerializeObject(fileData);
                 SelectedFileLabel.Text = fileData.FileName;
             }
             catch (Exception ex)
@@ -66,39 +86,52 @@ namespace PrintQue.GUI.DetailPages
         }
         private void ToolbarItem_Delete_Activated(object sender, EventArgs e)
         {
-            DisplayAlert("Delete Clicked!", "W00t!", "OK");
+           
         }
         private async void ToolbarItem_Save_Activated(object sender, EventArgs e)
         {
-            var exists = await Request.SearchByName(ent_ProjectName.Text);
-            if (exists == null)
+            var user = await User.SearchByEmail(Users_Picker.Text);
+            var printer = await Printer.SearchByName(Printers_Picker.Text);
+            var status = await Status.SearchByName(Status_Picker.Text);
+            var request = new Request()
+            {
+                
+                ProjectName = ent_ProjectName.Text,
+                //File = _request.File,
+                DateRequested = new DateTime(_dateTimeRequestSet.Year, _dateTimeRequestSet.Month, _dateTimeRequestSet.Day),
+                Duration = Convert.ToInt32(lbl_sli_duration.Text),
+                DateMade = DateTime.Now,
+                UserID = user.ID,
+                User = user,
+                PrinterID = printer.ID,
+                Printer = printer,
+                StatusID = status.ID,
+                Status = status,
+                Personal = PersonalUse_Picker.Text,
+                Description = edi_Description.Text,
+            };
+            var exists = await Request.SearchProjectNameByUser(request);
+            if (exists == null && insert == true)
+            {
+                await Request.Insert(request);
+                await Navigation.PopAsync();
+            }
+            else if (!insert)
+            {
+                request.ID = _request.ID;
+                await Request.Update(request);
+                await Navigation.PopAsync();
+
+            }
+            else if (exists != null && insert == true)
             {
 
-                var user =      await User.SearchByEmail(Users_Picker.Text);
-                var printer =   await Printer.SearchByName(Printers_Picker.Text);
-                var status =    await Status.SearchByName(Status_Picker.Text);
-                var request = new Request()
-                {
-                    ProjectName = ent_ProjectName.Text,
-                    //File = _request.File,
-                    DateRequested = new DateTime(_dateTimeRequestSet.Year, _dateTimeRequestSet.Month, _dateTimeRequestSet.Day),
-                    Duration = Convert.ToInt32(lbl_sli_duration.Text),
-                    DateMade = DateTime.Now,
-                    UserID = user.ID,
-                    PrinterID = printer.ID,
-                    StatusID = status.ID,
-                    Personal = PersonalUse_Picker.Text,
-                    Description = edi_Description.Text,
-                };
-                await Request.Insert(request);
-
-                await Navigation.PopAsync();
+                await DisplayAlert("ERROR", "Project Name already Used. Please choose another", "OK");
 
             }
             else
             {
-                
-                await DisplayAlert("ERROR", "Project Name already Used. Please choose another", "OK");
+                await DisplayAlert("ERROR", "Could not Update Request", "OK");
 
             }
         }
@@ -145,7 +178,7 @@ namespace PrintQue.GUI.DetailPages
             };
             await Navigation.PushAsync(page);
         }
-        
+
         async void PersonalUse_Selector_Tapped(object sender, EventArgs e)
         {
             var page = new PersonalUseSelector();

@@ -5,7 +5,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using PrintQue.GUI.DetailPages;
+using PrintQue.Helper;
 using PrintQue.Models;
+using PrintQue.ViewModel;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -16,81 +18,60 @@ namespace PrintQue
 [XamlCompilation(XamlCompilationOptions.Compile)]
 	public partial class UserMainPage : ContentPage
 	{
-        
+        UserMainViewModel viewModel;
 
 		public UserMainPage ()
 		{
 			InitializeComponent ();
-
+            viewModel = new UserMainViewModel();
+            BindingContext = viewModel;
         }
 
-        private ObservableCollection<PrinterWithChildren> _printers;
-
-        public async void GetAllChildren()
+        private ObservableCollection<Printer> _printers;
+        private bool isDataLoaded;
+        public async void RefreshPrinterListView()
         {
             var pri = await Printer.GetAll();
-
-            _printers = new ObservableCollection<PrinterWithChildren>();
-
-            foreach (Printer p in pri)
-            {
-                var printerchild = new PrinterWithChildren()
-                {
-                    printer = p,
-                    status = await Status.SearchByID(p.StatusID),
-                    printColor = await PrintColor.SearchByID(p.ColorID),
-                };
-
-                _printers.Add(printerchild);
-                PrinterListView.ItemsSource = _printers;
-            }        
+            _printers = new ObservableCollection<Printer>(pri);
+            PrinterListView.ItemsSource = _printers;
         }
-
+        public async void SyncOfflineDatabase()
+        {
+            await AzureAppServiceHelper.SyncAsync();
+        }
         protected override void OnAppearing()
         {
-
-            GetAllChildren();
-            PrinterListView.ItemsSource = _printers;
+            if (isDataLoaded)
+                return;
+            isDataLoaded = true;
+            RefreshPrinterListView();
             base.OnAppearing();
 
         }
-        private void SearchBar_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            GetAllChildren();
 
-            PrinterListView.ItemsSource = _printers.Where(p => p.printer.Name.Contains(e.NewTextValue)).ToList();
-
-        }
         async private void PrinterListView_ItemSelected(object sender, SelectedItemChangedEventArgs e)
         {
             if (e.SelectedItem == null)
                 return;
-            var prichild = e.SelectedItem as PrinterWithChildren;
-            var request = new RequestWithChildren() { printer = prichild.printer };
-            await Navigation.PushAsync(new RequestDetailPage(request));
+            var prichild = e.SelectedItem as Printer;
+            var request = new Request() { Printer = prichild, PrinterID = prichild.ID };
+            await Navigation.PushAsync(new RequestDetailPage(request, 1));
             PrinterListView.SelectedItem = null;
         }
 
-        private void PrinterListView_Refreshing(object sender, EventArgs e)
+        private void  PrinterListView_Refreshing(object sender, EventArgs e)
         {
-            GetAllChildren();
-            PrinterListView.ItemsSource = _printers;
+            RefreshPrinterListView();
             PrinterListView.IsRefreshing = false;
             PrinterListView.EndRefresh();
         }
-        private void CreateRequestButton_Clicked(object sender, EventArgs e)
-        {
-            RequestWithChildren request = null;
-            Navigation.PushAsync(new RequestDetailPage(request));
-        }
-        async private void ToolbarItem_Run_Activated(object sender, EventArgs e)
-        {
-            var response = await DisplayAlert("Warning", "You are about to logout. Are you sure?", "Yes", "No");
-            if (response)
-            {
-                App.LoggedInUserID = -1;
-                await Navigation.PopAsync();
-            }
-        }
+        //private void CreateRequestButton_Clicked(object sender, EventArgs e)
+        //{
+        //    Request request = null;
+            
+
+        //    Navigation.PushAsync(new RequestDetailPage(request));
+        //}
+        
     }
 }

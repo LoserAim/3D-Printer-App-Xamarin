@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage 
 
-    Title="{Binding request.ProjectName}"
+    Title="{Binding ProjectName}"
     xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="PrintQue.GUI.DetailPages.RequestDetailPage">
@@ -12,44 +12,53 @@
     </ContentPage.ToolbarItems>
     <TableView Intent="Form" 
                HasUnevenRows="True"
-               IsTabStop="False">
+               IsTabStop="False"
+               x:Name="RequestDetails">
             <TableRoot>
             <TableSection Title="Requests Details">
-                <ViewCell Tapped="User_Selector_Tapped">
-                    <StackLayout Orientation="Horizontal" Padding="13, 5">
-                        <Label Text="Assigned User" VerticalOptions="Center"/>
-                        <Label 
+            </TableSection>
+            <TableSection x:Name="UserSelectorSection">
+                    <ViewCell Tapped="User_Selector_Tapped">
+                        <StackLayout Orientation="Horizontal" Padding="13, 5">
+                            <Label Text="Assigned User" VerticalOptions="Center"/>
+                            <Label 
                                 x:Name="Users_Picker"
                                 VerticalOptions="Center"
                                 HorizontalOptions="EndAndExpand"
-                                Text="{Binding user.Email}"
+                                Text="{Binding User.Email}"
                                 TextColor="Gray"/>
-                    </StackLayout>
-                </ViewCell>
-                <EntryCell  x:Name="ent_ProjectName" Label="ProjectName" Text="{Binding request.ProjectName}"/>
+                        </StackLayout>
+                    </ViewCell>
+            </TableSection>
+            <TableSection x:Name="PrinterSelectorSection">
+                <EntryCell  x:Name="ent_ProjectName" Label="ProjectName" Text="{Binding ProjectName}"/>
 
-                 <ViewCell Tapped="Printer_Selector_Tapped">
+                <ViewCell Tapped="Printer_Selector_Tapped">
                     <StackLayout Orientation="Horizontal" Padding="13, 5">
                         <Label Text="Assigned Printer" VerticalOptions="Center"/>
                         <Label 
                                 x:Name="Printers_Picker"
                                 VerticalOptions="Center"
                                 HorizontalOptions="EndAndExpand"
-                                Text="{Binding printer.Name}"
+                                Text="{Binding Printer.Name}"
                                 TextColor="Gray"/>
                     </StackLayout>
                 </ViewCell>
-                <ViewCell Tapped="Status_Selector_Tapped">
-                    <StackLayout Orientation="Horizontal" Padding="13, 5">
-                        <Label Text="Assigned Status" VerticalOptions="Center"/>
-                        <Label 
-                                x:Name="Status_Picker"
-                                VerticalOptions="Center"
-                                HorizontalOptions="EndAndExpand"
-                                Text="{Binding status.Name}"
-                                TextColor="Gray"/>
-                    </StackLayout>
-                </ViewCell>
+            </TableSection>
+            <TableSection x:Name="StatusEditor">
+                    <ViewCell Tapped="Status_Selector_Tapped">
+                        <StackLayout Orientation="Horizontal" Padding="13, 5">
+                            <Label Text="Assigned Status" VerticalOptions="Center"/>
+                            <Label 
+                                    x:Name="Status_Picker"
+                                    VerticalOptions="Center"
+                                    HorizontalOptions="EndAndExpand"
+                                    Text="{Binding Status.Name}"
+                                    TextColor="Gray"/>
+                        </StackLayout>
+                    </ViewCell>
+                </TableSection>
+            <TableSection>
                 <ViewCell>
                     <StackLayout Padding="0,10,0,0">
                         <Label x:Name="PrintTimeLabel" HorizontalTextAlignment="Center" Text="Print Time: ASAP"></Label>
@@ -76,7 +85,7 @@
                 <ViewCell>
                     <StackLayout Padding="0,10,0,0">
                         <Label Text="Description"/>
-                        <Editor x:Name="edi_Description" Text="{Binding request.Description}" VerticalOptions="FillAndExpand" AutoSize="TextChanges" HeightRequest="100"/>
+                        <Editor x:Name="edi_Description" Text="{Binding Description}" VerticalOptions="FillAndExpand" AutoSize="TextChanges" HeightRequest="100"/>
 
                     </StackLayout>
                 </ViewCell>
@@ -87,7 +96,7 @@
                                 x:Name="PersonalUse_Picker"
                                 VerticalOptions="Center"
                                 HorizontalOptions="EndAndExpand"
-                                Text="{Binding request.PersonalUse}"
+                                Text="{Binding PersonalUse}"
                                 TextColor="Gray"/>
                     </StackLayout>
                 </ViewCell>

@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using SQLiteNetExtensionsAsync.Extensions;
 
 namespace PrintQue.Models
 {
@@ -25,6 +26,12 @@ namespace PrintQue.Models
         public int ID { get; set; }
         [Unique,NotNull,MaxLength(10)]
         public string Name { get; set; }
+        [OneToMany(CascadeOperations = CascadeOperation.All)]
+        public List<Printer> Printers { get; set; } = new List<Printer>();
+        [OneToMany(CascadeOperations = CascadeOperation.All)]
+        public List<Request> Requests { get; set; } = new List<Request>();
+
+
         public static async Task<int> Insert(Status status)
         {
             SQLiteAsyncConnection conn = new SQLiteAsyncConnection(App.DatabaseLocation);
@@ -39,7 +46,7 @@ namespace PrintQue.Models
             SQLiteAsyncConnection conn = new SQLiteAsyncConnection(App.DatabaseLocation);
             await conn.CreateTableAsync<Status>();
 
-            statuses = await conn.Table<Status>().ToListAsync();
+            statuses = await conn.GetAllWithChildrenAsync<Status>();
 
             
             return statuses;

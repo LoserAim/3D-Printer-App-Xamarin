@@ -16,6 +16,9 @@ namespace PrintQue.Models
         public string Name { get; set; }
         [Unique, NotNull]
         public string HexValue { get; set; }
+        [OneToMany(CascadeOperations = CascadeOperation.All)]
+        public List<Printer> printers { get; set; } = new List<Printer>();
+
         public static async Task<int> Insert(PrintColor printcolor)
         {
             SQLiteAsyncConnection conn = new SQLiteAsyncConnection(App.DatabaseLocation);

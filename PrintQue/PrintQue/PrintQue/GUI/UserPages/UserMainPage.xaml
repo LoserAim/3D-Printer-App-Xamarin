@@ -4,21 +4,23 @@
     xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="PrintQue.UserMainPage">
-    <ContentPage.ToolbarItems>
-        <ToolbarItem Icon="run.png"  Activated="ToolbarItem_Run_Activated"  Order="Primary" />
-    </ContentPage.ToolbarItems>
+
     <StackLayout>
-        <SearchBar Placeholder="Search..." TextChanged="SearchBar_TextChanged"/>
         <ListView x:Name="PrinterListView" HasUnevenRows="True" IsPullToRefreshEnabled="true" Refreshing="PrinterListView_Refreshing" ItemSelected="PrinterListView_ItemSelected">
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <ViewCell>
                         <StackLayout Orientation="Horizontal" Padding="5">
                             <StackLayout HorizontalOptions="StartAndExpand">
-                                <Label Text="{Binding printer.Name}" TextColor="Black"/>
+                                <Label Text="{Binding Name}" TextColor="Black"/>
                                 <Label Text="{Binding status.Name}"/>
                             </StackLayout>
-                            <Button x:Name="PrinterButton" CommandParameter="{Binding .}" Clicked="CreateRequestButton_Clicked" Text="Request"/>
+                            <Button x:Name="PrinterButton" Text="Request" 
+                                    BindingContext="{Binding Source={x:Reference PrinterListView}, Path=BindingContext}"
+                                    Command="{Binding NavCommand}" 
+                                    CommandParameter="{Binding .}"/>
+
+
 
                         </StackLayout>
                     </ViewCell>
