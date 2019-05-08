@@ -15,7 +15,10 @@
                                 <Label Text="{Binding Name}" TextColor="Black"/>
                                 <Label Text="{Binding status.Name}"/>
                             </StackLayout>
-                            <Button x:Name="PrinterButton" Text="Request" Command="{Binding NavCommand}" />
+                            <Button x:Name="PrinterButton" Text="Request" 
+                                    BindingContext="{Binding Source={x:Reference PrinterListView}, Path=BindingContext}"
+                                    Command="{Binding NavCommand}" 
+                                    CommandParameter="{Binding .}"/>
 
 
 

@@ -23,10 +23,10 @@ namespace PrintQue.ViewModel.Commands
                 return false;
             if (string.IsNullOrEmpty(user.Email) || string.IsNullOrEmpty(user.Password))
                 return false;
-            else
-                return true;
+            
+            return true;
         }
-
+        
         public void Execute(object parameter)
         {
             ViewModel.Login();

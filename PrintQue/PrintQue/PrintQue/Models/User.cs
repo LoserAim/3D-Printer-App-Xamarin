@@ -7,30 +7,58 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.ComponentModel;
 
 namespace PrintQue.Models
 {
-    public class User
+    public class User : INotifyPropertyChanged
     {
         [PrimaryKey, AutoIncrement]
         public int ID { get; set; }
 
 
 
+        
+        private string email;
         [MaxLength(50), Unique]
-        public string Email { get; set; }
+        public string Email
+        {
+            get { return email; }
+            set
+            {
+                email = value;
+                OnPropertyChanged("Email");
+            }
+        }
+
 
 
         [MaxLength(50)]
         public string Name { get; set; }
         public int Admin { get; set; }
-        [MaxLength(50)]
-        public string Password { get; set; }
+        
+        private string password;
+
+        public string Password
+        {
+            get { return password; }
+            set
+            {
+                password = value;
+                OnPropertyChanged("Password");
+            }
+        }
 
         [OneToMany(CascadeOperations = CascadeOperation.All)]
         public List<Request> Requests { get; set; } = new List<Request>();
 
+        public event PropertyChangedEventHandler PropertyChanged;
 
+        private void OnPropertyChanged(string propertyName)
+        {
+            if (PropertyChanged != null)
+                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+        }
         public static async Task<int> Login(string email, string password)
         {
             bool isUsernameEmpty = string.IsNullOrEmpty(email);

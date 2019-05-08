@@ -9,13 +9,13 @@
                  Margin="30,10">
 
         <Entry x:Name="userNameEntry" 
-               Placeholder="Username or Email Adress" 
+               Placeholder="Email" 
                Keyboard="Email"
                Text="{Binding Email, Mode=TwoWay}"/>
         <Entry x:Name="userPasswordEntry" 
                Placeholder="Password" 
                IsPassword="True"
-               Text="{Binding Password,Mode=TwoWay}"/>
+               Text="{Binding Password, Mode=TwoWay}"/>
         <Button x:Name="LoginButton" 
                 Text="Log in" 
                 Command="{Binding LoginCommand}"
@@ -27,7 +27,8 @@
         <Label Text="Don't have an account?" 
                HorizontalOptions="Center"/>
         <Label x:Name="RegisterLabel" 
-               Text="Register" 
+               Text="Register"
+               
                HorizontalOptions="Center" 
                TextColor="CadetBlue"/>
 
