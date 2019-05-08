@@ -48,6 +48,9 @@ namespace PrintQue.Models
                 OnPropertyChanged("Password");
             }
         }
+        [OneToMany(CascadeOperations = CascadeOperation.All)]
+        public List<Message> Messages { get; set; } = new List<Message>();
+
 
         [OneToMany(CascadeOperations = CascadeOperation.All)]
         public List<Request> Requests { get; set; } = new List<Request>();

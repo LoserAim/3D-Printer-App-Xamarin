@@ -34,7 +34,8 @@ namespace PrintQue.Models
         public string Description { get; set; }
         public string File { get; set; }
         public string Personal { get; set; }
-
+        [OneToMany(CascadeOperations = CascadeOperation.All)]
+        public List<Message> Messages { get; set; } = new List<Message>();
         public static async Task<int> Insert(Request request)
         {
             if (request.PrinterID == 0 || request.UserID == 0)
