@@ -19,9 +19,10 @@ namespace PrintQue
 		public LoginPage ()
 		{
 			InitializeComponent ();
+            BindingContext = viewModel;
             RegisterLabel_Clicked();
 
-            BindingContext = viewModel;
+
                 
             
 
