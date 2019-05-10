@@ -6,12 +6,9 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Text;
 <<<<<<< HEAD
-<<<<<<< HEAD
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Xamarin.Forms;
-=======
->>>>>>> parent of 8180791... Incomplete implementation to viewmodel
 =======
 >>>>>>> parent of 8180791... Incomplete implementation to viewmodel
 
@@ -19,7 +16,6 @@ namespace PrintQue.ViewModel
 {
     public class UserMainViewModel
     {
-<<<<<<< HEAD
 <<<<<<< HEAD
         public ICommand CreateRequestDetailsCommand { get; private set; }
         public ICommand SelectPrinterCommand { get; private set; }
@@ -94,33 +90,6 @@ namespace PrintQue.ViewModel
             NavCommand = new NavigationCommand(this);
         }
 
-=======
-        public NavigationCommand NavCommand { get; set; }
-        private Printer printer;
-
-        public Printer Printer
-        {
-            get { return printer; }
-            set
-            {
-                printer = value;
-                OnPropertyChanged("User");
-            }
-        }
-
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        private void OnPropertyChanged(string propertyName)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
-
-        public UserMainViewModel()
-        {
-            NavCommand = new NavigationCommand(this);
-        }
-
->>>>>>> parent of 8180791... Incomplete implementation to viewmodel
         public void Navigate(Printer printer)
         {
             Request request = new Request()

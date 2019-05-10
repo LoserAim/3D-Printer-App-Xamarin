@@ -7,7 +7,6 @@
 
     <StackLayout>
 <<<<<<< HEAD
-<<<<<<< HEAD
         <ListView x:Name="PrinterListView" 
                   HasUnevenRows="True" 
                   IsPullToRefreshEnabled="true" 
@@ -15,9 +14,6 @@
                   ItemsSource="{Binding Printers}"
                   ItemSelected="PrinterListView_ItemSelected"
                   >
-=======
-        <ListView x:Name="PrinterListView" HasUnevenRows="True" IsPullToRefreshEnabled="true" Refreshing="PrinterListView_Refreshing" ItemSelected="PrinterListView_ItemSelected">
->>>>>>> parent of 8180791... Incomplete implementation to viewmodel
 =======
         <ListView x:Name="PrinterListView" HasUnevenRows="True" IsPullToRefreshEnabled="true" Refreshing="PrinterListView_Refreshing" ItemSelected="PrinterListView_ItemSelected">
 >>>>>>> parent of 8180791... Incomplete implementation to viewmodel
