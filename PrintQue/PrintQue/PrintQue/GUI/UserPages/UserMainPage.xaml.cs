@@ -27,16 +27,24 @@ namespace PrintQue
             BindingContext = viewModel;
         }
 
-
-
+        private ObservableCollection<Printer> _printers;
+        private bool isDataLoaded;
+        public async void RefreshPrinterListView()
+        {
+            var pri = await Printer.GetAll();
+            _printers = new ObservableCollection<Printer>(pri);
+            PrinterListView.ItemsSource = _printers;
+        }
         public async void SyncOfflineDatabase()
         {
             await AzureAppServiceHelper.SyncAsync();
         }
         protected override void OnAppearing()
         {
-
-
+            if (isDataLoaded)
+                return;
+            isDataLoaded = true;
+            RefreshPrinterListView();
             base.OnAppearing();
 
         }
@@ -45,29 +53,17 @@ namespace PrintQue
 
         private void  PrinterListView_Refreshing(object sender, EventArgs e)
         {
-            viewModel = new UserMainViewModel(new PageService());
-            BindingContext = viewModel;
+            RefreshPrinterListView();
             PrinterListView.IsRefreshing = false;
             PrinterListView.EndRefresh();
-        }
-
-        private void PrinterListView_ItemSelected(object sender, SelectedItemChangedEventArgs e)
-        {
-            viewModel.SelectPrinterCommand.Execute(e.SelectedItem);
-        }
-        private void PrinterListView_Button(object sender, EventArgs e)
-        {
-            var menuItem = sender as Button;
-            var selectedItem = menuItem.CommandParameter as Printer;
-            viewModel.CreateRequestDetailsCommand.Execute(selectedItem);
         }
         //private void CreateRequestButton_Clicked(object sender, EventArgs e)
         //{
         //    Request request = null;
-
+            
 
         //    Navigation.PushAsync(new RequestDetailPage(request));
         //}
-
+        
     }
 }

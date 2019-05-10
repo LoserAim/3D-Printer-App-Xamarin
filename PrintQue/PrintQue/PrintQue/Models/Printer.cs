@@ -22,7 +22,7 @@ namespace PrintQue.Models
         [ForeignKey(typeof(PrintColor))]
         public int ColorID { get; set; }
 
-        public int ProjectsQueued { get => Requests.Count; set => ProjectsQueued = value; }
+        public int ProjectsQueued { get; set; }
 
 
         [ManyToOne]

@@ -11,7 +11,7 @@
                   IsPullToRefreshEnabled="true" 
                   Refreshing="PrinterListView_Refreshing" 
                   ItemsSource="{Binding Printers}"
-                  ItemSelected="PrinterListView_ItemSelected"
+                  ItemSelected="{Binding SelectedPrinter, Mode=TwoWay}"
                   >
             <ListView.ItemTemplate>
                 <DataTemplate>
@@ -22,7 +22,8 @@
                                 <Label Text="{Binding status.Name}"/>
                             </StackLayout>
                             <Button x:Name="PrinterButton" Text="Request" 
-                                    Clicked="PrinterListView_Button"
+                                    BindingContext="{Binding Source={x:Reference PrinterListView}, Path=BindingContext}"
+                                    Command="{Binding NavCommand}" 
                                     CommandParameter="{Binding .}"/>
 
 
