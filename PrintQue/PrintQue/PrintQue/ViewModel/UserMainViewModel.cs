@@ -3,45 +3,56 @@ using PrintQue.Models;
 using PrintQue.ViewModel.Commands;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Text;
+using System.Windows.Input;
+using Xamarin.Forms;
 
 namespace PrintQue.ViewModel
 {
-    public class UserMainViewModel
+    public class UserMainViewModel : BaseViewModel
     {
+        public ICommand CreateRequestDetailsCommand { get; private set; }
+        public ICommand SelectPrinterCommand { get; private set; }
         public NavigationCommand NavCommand { get; set; }
-        private Printer printer;
+        private Printer selectedPrinter;
 
-        public Printer Printer
-        {
-            get { return printer; }
-            set
-            {
-                printer = value;
-                OnPropertyChanged("User");
-            }
-        }
+        public ObservableCollection<Printer> Printers { get; private set; } = new ObservableCollection<Printer>(Printer.GetAll().Result);
+       
 
-        public event PropertyChangedEventHandler PropertyChanged;
+        public Printer SelectedPrinter { get => selectedPrinter; set => SetValue(ref selectedPrinter, value); }
 
-        private void OnPropertyChanged(string propertyName)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
 
-        public UserMainViewModel()
+
+        public UserMainViewModel(IPageService pageService)
         {
             NavCommand = new NavigationCommand(this);
+            _pageService = pageService;
+            CreateRequestDetailsCommand = new Command(CreateRequest);
+           /* SelectPrinterCommand = new Command<PrinterViewModel>(async vm => await SelectPrinter(vm));
+           */
+        }
+        private readonly IPageService _pageService;
+        private async void CreateRequest()
+        {
+            Request request = null;
+            await _pageService.PushAsync(new RequestDetailPage(request, 1));
         }
 
-        public void Navigate(Printer printer)
+        public async void SelectPrinter(Printer _printer)
         {
-            Request request = new Request()
-            {
-                Printer = printer,
-                PrinterID = printer.ID,
-            };
+            if (_printer == null)
+                return;
+            // This method should display information important to the user
+            var request = new Request() { Printer = _printer, PrinterID = _printer.ID };
+            await _pageService.PushAsync(new RequestDetailPage(request, 1));
+            SelectedPrinter = null;
+            //Code for printer information
+        }
+        public void Navigate()
+        {
+            Request request = null;
             Xamarin.Forms.Application.Current.MainPage.Navigation.PushAsync(new RequestDetailPage(request, 1));
         }
     }
