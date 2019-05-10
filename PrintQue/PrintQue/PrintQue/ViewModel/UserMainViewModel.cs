@@ -3,17 +3,20 @@ using PrintQue.Models;
 using PrintQue.ViewModel.Commands;
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Text;
+<<<<<<< HEAD
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Xamarin.Forms;
+=======
+>>>>>>> parent of 8180791... Incomplete implementation to viewmodel
 
 namespace PrintQue.ViewModel
 {
-    public class UserMainViewModel : BaseViewModel
+    public class UserMainViewModel
     {
+<<<<<<< HEAD
         public ICommand CreateRequestDetailsCommand { get; private set; }
         public ICommand SelectPrinterCommand { get; private set; }
         private Printer selectedPrinter;
@@ -61,5 +64,41 @@ namespace PrintQue.ViewModel
             //Code for printer information
         }
 
+=======
+        public NavigationCommand NavCommand { get; set; }
+        private Printer printer;
+
+        public Printer Printer
+        {
+            get { return printer; }
+            set
+            {
+                printer = value;
+                OnPropertyChanged("User");
+            }
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        private void OnPropertyChanged(string propertyName)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        public UserMainViewModel()
+        {
+            NavCommand = new NavigationCommand(this);
+        }
+
+        public void Navigate(Printer printer)
+        {
+            Request request = new Request()
+            {
+                Printer = printer,
+                PrinterID = printer.ID,
+            };
+            Xamarin.Forms.Application.Current.MainPage.Navigation.PushAsync(new RequestDetailPage(request, 1));
+        }
+>>>>>>> parent of 8180791... Incomplete implementation to viewmodel
     }
 }
