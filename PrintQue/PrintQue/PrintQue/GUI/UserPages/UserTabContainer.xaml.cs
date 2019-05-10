@@ -17,7 +17,7 @@ namespace PrintQue
 		public UserTabContainer ()
 		{
 			InitializeComponent ();
-            viewModel = new UserMainViewModel();
+            viewModel = new UserMainViewModel(new PageService());
             BindingContext = viewModel;
 		}
         async private void ToolbarItem_Run_Activated(object sender, EventArgs e)
