@@ -6,13 +6,7 @@
              x:Class="PrintQue.UserMainPage">
 
     <StackLayout>
-        <ListView x:Name="PrinterListView" 
-                  HasUnevenRows="True" 
-                  IsPullToRefreshEnabled="true" 
-                  Refreshing="PrinterListView_Refreshing" 
-                  ItemsSource="{Binding Printers}"
-                  ItemSelected="{Binding SelectedPrinter, Mode=TwoWay}"
-                  >
+        <ListView x:Name="PrinterListView" HasUnevenRows="True" IsPullToRefreshEnabled="true" Refreshing="PrinterListView_Refreshing" ItemSelected="PrinterListView_ItemSelected">
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <ViewCell>

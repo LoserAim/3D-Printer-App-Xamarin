@@ -23,7 +23,7 @@ namespace PrintQue
 		public UserMainPage ()
 		{
 			InitializeComponent ();
-            viewModel = new UserMainViewModel(new PageService());
+            viewModel = new UserMainViewModel();
             BindingContext = viewModel;
         }
 
@@ -49,7 +49,15 @@ namespace PrintQue
 
         }
 
-
+        async private void PrinterListView_ItemSelected(object sender, SelectedItemChangedEventArgs e)
+        {
+            if (e.SelectedItem == null)
+                return;
+            var prichild = e.SelectedItem as Printer;
+            var request = new Request() { Printer = prichild, PrinterID = prichild.ID };
+            await Navigation.PushAsync(new RequestDetailPage(request, 1));
+            PrinterListView.SelectedItem = null;
+        }
 
         private void  PrinterListView_Refreshing(object sender, EventArgs e)
         {
