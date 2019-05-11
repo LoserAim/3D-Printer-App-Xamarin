@@ -18,13 +18,12 @@ namespace PrintQue
 [XamlCompilation(XamlCompilationOptions.Compile)]
 	public partial class UserMainPage : ContentPage
 	{
-        UserMainViewModel viewModel;
+
 
 		public UserMainPage ()
 		{
 			InitializeComponent ();
-            viewModel = new UserMainViewModel();
-            BindingContext = viewModel;
+
         }
 
         private ObservableCollection<Printer> _printers;
@@ -54,8 +53,20 @@ namespace PrintQue
             if (e.SelectedItem == null)
                 return;
             var prichild = e.SelectedItem as Printer;
-            var request = new Request() { Printer = prichild, PrinterID = prichild.ID };
-            await Navigation.PushAsync(new RequestDetailPage(request, 1));
+            string action = await DisplayActionSheet("What would you like to know about the Printer?"
+                , "Projects Queued"
+                , "Printer Color");
+            switch(action)
+            {
+                case "Projects Queued":
+                    await DisplayAlert("Projects Queued"
+                        , "Here the number of projects queued for this printer today: " + prichild.Requests.Count, "OK");
+                    break;
+                case "Printer Color":
+                    await DisplayAlert("Printer Color"
+                        , "This printer only prints in " + prichild.PrintColor.Name, "OK");
+                    break;
+            }
             PrinterListView.SelectedItem = null;
         }
 
@@ -65,13 +76,19 @@ namespace PrintQue
             PrinterListView.IsRefreshing = false;
             PrinterListView.EndRefresh();
         }
-        //private void CreateRequestButton_Clicked(object sender, EventArgs e)
-        //{
-        //    Request request = null;
-            
-
-        //    Navigation.PushAsync(new RequestDetailPage(request));
-        //}
+        private void CreateRequestButton_Clicked(object sender, EventArgs e)
+        {
+            var menuItem = sender as Button;
+            var selectedItem = menuItem.CommandParameter as Printer;
+            var request = new Request()
+            {
+                Printer = selectedItem,
+                PrinterID = selectedItem.ID,
+                User = User.SearchByID(App.LoggedInUserID).Result,
+                UserID = App.LoggedInUserID,
+            };
+            Navigation.PushAsync(new RequestDetailPage(request, 1));
+        }
         
     }
 }

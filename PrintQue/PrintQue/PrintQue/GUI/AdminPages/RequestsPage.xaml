@@ -20,7 +20,12 @@
             </Picker>
         </StackLayout>
         
-        <ListView x:Name="RequestListView" HasUnevenRows="True" IsPullToRefreshEnabled="true" Refreshing="RequestListView_Refreshing" ItemSelected="RequestListView_ItemSelected">
+        <ListView x:Name="RequestListView" 
+                  HasUnevenRows="True" 
+                  IsPullToRefreshEnabled="true" 
+                  Refreshing="RequestListView_Refreshing" 
+                  ItemSelected="RequestListView_ItemSelected"
+                  >
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <ViewCell>

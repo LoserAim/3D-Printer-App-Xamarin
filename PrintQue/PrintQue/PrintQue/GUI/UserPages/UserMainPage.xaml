@@ -16,8 +16,7 @@
                                 <Label Text="{Binding status.Name}"/>
                             </StackLayout>
                             <Button x:Name="PrinterButton" Text="Request" 
-                                    BindingContext="{Binding Source={x:Reference PrinterListView}, Path=BindingContext}"
-                                    Command="{Binding NavCommand}" 
+                                    Clicked="CreateRequestButton_Clicked"
                                     CommandParameter="{Binding .}"/>
 
 

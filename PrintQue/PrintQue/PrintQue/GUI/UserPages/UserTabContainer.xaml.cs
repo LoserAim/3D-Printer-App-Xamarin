@@ -13,12 +13,11 @@ namespace PrintQue
 	[XamlCompilation(XamlCompilationOptions.Compile)]
 	public partial class UserTabContainer : TabbedPage
 	{
-        UserMainViewModel viewModel;
+
 		public UserTabContainer ()
 		{
 			InitializeComponent ();
-            viewModel = new UserMainViewModel();
-            BindingContext = viewModel;
+
 		}
         async private void ToolbarItem_Run_Activated(object sender, EventArgs e)
         {
