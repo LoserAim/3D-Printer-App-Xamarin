@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PrintQue.Models;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Windows.Input;
@@ -16,12 +17,17 @@ namespace PrintQue.ViewModel.Commands
 
         public bool CanExecute(object parameter)
         {
-            throw new NotImplementedException();
+            var user = (User)parameter;
+            if (user == null)
+                return false;
+            if (string.IsNullOrEmpty(user.Email) || string.IsNullOrEmpty(user.Password) || string.IsNullOrEmpty(user.FirstName) || string.IsNullOrEmpty(user.LastName))
+                return false;
+            return true;
         }
 
         public void Execute(object parameter)
         {
-            throw new NotImplementedException();
+            RegisterViewModel.Register();
         }
     }
 }

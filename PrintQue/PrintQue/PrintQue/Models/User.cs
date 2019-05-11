@@ -75,6 +75,33 @@ namespace PrintQue.Models
 
             }
         }
+
+        public static async Task<int> Register(string email, string password, string firstname, string lastname)
+        {
+            bool isUsernameEmpty = string.IsNullOrEmpty(email);
+            bool isPasswordEmpty = string.IsNullOrEmpty(password);
+            bool isFirstNameEmpty = string.IsNullOrEmpty(firstname);
+            bool isLastNameEmpty = string.IsNullOrEmpty(lastname);
+            if (isUsernameEmpty || isPasswordEmpty || isFirstNameEmpty || isLastNameEmpty)
+            {
+                //then show error
+                return 0;
+            }
+            else
+            {
+                if (email.Contains("@") || email.Contains(".com") || email.Contains(".edu"))
+                {
+                    var user = await SearchByEmail(email.ToString());
+                    if (user == null)
+                    {
+                        return 1;
+                    }
+                }
+   
+                return 0;
+
+            }
+        }
         public static async Task<int> Insert(User user)
         {
             SQLiteAsyncConnection conn = new SQLiteAsyncConnection(App.DatabaseLocation);

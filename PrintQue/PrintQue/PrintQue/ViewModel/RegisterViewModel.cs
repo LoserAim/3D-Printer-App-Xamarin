@@ -7,7 +7,7 @@ using System.Text;
 
 namespace PrintQue.ViewModel
 {
-    public class RegisterViewModel
+    public class RegisterViewModel : INotifyPropertyChanged
     {
         private User user;
 
@@ -22,8 +22,38 @@ namespace PrintQue.ViewModel
         }
 
         public RegisterCommand RegisterCommand { get; set; }
-
-        public string FirstName { get; set; }
+        public string LastName
+        {
+            get { return lastName; }
+            set
+            {
+                lastName = value;
+                User = new User()
+                {
+                    FirstName = this.FirstName,
+                    LastName = this.LastName,
+                    Email = this.Email,
+                    Password = this.Password
+                };
+                OnPropertyChanged("LastName");
+            }
+        }
+        public string FirstName
+        {
+            get { return firstName; }
+            set
+            {
+                firstName = value;
+                User = new User()
+                {
+                    FirstName = this.FirstName,
+                    LastName = this.LastName,
+                    Email = this.Email,
+                    Password = this.Password
+                };
+                OnPropertyChanged("FirstName");
+            }
+        }
 
 
         private string email;
@@ -36,6 +66,8 @@ namespace PrintQue.ViewModel
                 email = value;
                 User = new User()
                 {
+                    FirstName = this.FirstName,
+                    LastName = this.LastName,
                     Email = this.Email,
                     Password = this.Password
                 };
@@ -44,6 +76,8 @@ namespace PrintQue.ViewModel
         }
 
         private string password;
+        private string firstName;
+        private string lastName;
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -55,6 +89,8 @@ namespace PrintQue.ViewModel
                 password = value;
                 User = new User()
                 {
+                    FirstName = this.FirstName,
+                    LastName = this.LastName,
                     Email = this.Email,
                     Password = this.Password
                 };
@@ -76,18 +112,25 @@ namespace PrintQue.ViewModel
         }
         public async void Register()
         {
-            int canLogin = await User.Login(User.Email, user.Password);
-            switch (canLogin)
+            int canRegister = await User.Register(User.Email, User.Password, User.FirstName, User.LastName);
+            switch (canRegister)
             {
                 case 0:
                     await Xamarin.Forms.Application.Current.MainPage.DisplayAlert("Error", "Try again", "OK");
                     break;
                 case 1:
-                    await Xamarin.Forms.Application.Current.MainPage.Navigation.PushAsync(new AdminTabContainer());
+                    var Num = await User.Insert(user);
+                    if (Num > 0)
+                    {
+                        await Xamarin.Forms.Application.Current.MainPage.DisplayAlert("Success!", "You have successfully logged in!", "OK");
+                        await Xamarin.Forms.Application.Current.MainPage.Navigation.PopAsync();
+                    }
+                    else
+                    {
+                        await Xamarin.Forms.Application.Current.MainPage.DisplayAlert("Failure!", "An error was encountered when registering", "OK");
+                    }
                     break;
-                case 2:
-                    await Xamarin.Forms.Application.Current.MainPage.Navigation.PushAsync(new UserTabContainer());
-                    break;
+
             }
         }
     }
