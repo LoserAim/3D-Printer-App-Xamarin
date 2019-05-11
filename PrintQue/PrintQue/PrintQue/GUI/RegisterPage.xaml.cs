@@ -46,7 +46,7 @@ namespace PrintQue
 
                     User user = new User()
                     {
-                        Name = NameEntry.Text,
+                        FirstName = NameEntry.Text,
                         Email = userNameEntry.Text,
                         Admin = 0,
                         Password = PasswordConfirmEntry.Text

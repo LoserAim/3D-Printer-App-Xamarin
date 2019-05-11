@@ -88,14 +88,14 @@ namespace PrintQue
             {
                 Email = "drew.doser@gmail.com",
                 Password = "1234",
-                Name = "Andrew",
+                FirstName = "Andrew",
                 Admin = 0,
             },
             new User()
             {
                 Email = "Brad.Bergstrom@gmail.com",
                 Password = "1234",
-                Name = "Brad",
+                FirstName = "Brad",
                 Admin = 0,
             },
 

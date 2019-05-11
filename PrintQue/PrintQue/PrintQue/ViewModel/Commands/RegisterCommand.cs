@@ -7,6 +7,11 @@ namespace PrintQue.ViewModel.Commands
 {
     public class RegisterCommand : ICommand
     {
+        public RegisterViewModel RegisterViewModel { get; set; }
+        public RegisterCommand(RegisterViewModel registerViewModel)
+        {
+            RegisterViewModel = registerViewModel;
+        }
         public event EventHandler CanExecuteChanged;
 
         public bool CanExecute(object parameter)

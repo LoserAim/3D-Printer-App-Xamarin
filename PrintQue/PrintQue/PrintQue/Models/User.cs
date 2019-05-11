@@ -11,43 +11,25 @@ using System.ComponentModel;
 
 namespace PrintQue.Models
 {
-    public class User : INotifyPropertyChanged
+    public class User 
     {
         [PrimaryKey, AutoIncrement]
         public int ID { get; set; }
 
-
-
-        
-        private string email;
         [MaxLength(50), Unique]
-        public string Email
-        {
-            get { return email; }
-            set
-            {
-                email = value;
-                OnPropertyChanged("Email");
-            }
-        }
+        public string Email { get; set; }
 
 
 
         [MaxLength(50)]
-        public string Name { get; set; }
+        public string FirstName { get; set; }
+        [MaxLength(50)]
+        public string LastName { get; set; }
         public int Admin { get; set; }
-        
-        private string password;
 
-        public string Password
-        {
-            get { return password; }
-            set
-            {
-                password = value;
-                OnPropertyChanged("Password");
-            }
-        }
+
+
+        public string Password { get; set; }
         [OneToMany(CascadeOperations = CascadeOperation.All)]
         public List<Message> Messages { get; set; } = new List<Message>();
 
@@ -55,13 +37,7 @@ namespace PrintQue.Models
         [OneToMany(CascadeOperations = CascadeOperation.All)]
         public List<Request> Requests { get; set; } = new List<Request>();
 
-        public event PropertyChangedEventHandler PropertyChanged;
 
-        private void OnPropertyChanged(string propertyName)
-        {
-            if (PropertyChanged != null)
-                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-        }
         public static async Task<int> Login(string email, string password)
         {
             bool isUsernameEmpty = string.IsNullOrEmpty(email);
@@ -104,15 +80,15 @@ namespace PrintQue.Models
             SQLiteAsyncConnection conn = new SQLiteAsyncConnection(App.DatabaseLocation);
 
             var rows = await conn.InsertAsync(user);
-            
+
             return rows;
         }
-        
+
         public static async Task<List<User>> GetAll()
         {
             List<User> users = new List<User>();
             SQLiteAsyncConnection conn = new SQLiteAsyncConnection(App.DatabaseLocation);
-            users = await conn.GetAllWithChildrenAsync<User>();            
+            users = await conn.GetAllWithChildrenAsync<User>();
             return users;
         }
         public static async Task<User> SearchByID(int ID)
