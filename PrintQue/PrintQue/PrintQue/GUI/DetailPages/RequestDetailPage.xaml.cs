@@ -19,29 +19,31 @@ namespace PrintQue.GUI.DetailPages
         private DateTime _dateTimeRequestSet;
         private Request _request;
         private bool insert;
+        private int _status;
 
-        public RequestDetailPage(Request request=null, int status =0)
+
+        public RequestDetailPage(Request request=null, int Status =0)
         {
 
             InitializeComponent();
-            /*
-             status:
-             0 Admin insert
-             1 User insert
-             2 Admin Update
-             3 User Update
-             
-             */
+            BindingContext = request;
+            _request = request;
+            _status = Status;
 
-            switch (status)
+
+        }
+        protected override void OnAppearing()
+        {
+            switch (_status)
             {
                 case 0:
-
+                    //Admin insert
                     insert = true;
                     ToolbarItems.RemoveAt(1);
                     ToolbarItems.RemoveAt(1);
                     break;
                 case 1:
+                    //User insert
                     RequestDetails.Root.Remove(StatusEditor);
                     RequestDetails.Root.Remove(UserSelectorSection);
                     insert = true;
@@ -49,18 +51,19 @@ namespace PrintQue.GUI.DetailPages
                     ToolbarItems.RemoveAt(1);
                     break;
                 case 2:
+                    //Admin Edit
                     insert = false;
+                    
                     break;
                 case 3:
+                    //User Edit
                     RequestDetails.Root.Remove(StatusEditor);
                     RequestDetails.Root.Remove(UserSelectorSection);
                     insert = false;
                     break;
 
             }
-            BindingContext = request;
-            _request = request;
-
+            base.OnAppearing();
 
         }
         private async void SelectFile_Clicked(object sender, EventArgs e)
@@ -84,9 +87,17 @@ namespace PrintQue.GUI.DetailPages
         {
             DisplayAlert("Message Clicked!", "W00t!", "OK");
         }
-        private void ToolbarItem_Delete_Activated(object sender, EventArgs e)
+        private async void ToolbarItem_Delete_Activated(object sender, EventArgs e)
         {
-           
+            bool answer = await DisplayAlert("ALERT", "Are you sure you would like to delete this request?", "OK", "Cancel");
+            if(answer)
+            {
+                int num = await Request.Remove(_request);
+                if(num == 1)
+                {
+                    await DisplayAlert("ALERT", "Request Deleted", "OK");
+                }
+            }
         }
         private async void ToolbarItem_Save_Activated(object sender, EventArgs e)
         {
@@ -118,7 +129,7 @@ namespace PrintQue.GUI.DetailPages
             }
             else if (!insert)
             {
-                request.ID = _request.ID;
+                request.ID = exists.ID;
                 await Request.Update(request);
                 await Navigation.PopAsync();
 
@@ -131,7 +142,7 @@ namespace PrintQue.GUI.DetailPages
             }
             else
             {
-                await DisplayAlert("ERROR", "Could not Update Request", "OK");
+                await DisplayAlert("ERROR", "Could not save details of Request", "OK");
 
             }
         }

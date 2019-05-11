@@ -80,7 +80,7 @@ namespace PrintQue.Models
         public static async Task<int> Remove(Request request)
         {
             SQLiteAsyncConnection conn = new SQLiteAsyncConnection(App.DatabaseLocation);
-            var num = await conn.DeleteAsync<Request>(request);
+            var num = await conn.DeleteAsync<Request>(request.ID);
             return num;
         }
 

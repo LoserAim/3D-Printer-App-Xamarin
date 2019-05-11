@@ -8,7 +8,7 @@
     <ContentPage.ToolbarItems>
         <ToolbarItem Icon="save.png" Activated="ToolbarItem_Save_Activated" Order="Primary"/>
         <ToolbarItem x:Name="tool_Message" Icon="message.png" Activated="ToolbarItem_Message_Activated" Order="Primary"/>
-        <ToolbarItem x:Name="tool_Delete" Icon="delete.png" Activated="ToolbarItem_Delete_Activated" Order="Primary"/>
+        <ToolbarItem x:Name="tool_Delete" Icon="trash.png" Activated="ToolbarItem_Delete_Activated" Order="Primary"/>
     </ContentPage.ToolbarItems>
     <TableView Intent="Form" 
                HasUnevenRows="True"
