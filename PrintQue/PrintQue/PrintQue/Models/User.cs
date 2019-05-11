@@ -112,11 +112,7 @@ namespace PrintQue.Models
         {
             List<User> users = new List<User>();
             SQLiteAsyncConnection conn = new SQLiteAsyncConnection(App.DatabaseLocation);
-            await conn.CreateTableAsync<User>();
-
-            users = await conn.GetAllWithChildrenAsync<User>();
-
-            
+            users = await conn.GetAllWithChildrenAsync<User>();            
             return users;
         }
         public static async Task<User> SearchByID(int ID)

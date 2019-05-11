@@ -29,13 +29,13 @@ namespace PrintQue
         {
             
             SQLiteAsyncConnection conn = new SQLiteAsyncConnection(App.DatabaseLocation);
-
+            await conn.CreateTableAsync<Message>();
             await conn.CreateTableAsync<User>();
             await conn.CreateTableAsync<Request>();
             await conn.CreateTableAsync<Printer>();
             await conn.CreateTableAsync<Status>();
             await conn.CreateTableAsync<PrintColor>();
-            
+            await conn.CloseAsync();
         }
         private void RegisterLabel_Clicked()
              {
