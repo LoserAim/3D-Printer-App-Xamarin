@@ -22,8 +22,8 @@ namespace PrintQue.Models
          */
     public class Status
     {
-        [PrimaryKey, AutoIncrement]
-        public int ID { get; set; }
+        [PrimaryKey]
+        public string ID { get; set; }
         [Unique,NotNull,MaxLength(10)]
         public string Name { get; set; }
         [OneToMany(CascadeOperations = CascadeOperation.All)]
@@ -57,7 +57,7 @@ namespace PrintQue.Models
 
             return statuses.FirstOrDefault(g => g.Name == searchText);
         }
-        public static async Task<Status> SearchByID(int ID)
+        public static async Task<Status> SearchByID(string ID)
         {
             List<Status> statuses = await GetAll();
 

@@ -12,8 +12,8 @@ namespace PrintQue
     public partial class App : Application
     {
         public static string DatabaseLocation = string.Empty;
-        public static int    LoggedInUserID   = -1;
-        public static MobileServiceClient MobileService =new MobileServiceClient("https://3dprintqueue.azurewebsites.net");
+        public static string    LoggedInUserID   = null;
+        public static MobileServiceClient MobileService =new MobileServiceClient("http://3dprintqueue.azurewebsites.net");
         public static IMobileServiceSyncTable<Request> requestsTable;
         public static IMobileServiceSyncTable<Printer> printersTable;
         public static IMobileServiceSyncTable<Status> statusesTable;
@@ -28,11 +28,19 @@ namespace PrintQue
             MainPage = new NavigationPage(new LoginPage());
             //MainPage = new MainPage();
         }
+        public async void TestInsert()
+        {
+            var user = new ToDoItem()
+            {
+                text = "testing insert",
 
+            };
+            await MobileService.GetTable<ToDoItem>().InsertAsync(user);
+        }
         public App(string databaseLocation)
         {
             InitializeComponent();
-
+            TestInsert();
             MainPage = new NavigationPage(new LoginPage());
             //MainPage = new MainPage();
             DatabaseLocation = databaseLocation;
@@ -43,7 +51,6 @@ namespace PrintQue
             store.DefineTable<Status>();
 
             MobileService.SyncContext.InitializeAsync(store);
-
             requestsTable = MobileService.GetSyncTable<Request>();
             printersTable = MobileService.GetSyncTable<Printer>();
             statusesTable = MobileService.GetSyncTable<Status>();

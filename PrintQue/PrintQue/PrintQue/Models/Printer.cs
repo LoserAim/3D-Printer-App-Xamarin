@@ -9,18 +9,18 @@ namespace PrintQue.Models
 {
     public class Printer
     {
-        [PrimaryKey,AutoIncrement]
-        public int ID { get; set; }
+        [PrimaryKey]
+        public string ID { get; set; }
         [MaxLength(50), Unique]
         public string Name { get; set; }
 
 
         [ForeignKey(typeof(Status))]
-        public int StatusID { get; set; }
+        public string StatusID { get; set; }
 
 
         [ForeignKey(typeof(PrintColor))]
-        public int ColorID { get; set; }
+        public string ColorID { get; set; }
 
         public int ProjectsQueued { get; set; }
 
@@ -77,7 +77,7 @@ namespace PrintQue.Models
         {
             return await PrintColor.SearchByID(printer.ColorID);
         }
-        public static async Task<Printer> SearchByID(int ID)
+        public static async Task<Printer> SearchByID(string ID)
         {
             List<Printer> printers = await GetAll();
             return printers.FirstOrDefault(u => u.ID == ID);

@@ -24,7 +24,7 @@ namespace PrintQue
             var response = await DisplayAlert("Warning", "You are about to logout. Are you sure?", "Yes", "No");
             if (response)
             {
-                App.LoggedInUserID = -1;
+                App.LoggedInUserID = null;
                 await Navigation.PopAsync();
             }
         }

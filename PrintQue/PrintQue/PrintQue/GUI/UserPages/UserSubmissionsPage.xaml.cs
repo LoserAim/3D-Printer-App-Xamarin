@@ -27,7 +27,7 @@ namespace PrintQue.GUI.UserPages
 
         object IValueConverter.Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            var statusID  = (int)value;
+            var statusID  = (string)value;
             
             SQLiteConnection connection = new SQLiteConnection(App.DatabaseLocation);
             List<Status>     statuses   = connection.Table<Status>().ToList();

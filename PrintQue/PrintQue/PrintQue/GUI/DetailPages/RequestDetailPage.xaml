@@ -31,7 +31,7 @@
                     </ViewCell>
             </TableSection>
             <TableSection x:Name="PrinterSelectorSection">
-                <EntryCell  x:Name="ent_ProjectName" Label="ProjectName" Text="{Binding ProjectName}"/>
+                <EntryCell  x:Name="ent_ProjectName" Label="ProjectName" Text="{Binding ProjectName}" />
 
                 <ViewCell Tapped="Printer_Selector_Tapped">
                     <StackLayout Orientation="Horizontal" Padding="13, 5">

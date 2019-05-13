@@ -10,8 +10,8 @@ namespace PrintQue.Models
 {
     public class PrintColor
     {
-        [PrimaryKey, AutoIncrement]
-        public int ID { get; set; }
+        [PrimaryKey]
+        public string ID { get; set; }
         [Unique, NotNull]
         public string Name { get; set; }
         [Unique, NotNull]
@@ -37,7 +37,7 @@ namespace PrintQue.Models
 
             return printColors;
         }
-        public static async Task<PrintColor> SearchByID(int ID)
+        public static async Task<PrintColor> SearchByID(string ID)
         {
             List<PrintColor> printColors = await GetAll();
             return printColors.FirstOrDefault(u => u.ID == ID);

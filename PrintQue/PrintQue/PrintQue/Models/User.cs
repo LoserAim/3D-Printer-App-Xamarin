@@ -13,8 +13,8 @@ namespace PrintQue.Models
 {
     public class User 
     {
-        [PrimaryKey, AutoIncrement]
-        public int ID { get; set; }
+        [PrimaryKey]
+        public string ID { get; set; }
 
         [MaxLength(50), Unique]
         public string Email { get; set; }
@@ -49,31 +49,38 @@ namespace PrintQue.Models
             }
             else
             {
-                //admin
-                if (email.Equals("admin"))
-                {
-                    // TODO(VorpW): Assign App.LoggedInUserID when an admin logs in
-                    return 1;
-                }
-                else
-                {
+                var user = (await App.MobileService.GetTable<User>().Where(u => u.Email == email).ToListAsync()).FirstOrDefault();
 
-                    var user = await SearchByEmail(email.ToString());
-                    if (user != null)
+                if (user != null)
+                {
+                    //admin
+                    if (user.Admin == 1)
                     {
+                        if (user.Password.Contains(password.ToString()))
+                        {
+                            App.LoggedInUserID = user.ID;
+                            return 1;
+                        }
+                        // TODO(VorpW): Assign App.LoggedInUserID when an admin logs in
+
+                    }
+                    else
+                    {
+
                         if (user.Password.Contains(password.ToString()))
                         {
                             App.LoggedInUserID = user.ID;
                             return 2;
                         }
+
+
+
+
                     }
-
-
-
                 }
-                return 0;
 
             }
+            return 0;
         }
 
         public static async Task<int> Register(string email, string password, string firstname, string lastname)
@@ -118,7 +125,7 @@ namespace PrintQue.Models
             users = await conn.GetAllWithChildrenAsync<User>();
             return users;
         }
-        public static async Task<User> SearchByID(int ID)
+        public static async Task<User> SearchByID(string ID)
         {
             List<User> users = await GetAll();
             return users.FirstOrDefault(u => u.ID == ID);

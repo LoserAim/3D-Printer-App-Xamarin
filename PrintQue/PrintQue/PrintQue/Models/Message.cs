@@ -11,10 +11,10 @@ namespace PrintQue.Models
 {
     public class Message
     {
-        [PrimaryKey, AutoIncrement]
-        public int ID { get; set; }
+        [PrimaryKey]
+        public string ID { get; set; }
         [ForeignKey(typeof(User))]
-        public int UserID { get; set; }
+        public string UserID { get; set; }
         [ManyToOne]
         public User User { get; set; }
         [ForeignKey(typeof(Request))]

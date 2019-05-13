@@ -133,7 +133,7 @@ namespace PrintQue
             if (response)
 
             {
-                App.LoggedInUserID = -1;
+                App.LoggedInUserID = null;
 
                 await Navigation.PopAsync();
             }
@@ -142,7 +142,7 @@ namespace PrintQue
         private async void ToolbarItem_Drop_Tables_Activated(object sender, EventArgs e)
         {
             await DropTables();
-            await PopulateTables();
+           // await PopulateTables();
 
 
 

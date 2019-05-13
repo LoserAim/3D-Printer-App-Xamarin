@@ -13,18 +13,18 @@ namespace PrintQue.Models
 {
     public class Request 
     {
-        [PrimaryKey, AutoIncrement]
-        public int ID { get; set; }
+        [PrimaryKey]
+        public string ID { get; set; }
         [ForeignKey(typeof(Printer))]
-        public int PrinterID { get; set; }
+        public string PrinterID { get; set; }
         [ManyToOne]
         public Printer Printer { get; set; }
         [ForeignKey(typeof(Status))]
-        public int StatusID { get; set; }
+        public string StatusID { get; set; }
         [ManyToOne]
         public Status Status { get; set; }
         [ForeignKey(typeof(User))]
-        public int UserID { get; set; }
+        public string UserID { get; set; }
         [ManyToOne]
         public User User { get; set; }
         public DateTime DateMade { get; set; }
@@ -38,28 +38,23 @@ namespace PrintQue.Models
         public List<Message> Messages { get; set; } = new List<Message>();
         public static async Task<int> Insert(Request request)
         {
-            if (request.PrinterID == 0 || request.UserID == 0)
-            {
-                return 0;
-            }
-            else
-            {
-                var status = request.Status;
-                var user = request.User;
-                var printer = request.Printer;
-                status.Requests.Add(request);
-                user.Requests.Add(request);
-                printer.Requests.Add(request);
-                SQLiteAsyncConnection conn = new SQLiteAsyncConnection(App.DatabaseLocation);
 
-                var rows = await conn.InsertAsync(request);
-                await conn.UpdateWithChildrenAsync(status);
-                await conn.UpdateWithChildrenAsync(printer);
-                await conn.UpdateWithChildrenAsync(user);
+            var status = request.Status;
+            var user = request.User;
+            var printer = request.Printer;
+            status.Requests.Add(request);
+            user.Requests.Add(request);
+            printer.Requests.Add(request);
+            SQLiteAsyncConnection conn = new SQLiteAsyncConnection(App.DatabaseLocation);
+
+            var rows = await conn.InsertAsync(request);
+            await conn.UpdateWithChildrenAsync(status);
+            await conn.UpdateWithChildrenAsync(printer);
+            await conn.UpdateWithChildrenAsync(user);
 
 
-                return rows;
-            }
+            return rows;
+            
         }
 
 
@@ -103,8 +98,8 @@ namespace PrintQue.Models
         public static async Task<List<Request>> SortByStatus(string searchText = null)
         {
             List<Request> requests = await GetAll();
-            var status = Status.SearchByName(searchText);
-            List<Request> sortedRequests = requests.Where(r => r.StatusID == status.Id).ToList();
+            var status = await Status.SearchByName(searchText);
+            List<Request> sortedRequests = requests.Where(r => r.StatusID.Contains(status.ID)).ToList();
             return sortedRequests;
             
         }

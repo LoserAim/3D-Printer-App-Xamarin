@@ -29,11 +29,6 @@ namespace PrintQue.GUI.DetailPages
             BindingContext = request;
             _request = request;
             _status = Status;
-
-
-        }
-        protected override void OnAppearing()
-        {
             switch (_status)
             {
                 case 0:
@@ -53,7 +48,7 @@ namespace PrintQue.GUI.DetailPages
                 case 2:
                     //Admin Edit
                     insert = false;
-                    
+
                     break;
                 case 3:
                     //User Edit
@@ -63,9 +58,10 @@ namespace PrintQue.GUI.DetailPages
                     break;
 
             }
-            base.OnAppearing();
+
 
         }
+
         private async void SelectFile_Clicked(object sender, EventArgs e)
         {
             try
@@ -125,7 +121,9 @@ namespace PrintQue.GUI.DetailPages
             if (exists == null && insert == true)
             {
                 await Request.Insert(request);
+                await App.MobileService.GetTable<Request>().InsertAsync(request);
                 await Navigation.PopAsync();
+
             }
             else if (!insert)
             {
