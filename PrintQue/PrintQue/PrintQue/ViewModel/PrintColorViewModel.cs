@@ -1,6 +1,7 @@
 ﻿using PrintQue.Models;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -9,7 +10,7 @@ namespace PrintQue.ViewModel
     public class PrintColorViewModel : PrintColor
     {
 
-        public List<Printer> printers { get; set; } = new List<Printer>();
+        public List<Printer> Printers { get; set; } = new List<Printer>();
 
         public static async Task Insert(PrintColorViewModel printColorViewModel)
         {
@@ -33,22 +34,20 @@ namespace PrintQue.ViewModel
                     Name    =  pc.Name,
                     HexValue = pc.HexValue,
                 };
-                usersviewmodel.Add(inser);
+                printColorsViewModel.Add(inser);
             }
             //ADD PULL OF FOREIGN KEYS
-            return usersviewmodel;
-
-            return printColors;
+            return printColorsViewModel;
         }
-        public static async Task<PrintColor> SearchByID(string ID)
+        public static async Task<PrintColorViewModel> SearchByID(string ID)
         {
-            List<PrintColor> printColors = await GetAll();
+            List<PrintColorViewModel> printColors = await GetAll();
             return printColors.FirstOrDefault(u => u.ID == ID);
 
         }
-        public static async Task<PrintColor> SearchByName(string searchText = null)
+        public static async Task<PrintColorViewModel> SearchByName(string searchText = null)
         {
-            List<PrintColor> printColors = await GetAll();
+            List<PrintColorViewModel> printColors = await GetAll();
 
             return printColors.FirstOrDefault(g => g.Name == searchText);
         }
