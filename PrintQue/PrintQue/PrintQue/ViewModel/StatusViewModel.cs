@@ -4,7 +4,7 @@ using System.Text;
 
 namespace PrintQue.ViewModel
 {
-    class StatusViewModel
+    public class StatusViewModel
     {
     }
 }

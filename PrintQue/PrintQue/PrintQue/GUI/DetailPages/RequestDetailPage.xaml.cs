@@ -4,6 +4,7 @@ using Plugin.FilePicker.Abstractions;
 using PrintQue.GUI.SelectorPages;
 using PrintQue.GUI.UserPages;
 using PrintQue.Models;
+using PrintQue.ViewModel;
 using PrintQue.Widgets.CalendarWidget;
 using System;
 using System.Diagnostics;
@@ -97,7 +98,7 @@ namespace PrintQue.GUI.DetailPages
         }
         private async void ToolbarItem_Save_Activated(object sender, EventArgs e)
         {
-            var user = await User.SearchByEmail(Users_Picker.Text);
+            var user = await UserViewModel.SearchByEmail(Users_Picker.Text);
             var printer = await Printer.SearchByName(Printers_Picker.Text);
             var status = await Status.SearchByName(Status_Picker.Text);
             var request = new Request()
