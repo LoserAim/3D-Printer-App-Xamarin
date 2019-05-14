@@ -1,4 +1,5 @@
 ﻿using PrintQue.Models;
+using PrintQue.ViewModel;
 using SQLite;
 using System.Collections.Generic;
 using Xamarin.Forms;
@@ -19,7 +20,7 @@ namespace PrintQue.GUI.SelectorPages
         {
             base.OnAppearing();
             var StringList = new List<string>();
-            foreach (var p in await Status.GetAll())
+            foreach (var p in await StatusViewModel.GetAll())
             {
                 StringList.Add(p.Name);
                 

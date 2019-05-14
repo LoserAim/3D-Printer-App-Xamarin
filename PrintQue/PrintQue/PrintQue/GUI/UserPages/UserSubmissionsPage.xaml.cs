@@ -1,5 +1,6 @@
 ﻿using PrintQue.GUI.DetailPages;
 using PrintQue.Models;
+using PrintQue.ViewModel;
 using SQLite;
 using System;
 using System.Collections.Generic;
@@ -41,7 +42,7 @@ namespace PrintQue.GUI.UserPages
     [XamlCompilation(XamlCompilationOptions.Compile)]
 	public partial class UserSubmissionsPage : ContentPage
 	{
-        private ObservableCollection<Request> _requests;
+        private ObservableCollection<RequestViewModel> _requests;
         
         public UserSubmissionsPage()
 		{
@@ -56,10 +57,10 @@ namespace PrintQue.GUI.UserPages
 
         public async void RefreshRequestsView()
         {
-            var requests = await Request.GetAll();
-            var UserRequests = new List<Request>();
+            var requests = await RequestViewModel.GetAll();
+            var UserRequests = new List<RequestViewModel>();
             UserRequests = requests.Where(u => u.UserID == App.LoggedInUserID).ToList();
-            _requests = new ObservableCollection<Request>(UserRequests);
+            _requests = new ObservableCollection<RequestViewModel>(UserRequests);
             RequestListView.ItemsSource = _requests;
         }
 
@@ -76,7 +77,7 @@ namespace PrintQue.GUI.UserPages
             if (e.SelectedItem == null)
                 return;
 
-            var request = e.SelectedItem as Request;
+            var request = e.SelectedItem as RequestViewModel;
             await Navigation.PushAsync(new RequestDetailPage(request, 3));
             RequestListView.SelectedItem = null;
         }

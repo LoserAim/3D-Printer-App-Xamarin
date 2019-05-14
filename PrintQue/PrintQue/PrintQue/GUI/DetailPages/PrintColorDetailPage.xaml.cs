@@ -1,4 +1,5 @@
 ﻿using PrintQue.Models;
+using PrintQue.ViewModel;
 using SQLite;
 using System;
 using System.Collections.Generic;
@@ -20,25 +21,19 @@ namespace PrintQue.GUI.DetailPages
 		}
         private async void ToolbarItem_Save_Activated(object sender, EventArgs e)
         {
-            var exists = await PrintColor.SearchByName(ent_Name.Text);
+            var exists = await PrintColorViewModel.SearchByName(ent_Name.Text);
             if (exists == null)
             {
-                var printcolor = new PrintColor()
+                var printcolor = new PrintColorViewModel()
                 {
                     Name = ent_Name.Text,
                     HexValue = ent_HexValue.Text,
                 };
-                int rows = await PrintColor.Insert(printcolor);
-                if (rows > 0)
-                {
-                    await DisplayAlert("Success!", "Print Color was successfully save!", "OK");
-                    await Navigation.PopAsync();
-                }
-                else
-                {
-                    await DisplayAlert("Failure", "Print Color was not saved!", "OK");
+                await PrintColorViewModel.Insert(printcolor);
 
-                }
+                await DisplayAlert("Success!", "Print Color was successfully save!", "OK");
+                await Navigation.PopAsync();
+
             }
             else
             {

@@ -1,5 +1,6 @@
 ﻿using PrintQue.GUI.SelectorPages;
 using PrintQue.Models;
+using PrintQue.ViewModel;
 using SQLite;
 using SQLiteNetExtensions.Extensions;
 using System;
@@ -53,16 +54,16 @@ namespace PrintQue.GUI.DetailPages
             var response = await DisplayAlert("Warning", "Are you sure you want to Create this Printer?", "Yes", "No");
             if (response)
             {
-                var exists = await Printer.SearchByName(ent_Name.Text);
+                var exists = await PrinterViewModel.SearchByName(ent_Name.Text);
                 if (exists != null)
                 {
                     await DisplayAlert("ERROR", "Name already Used. Please choose another", "OK");
                 }
                 else
                 {
-                    var status = await Status.SearchByName(Status_Picker.Text);
-                    var printColor = await PrintColor.SearchByName(Color_Picker.Text);
-                    var printer = new Printer()
+                    var status = await StatusViewModel.SearchByName(Status_Picker.Text);
+                    var printColor = await PrintColorViewModel.SearchByName(Color_Picker.Text);
+                    var printer = new PrinterViewModel()
                     {
                         Name = ent_Name.Text,
                         StatusID = status.ID,
@@ -72,7 +73,7 @@ namespace PrintQue.GUI.DetailPages
                         ProjectsQueued = 0,
                     };
 
-                    await Printer.Insert(printer);
+                    await PrinterViewModel.Insert(printer);
 
                 }
 

@@ -9,9 +9,9 @@ namespace PrintQue.ViewModel
 {
     public class RegisterViewModel : INotifyPropertyChanged
     {
-        private User user;
+        private UserViewModel user;
 
-        public User User
+        public UserViewModel User
         {
             get { return user; }
             set
@@ -28,7 +28,7 @@ namespace PrintQue.ViewModel
             set
             {
                 lastName = value;
-                User = new User()
+                User = new UserViewModel()
                 {
                     FirstName = this.FirstName,
                     LastName = this.LastName,
@@ -44,7 +44,7 @@ namespace PrintQue.ViewModel
             set
             {
                 firstName = value;
-                User = new User()
+                User = new UserViewModel()
                 {
                     FirstName = this.FirstName,
                     LastName = this.LastName,
@@ -64,7 +64,7 @@ namespace PrintQue.ViewModel
             set
             {
                 email = value;
-                User = new User()
+                User = new UserViewModel()
                 {
                     FirstName = this.FirstName,
                     LastName = this.LastName,
@@ -87,7 +87,7 @@ namespace PrintQue.ViewModel
             set
             {
                 password = value;
-                User = new User()
+                User = new UserViewModel()
                 {
                     FirstName = this.FirstName,
                     LastName = this.LastName,
@@ -107,29 +107,24 @@ namespace PrintQue.ViewModel
 
         public RegisterViewModel()
         {
-            User = new User();
+            User = new UserViewModel();
             RegisterCommand = new RegisterCommand(this);
         }
         public async void Register()
         {
-            int canRegister = await User.Register(User.Email, User.Password, User.FirstName, User.LastName);
+            int canRegister = await UserViewModel.Register(User.Email, User.Password, User.FirstName, User.LastName);
             switch (canRegister)
             {
                 case 0:
                     await Xamarin.Forms.Application.Current.MainPage.DisplayAlert("Error", "Try again", "OK");
                     break;
                 case 1:
-                    var Num = await User.Insert(user);
-                    if (Num > 0)
-                    {
-                        await Xamarin.Forms.Application.Current.MainPage.DisplayAlert("Success!", "You have successfully logged in!", "OK");
-                        await Xamarin.Forms.Application.Current.MainPage.Navigation.PopAsync();
-                    }
-                    else
-                    {
-                        await Xamarin.Forms.Application.Current.MainPage.DisplayAlert("Failure!", "An error was encountered when registering", "OK");
-                    }
+                    var Num = UserViewModel.Insert(user);
+                    await Xamarin.Forms.Application.Current.MainPage.DisplayAlert("Success!", "You have successfully Registered in!", "OK");
+                    await Xamarin.Forms.Application.Current.MainPage.Navigation.PopAsync();
                     break;
+
+
 
             }
         }

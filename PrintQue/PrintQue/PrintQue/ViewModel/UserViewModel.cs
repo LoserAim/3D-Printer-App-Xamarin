@@ -10,10 +10,22 @@ namespace PrintQue.ViewModel
     public class UserViewModel : User
     {
 
-        public List<Message> Messages { get; set; } = new List<Message>();
-        public List<Request> Requests { get; set; } = new List<Request>();
+        public List<MessageViewModel> Messages { get; set; } = new List<MessageViewModel>();
+        public List<RequestViewModel> Requests { get; set; } = new List<RequestViewModel>();
+
+        private static async Task<UserViewModel> GetForeignKeys(UserViewModel userViewModel)
+        {
+
+            if (userViewModel.ID != null)
+            {
+                userViewModel.Messages = await MessageViewModel.SearchByUserID(userViewModel.ID);
+                var requests = await RequestViewModel.GetAll();
+                userViewModel.Requests = requests.Where(r => r.UserID.Contains(userViewModel.ID)).ToList();
+            }
 
 
+            return userViewModel;
+        }
         public static async Task<int> Login(string email, string password)
         {
             bool isUsernameEmpty = string.IsNullOrEmpty(email);
@@ -25,14 +37,16 @@ namespace PrintQue.ViewModel
             }
             else
             {
-                var user = (await App.MobileService.GetTable<User>().Where(u => u.Email == email).ToListAsync()).FirstOrDefault();
+
+                var user = await SearchByEmail(email);
 
                 if (user != null)
                 {
                     //admin
+                    
                     if (user.Admin == 1)
                     {
-                        if (user.Password.Contains(password.ToString()))
+                        if (user.Password.Contains(password))
                         {
                             App.LoggedInUserID = user.ID;
                             return 1;
@@ -89,28 +103,34 @@ namespace PrintQue.ViewModel
         {
             var user = new User()
             {
+                ID = userviewmodel.ID,
                 FirstName   = userviewmodel.FirstName,
                 LastName    = userviewmodel.LastName,
                 Email       = userviewmodel.Email,
                 Password    = userviewmodel.Password,
-
+                LatestMessage = userviewmodel.LatestMessage,
+                Admin = userviewmodel.Admin,
             };
             await App.MobileService.GetTable<User>().InsertAsync(user);
         }
 
         public static async Task<List<UserViewModel>> GetAll()
         {
-            List<User> users = new List<User>();
+            
             List<UserViewModel> usersviewmodel = new List<UserViewModel>();
-            users =await App.MobileService.GetTable<User>().ToListAsync();
+            var users =await App.MobileService.GetTable<User>().ToListAsync();
             foreach(var u in users)
             {
                 var inser = new UserViewModel()
                 {
+                    ID          = u.ID,
                     FirstName   = u.FirstName,
                     LastName    = u.LastName,
                     Email       = u.Email,
                     Password    = u.Password,
+                    Admin       = u.Admin,
+                    LatestMessage = u.LatestMessage,
+
                 };
                 usersviewmodel.Add(inser);
             }

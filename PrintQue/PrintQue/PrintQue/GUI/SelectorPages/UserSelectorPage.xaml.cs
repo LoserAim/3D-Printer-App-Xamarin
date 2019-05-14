@@ -1,4 +1,5 @@
 ﻿using PrintQue.Models;
+using PrintQue.ViewModel;
 using SQLite;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,7 +18,7 @@ namespace PrintQue.GUI.SelectorPages
         private async void RefreshListView(string searchtext = null)
         {
             var StringList = new List<string>();
-            foreach (var p in await User.GetAll())
+            foreach (var p in await UserViewModel.GetAll())
             {
                 StringList.Add(p.Email);
             }
@@ -36,7 +37,7 @@ namespace PrintQue.GUI.SelectorPages
         {
             base.OnAppearing();
             var StringList = new List<string>();
-            foreach (var p in await User.GetAll())
+            foreach (var p in await UserViewModel.GetAll())
             {
                 StringList.Add(p.Email);
             }

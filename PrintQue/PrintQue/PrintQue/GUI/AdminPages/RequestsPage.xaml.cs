@@ -11,6 +11,7 @@ using Xamarin.Forms.Xaml;
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using System.Threading;
+using PrintQue.ViewModel;
 
 namespace PrintQue
 {
@@ -18,7 +19,7 @@ namespace PrintQue
     public partial class RequestsPage : ContentPage
     {
 
-        private ObservableCollection<Request> _requests;
+        private ObservableCollection<RequestViewModel> _requests;
 
         private string _searchFilter = "All";
 
@@ -42,21 +43,22 @@ namespace PrintQue
 
         public async void RefreshRequestsView()
         {
-            var req = await Request.GetAll();
+
+            var req = await RequestViewModel.GetAll();
 
             if(_searchFilter.Contains("Pending"))
             {
-                _requests = new ObservableCollection<Request>(req.Where(r => r.Status.Name.Contains("nostatus")).ToList());
+                _requests = new ObservableCollection<RequestViewModel>(req.Where(r => r.Status.Name.Contains("nostatus")).ToList());
 
             }
             else if(!_searchFilter.Contains("All"))
             {
-                _requests = new ObservableCollection<Request>(req.Where(r => r.Status.Name.Contains(_searchFilter)).ToList());
+                _requests = new ObservableCollection<RequestViewModel>(req.Where(r => r.Status.Name.Contains(_searchFilter)).ToList());
 
             }
             else
             {
-                _requests = new ObservableCollection<Request>(req);
+                _requests = new ObservableCollection<RequestViewModel>(req);
             }
             
 
@@ -65,19 +67,19 @@ namespace PrintQue
 
         public async void Clicked_Approve(object sender, EventArgs e)
         {
-            var request = (sender as MenuItem).CommandParameter as Request;
-            request.Status = await Status.SearchByName("Approved");
+            var request = (sender as MenuItem).CommandParameter as RequestViewModel;
+            request.Status = await StatusViewModel.SearchByName("Approved");
             request.StatusID = request.Status.ID;
-            await Request.Update(request);
+            await RequestViewModel.Update(request);
             await DisplayAlert("Approved", request.ProjectName, "OK");
         }
 
         public async void Clicked_Deny(object sender, EventArgs e)
         {
-            var request = (sender as MenuItem).CommandParameter as Request;
-            request.Status = await Status.SearchByName("Denied");
+            var request = (sender as MenuItem).CommandParameter as RequestViewModel;
+            request.Status = await StatusViewModel.SearchByName("Denied");
             request.StatusID = request.Status.ID;
-            await Request.Update(request);
+            await RequestViewModel.Update(request);
             await DisplayAlert("Denied", request.ProjectName, "OK");
         }
 
@@ -102,8 +104,8 @@ namespace PrintQue
         {
             if (e.SelectedItem == null)
                 return;
-            var request = e.SelectedItem as Request;
-            request = await Request.SearchByName(request.ProjectName);
+            var request = e.SelectedItem as RequestViewModel;
+            request = await RequestViewModel.SearchByName(request.ProjectName);
             await Navigation.PushAsync(new RequestDetailPage(request, 2));
             RequestListView.SelectedItem = null;
         }

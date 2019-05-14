@@ -10,7 +10,7 @@ namespace PrintQue.ViewModel
     public class PrintColorViewModel : PrintColor
     {
 
-        public List<Printer> Printers { get; set; } = new List<Printer>();
+        public List<PrinterViewModel> Printers { get; set; } = new List<PrinterViewModel>();
 
         public static async Task Insert(PrintColorViewModel printColorViewModel)
         {
@@ -31,12 +31,15 @@ namespace PrintQue.ViewModel
             {
                 var inser = new PrintColorViewModel()
                 {
+                    ID = pc.ID,
                     Name    =  pc.Name,
                     HexValue = pc.HexValue,
                 };
+                if (inser.ID != null)
+                    inser.Printers = PrinterViewModel.GetAll().Result.ToList().Where(p => p.ColorID.Contains(inser.ID)).ToList();
                 printColorsViewModel.Add(inser);
             }
-            //ADD PULL OF FOREIGN KEYS
+
             return printColorsViewModel;
         }
         public static async Task<PrintColorViewModel> SearchByID(string ID)

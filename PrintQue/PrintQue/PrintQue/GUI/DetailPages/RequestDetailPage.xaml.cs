@@ -18,12 +18,12 @@ namespace PrintQue.GUI.DetailPages
     public partial class RequestDetailPage : ContentPage
     {
         private DateTime _dateTimeRequestSet;
-        private Request _request;
+        private RequestViewModel _request;
         private bool insert;
         private int _status;
 
 
-        public RequestDetailPage(Request request=null, int Status =0)
+        public RequestDetailPage(RequestViewModel request =null, int Status =0)
         {
 
             InitializeComponent();
@@ -89,19 +89,18 @@ namespace PrintQue.GUI.DetailPages
             bool answer = await DisplayAlert("ALERT", "Are you sure you would like to delete this request?", "OK", "Cancel");
             if(answer)
             {
-                int num = await Request.Remove(_request);
-                if(num == 1)
-                {
-                    await DisplayAlert("ALERT", "Request Deleted", "OK");
-                }
+                await RequestViewModel.Remove(_request);
+
+                await DisplayAlert("ALERT", "Request Deleted", "OK");
+ 
             }
         }
         private async void ToolbarItem_Save_Activated(object sender, EventArgs e)
         {
             var user = await UserViewModel.SearchByEmail(Users_Picker.Text);
-            var printer = await Printer.SearchByName(Printers_Picker.Text);
-            var status = await Status.SearchByName(Status_Picker.Text);
-            var request = new Request()
+            var printer = await PrinterViewModel.SearchByName(Printers_Picker.Text);
+            var status = await StatusViewModel.SearchByName(Status_Picker.Text);
+            var request = new RequestViewModel()
             {
                 
                 ProjectName = ent_ProjectName.Text,
@@ -118,18 +117,17 @@ namespace PrintQue.GUI.DetailPages
                 Personal = PersonalUse_Picker.Text,
                 Description = edi_Description.Text,
             };
-            var exists = await Request.SearchProjectNameByUser(request);
+            var exists = await RequestViewModel.SearchProjectNameByUser(request);
             if (exists == null && insert == true)
             {
-                await Request.Insert(request);
-                await App.MobileService.GetTable<Request>().InsertAsync(request);
+                await RequestViewModel.Insert(request);
                 await Navigation.PopAsync();
 
             }
             else if (!insert)
             {
                 request.ID = exists.ID;
-                await Request.Update(request);
+                await RequestViewModel.Update(request);
                 await Navigation.PopAsync();
 
             }

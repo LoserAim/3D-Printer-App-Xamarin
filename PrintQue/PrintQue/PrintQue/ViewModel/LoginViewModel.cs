@@ -79,7 +79,7 @@ namespace PrintQue.ViewModel
         }
         public async void Login()
         {
-            int canLogin = await User.Login(User.Email, user.Password);
+            int canLogin = await UserViewModel.Login(User.Email, user.Password);
             switch (canLogin)
             {
                 case 0:

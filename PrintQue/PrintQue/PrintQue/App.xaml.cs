@@ -28,19 +28,11 @@ namespace PrintQue
             MainPage = new NavigationPage(new LoginPage());
             //MainPage = new MainPage();
         }
-        public async void TestInsert()
-        {
-            var user = new ToDoItem()
-            {
-                text = "testing insert",
 
-            };
-            await MobileService.GetTable<ToDoItem>().InsertAsync(user);
-        }
         public App(string databaseLocation)
         {
             InitializeComponent();
-            TestInsert();
+            //TestInsert();
             MainPage = new NavigationPage(new LoginPage());
             //MainPage = new MainPage();
             DatabaseLocation = databaseLocation;

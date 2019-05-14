@@ -14,7 +14,7 @@ namespace PrintQue.Models
     {
         public string ID { get; set; }
         public string UserID { get; set; }
-        public int RequestID { get; set; }
+        public string RequestID { get; set; }
         public DateTime Sent { get; set; }
         public string Body { get; set; }
 

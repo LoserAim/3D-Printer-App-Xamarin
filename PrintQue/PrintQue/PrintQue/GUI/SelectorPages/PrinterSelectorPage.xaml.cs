@@ -9,6 +9,7 @@ using SQLiteNetExtensions.Extensions;
 
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
+using PrintQue.ViewModel;
 
 namespace PrintQue.GUI.SelectorPages
 {
@@ -23,7 +24,7 @@ namespace PrintQue.GUI.SelectorPages
         {
             base.OnAppearing();
             var StringList = new List<string>();
-            foreach (var p in await Printer.GetAll())
+            foreach (var p in await PrinterViewModel.GetAll())
             {
                 StringList.Add(p.Name);
             }

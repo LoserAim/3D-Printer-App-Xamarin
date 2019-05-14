@@ -1,4 +1,5 @@
 ﻿using PrintQue.Models;
+using PrintQue.ViewModel;
 using SQLite;
 using System;
 using System.Collections.Generic;
@@ -21,23 +22,17 @@ namespace PrintQue.GUI.DetailPages
 
         private async void ToolbarItem_Save_Activated(object sender, EventArgs e)
         {
-            var exists = await Status.SearchByName(ent_Name.Text);
+            var exists = await StatusViewModel.SearchByName(ent_Name.Text);
             if (exists == null)
             {
-                var status = new Status()
+                var status = new StatusViewModel()
                 {
                     Name = ent_Name.Text,
                 };
-                int rows = await Status.Insert(status);
-                if (rows > 0)
-                {
-                    await DisplayAlert("Success!", "Status was successfully save!", "OK");
-                    await Navigation.PopAsync();
-                }
-                else
-                {
-                    await DisplayAlert("Failure", "Status was not saved!", "OK");
-                }
+                await StatusViewModel.Insert(status);
+
+                await DisplayAlert("Success!", "Status was successfully save!", "OK");
+                await Navigation.PopAsync();
             }
             else
             {

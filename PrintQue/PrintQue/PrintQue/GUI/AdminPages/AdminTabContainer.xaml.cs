@@ -13,6 +13,7 @@ using SQLiteNetExtensions.Extensions;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using PrintQue.GUI.DetailPages;
+using PrintQue.ViewModel;
 
 namespace PrintQue
 {
@@ -29,7 +30,7 @@ namespace PrintQue
 
         private void ToolbarItem_Plus_Activated(object sender, EventArgs e)
         {
-            var request = new Request();
+            var request = new RequestViewModel();
             request = null;
             Navigation.PushAsync(new RequestDetailPage(request));
         }
@@ -41,7 +42,7 @@ namespace PrintQue
 
         private void ToolbarItem_Add_Request_Activated(object sender, EventArgs e)
         {
-            var request = new Request();
+            var request = new RequestViewModel();
             request = null;
             Navigation.PushAsync(new RequestDetailPage(request));
         }
@@ -58,15 +59,7 @@ namespace PrintQue
             }
         }
 
-        private async void ToolbarItem_Drop_Tables_Activated(object sender, EventArgs e)
-        {
-            //await DropTables();
-           // await PopulateTables();
 
-
-
-
-        }
 
 
         async private void ToolbarItem_Add_Color_Activated(object sender, EventArgs e)
