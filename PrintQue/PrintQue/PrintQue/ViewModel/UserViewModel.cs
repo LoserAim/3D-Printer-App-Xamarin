@@ -99,6 +99,35 @@ namespace PrintQue.ViewModel
 
             }
         }
+        private static UserViewModel ReturnUserViewModel(User user)
+        {
+            var item = new UserViewModel()
+            {
+                ID = user.ID,
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                Email = user.Email,
+                Password = user.Password,
+                LatestMessage = user.LatestMessage,
+                Admin = user.Admin,
+            };
+            return item;
+        }
+        private static User ReturnUser(UserViewModel userviewmodel)
+        {
+            var item = new User()
+            {
+                ID = userviewmodel.ID,
+                FirstName = userviewmodel.FirstName,
+                LastName = userviewmodel.LastName,
+                Email = userviewmodel.Email,
+                Password = userviewmodel.Password,
+                LatestMessage = userviewmodel.LatestMessage,
+                Admin = userviewmodel.Admin,
+            };
+            return item;
+        }
+
         public static async Task Insert(UserViewModel userviewmodel)
         {
             var user = new User()
@@ -139,15 +168,15 @@ namespace PrintQue.ViewModel
         }
         public static async Task<UserViewModel> SearchByID(string ID)
         {
-            List<UserViewModel> users = await GetAll();
-            return users.FirstOrDefault(u => u.ID == ID);
+            User user = (await App.MobileService.GetTable<User>().Where(u => u.ID.Contains(ID)).ToListAsync()).FirstOrDefault();
+            return ReturnUserViewModel(user);
 
         }
         public static async Task<UserViewModel> SearchByEmail(string email)
         {
-            List<UserViewModel> users = await GetAll();
-            return users.FirstOrDefault(u => u.Email.Contains(email));
+            User user = (await App.MobileService.GetTable<User>().Where(u => u.Email.Contains(email)).ToListAsync()).FirstOrDefault();
 
+            return ReturnUserViewModel(user);
         }
 
     }

@@ -50,20 +50,18 @@ namespace PrintQue.ViewModel
                 var status = ReturnStatusViewModel(item);
                 statusViewModels.Add(status);
             }
-            //ADD PULL OF FOREIGN KEYS
+
             return statusViewModels;
         }
         public static async Task<StatusViewModel> SearchByName(string searchText = null)
         {
-            List<StatusViewModel> statuses = await GetAll();
-
-            return statuses.FirstOrDefault(g => g.Name == searchText);
+            Status user = (await App.MobileService.GetTable<Status>().Where(u => u.Name.Contains(searchText)).ToListAsync()).FirstOrDefault();
+            return ReturnStatusViewModel(user);
         }
         public static async Task<StatusViewModel> SearchByID(string ID)
         {
-            List<StatusViewModel> statuses = await GetAll();
-
-            return statuses.FirstOrDefault(g => g.ID == ID);
+            Status user = (await App.MobileService.GetTable<Status>().Where(u => u.ID.Contains(ID)).ToListAsync()).FirstOrDefault();
+            return ReturnStatusViewModel(user);
         }
 
     }

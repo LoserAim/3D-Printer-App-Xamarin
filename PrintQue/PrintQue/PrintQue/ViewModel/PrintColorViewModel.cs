@@ -35,8 +35,6 @@ namespace PrintQue.ViewModel
                     Name    =  pc.Name,
                     HexValue = pc.HexValue,
                 };
-                if (inser.ID != null)
-                    inser.Printers = PrinterViewModel.GetAll().Result.ToList().Where(p => p.ColorID.Contains(inser.ID)).ToList();
                 printColorsViewModel.Add(inser);
             }
 

@@ -9,7 +9,7 @@
         <Entry x:Name="userNameEntry" Placeholder="Email Adress" Keyboard="Email" Text="{Binding Email, Mode=TwoWay}"/>
         <Entry x:Name="userPasswordEntry" Placeholder="Password" IsPassword="True" Text="{Binding Password, Mode=TwoWay}"/>
         <Entry x:Name="PasswordConfirmEntry" Placeholder="Confirm Password" IsPassword="True" Text="{Binding confirmPassword, Mode=TwoWay}"/>
-        <Button x:Name="LoginButton" Text="Register" Command="{Binding RegisterCommand}" CommandParameter="{Binding UserViewModel}" Margin="0,35"  BackgroundColor="DodgerBlue" TextColor="White"/>
+        <Button x:Name="LoginButton" Text="Register" Command="{Binding RegisterCommand}" CommandParameter="{Binding User}" Margin="0,35"  BackgroundColor="DodgerBlue" TextColor="White"/>
     </StackLayout>
 
 </ContentPage>

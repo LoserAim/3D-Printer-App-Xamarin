@@ -14,7 +14,22 @@ namespace PrintQue.ViewModel
         public PrintColorViewModel PrintColor { get; set; } = new PrintColorViewModel();
         public List<RequestViewModel> Requests { get; set; } = new List<RequestViewModel>();
 
-
+        public static async Task PopulateForeignKeys(PrinterViewModel printer)
+        {
+            if (printer.StatusID != null)
+            {
+                printer.Status = await StatusViewModel.SearchByID(printer.StatusID);
+            }
+            if (printer.ColorID != null)
+            {
+                printer.PrintColor = await PrintColorViewModel.SearchByID(printer.ColorID);
+            }
+            var requests = await RequestViewModel.SearchByPrinter(printer);
+            if (requests != null)
+            {
+                printer.Requests = requests;
+            }
+        }
         public static async Task Insert(PrinterViewModel printerViewModel)
         {
             var printer = new Printer()
@@ -43,19 +58,7 @@ namespace PrintQue.ViewModel
                     ProjectsQueued = p.ProjectsQueued,
 
                 };
-                if(printer.StatusID != null)
-                {
-                    printer.Status = await StatusViewModel.SearchByID(printer.StatusID);
-                }
-                if (printer.ColorID != null)
-                {
-                    printer.PrintColor = await PrintColorViewModel.SearchByID(printer.ColorID);
-                }
-                var requests = await RequestViewModel.SearchByPrinter(printer);
-                if(requests != null)
-                {
-                    printer.Requests = requests;
-                }
+
                 printersviewmodel.Add(printer);
             }
 
