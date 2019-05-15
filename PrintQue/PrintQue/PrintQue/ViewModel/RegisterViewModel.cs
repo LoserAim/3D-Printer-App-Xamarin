@@ -1,4 +1,5 @@
-﻿using PrintQue.Models;
+﻿using PrintQue.Helper;
+using PrintQue.Models;
 using PrintQue.ViewModel.Commands;
 using System;
 using System.Collections.Generic;
@@ -10,7 +11,7 @@ namespace PrintQue.ViewModel
     public class RegisterViewModel : INotifyPropertyChanged
     {
         private UserViewModel user;
-
+        ApiHelper apiHelper = new ApiHelper();
         public UserViewModel User
         {
             get { return user; }
@@ -33,7 +34,8 @@ namespace PrintQue.ViewModel
                     FirstName = this.FirstName,
                     LastName = this.LastName,
                     Email = this.Email,
-                    Password = this.Password
+                    Password = this.Password,
+                    confirmPassword = this.confirmPassword,
                 };
                 OnPropertyChanged("LastName");
             }
@@ -49,7 +51,8 @@ namespace PrintQue.ViewModel
                     FirstName = this.FirstName,
                     LastName = this.LastName,
                     Email = this.Email,
-                    Password = this.Password
+                    Password = this.Password,
+                    confirmPassword = this.confirmPassword,
                 };
                 OnPropertyChanged("FirstName");
             }
@@ -69,13 +72,15 @@ namespace PrintQue.ViewModel
                     FirstName = this.FirstName,
                     LastName = this.LastName,
                     Email = this.Email,
-                    Password = this.Password
+                    Password = this.Password,
+                    confirmPassword = this.confirmPassword,
                 };
                 OnPropertyChanged("Email");
             }
         }
 
         private string password;
+        private string confirmpassword;
         private string firstName;
         private string lastName;
 
@@ -92,9 +97,28 @@ namespace PrintQue.ViewModel
                     FirstName = this.FirstName,
                     LastName = this.LastName,
                     Email = this.Email,
-                    Password = this.Password
+                    Password = this.Password,
+                    confirmPassword = this.confirmPassword,
                 };
                 OnPropertyChanged("Password");
+            }
+
+        }
+        public string confirmPassword
+        {
+            get { return confirmpassword; }
+            set
+            {
+                confirmpassword = value;
+                User = new UserViewModel()
+                {
+                    FirstName = this.FirstName,
+                    LastName = this.LastName,
+                    Email = this.Email,
+                    Password = this.Password,
+                    confirmPassword = this.confirmPassword, 
+                };
+                OnPropertyChanged("confirmPassword");
             }
 
         }
@@ -112,21 +136,23 @@ namespace PrintQue.ViewModel
         }
         public async void Register()
         {
-            int canRegister = await UserViewModel.Register(User.Email, User.Password, User.FirstName, User.LastName);
-            switch (canRegister)
-            {
-                case 0:
-                    await Xamarin.Forms.Application.Current.MainPage.DisplayAlert("Error", "Try again", "OK");
-                    break;
-                case 1:
-                    var Num = UserViewModel.Insert(user);
-                    await Xamarin.Forms.Application.Current.MainPage.DisplayAlert("Success!", "You have successfully Registered in!", "OK");
-                    await Xamarin.Forms.Application.Current.MainPage.Navigation.PopAsync();
-                    break;
+
+            apiHelper.RegisterAsync(User.Email, User.Password, User.confirmPassword, User.FirstName, User.LastName);
+            //int canRegister = await UserViewModel.Register(User.Email, User.Password, User.FirstName, User.LastName);
+            //switch (canRegister)
+            //{
+            //    case 0:
+            //        await Xamarin.Forms.Application.Current.MainPage.DisplayAlert("Error", "Try again", "OK");
+            //        break;
+            //    case 1:
+            //        var Num = UserViewModel.Insert(user);
+            //        await Xamarin.Forms.Application.Current.MainPage.DisplayAlert("Success!", "You have successfully Registered in!", "OK");
+            //        await Xamarin.Forms.Application.Current.MainPage.Navigation.PopAsync();
+            //        break;
 
 
 
-            }
+            //}
         }
     }
 }

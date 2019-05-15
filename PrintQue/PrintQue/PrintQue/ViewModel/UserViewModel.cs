@@ -9,7 +9,7 @@ namespace PrintQue.ViewModel
 {
     public class UserViewModel : User
     {
-
+        public string confirmPassword { get; set; }
         public List<MessageViewModel> Messages { get; set; } = new List<MessageViewModel>();
         public List<RequestViewModel> Requests { get; set; } = new List<RequestViewModel>();
 

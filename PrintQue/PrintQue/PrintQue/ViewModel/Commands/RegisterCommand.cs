@@ -17,10 +17,12 @@ namespace PrintQue.ViewModel.Commands
 
         public bool CanExecute(object parameter)
         {
-            var user = (User)parameter;
+            var user = (UserViewModel)parameter;
             if (user == null)
                 return false;
-            if (string.IsNullOrEmpty(user.Email) || string.IsNullOrEmpty(user.Password) || string.IsNullOrEmpty(user.FirstName) || string.IsNullOrEmpty(user.LastName))
+            if (string.IsNullOrEmpty(user.Email) || string.IsNullOrEmpty(user.Password) || string.IsNullOrEmpty(user.confirmPassword) || string.IsNullOrEmpty(user.FirstName) || string.IsNullOrEmpty(user.LastName))
+                return false;
+            if (!string.Equals(user.Password, user.confirmPassword))
                 return false;
             return true;
         }
