@@ -25,7 +25,7 @@ namespace PrintQue.Helper
             var json = JsonConvert.SerializeObject(us);
             HttpContent content = new StringContent(json);
             //Need to add url for Account register page
-            var response = await client.PostAsync("", content);
+            var response = await client.PostAsync("http://3dprintqueueweb.azurewebsites.net/Identity/Account/Register", content);
             return response.IsSuccessStatusCode;
         }
     }
