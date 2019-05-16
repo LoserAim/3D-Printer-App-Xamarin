@@ -13,7 +13,7 @@
                         <StackLayout Orientation="Horizontal" Padding="5">
                             <StackLayout HorizontalOptions="StartAndExpand">
                                 <Label Text="{Binding Name}" TextColor="Black"/>
-                                <Label Text="{Binding status.Name}"/>
+                                <Label Text="{Binding Status.Name}"/>
                             </StackLayout>
                             <Button x:Name="PrinterButton" Text="Request" 
                                     Clicked="CreateRequestButton_Clicked"

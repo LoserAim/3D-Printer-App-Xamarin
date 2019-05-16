@@ -46,37 +46,46 @@ namespace PrintQue.ViewModel
         public static async Task<List<MessageViewModel>> GetAll()
         {
             List<Message> messages = new List<Message>();
-            List<MessageViewModel> messageViewModel = new List<MessageViewModel>();
             messages = await App.MobileService.GetTable<Message>().ToListAsync();
+
+            
+            return ReturnListMessageViewModel(messages);
+        }
+
+        private static List<MessageViewModel> ReturnListMessageViewModel(List<Message> messages)
+        {
+            List<MessageViewModel> messageViewModel = new List<MessageViewModel>();
             foreach (var item in messages)
             {
                 var obj = ReturnMessageViewModel(item);
-                if (obj.UserID != null)
-                    obj.User = await UserViewModel.SearchByID(obj.UserID);
-                if (obj.RequestID != null)
-                    obj.Request = await RequestViewModel.SearchByID(obj.RequestID);
+
                 messageViewModel.Add(obj);
             }
-            
             return messageViewModel;
+        }
+        public static async  Task<MessageViewModel> GetForeignKeys(MessageViewModel obj)
+        {
+            if (obj.UserID != null)
+                obj.User = await UserViewModel.SearchByID(obj.UserID);
+            if (obj.RequestID != null)
+                obj.Request = await RequestViewModel.SearchByID(obj.RequestID);
+            return obj;
         }
         public static async Task<MessageViewModel> SearchByID(string ID)
         {
-            List<MessageViewModel> messages = await GetAll();
-            return messages.FirstOrDefault(u => u.ID == ID);
-
+            Message sorted = (await App.MobileService.GetTable<Message>().Where(u => u.ID.Contains(ID)).ToListAsync()).FirstOrDefault();
+            return ReturnMessageViewModel(sorted);
         }
         public static async Task<List<MessageViewModel>> SearchByUserID(string ID)
         {
-            List<MessageViewModel> messages = await GetAll();
-            return messages.Where(u => u.UserID.Contains(ID)).ToList();
+            List<Message> sorted = (await App.MobileService.GetTable<Message>().Where(u => u.UserID.Contains(ID)).ToListAsync());
+            return ReturnListMessageViewModel(sorted);
 
         }
         public static async Task<List<MessageViewModel>> SearchByRequestID(string ID)
         {
-            List<MessageViewModel> messages = await GetAll();
-            return messages.Where(u => u.RequestID.Contains(ID)).ToList();
-
+            List<Message> sorted = (await App.MobileService.GetTable<Message>().Where(u => u.RequestID.Contains(ID)).ToListAsync());
+            return ReturnListMessageViewModel(sorted);
         }
     }
 }

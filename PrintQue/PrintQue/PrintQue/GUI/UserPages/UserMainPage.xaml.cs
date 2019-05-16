@@ -53,6 +53,7 @@ namespace PrintQue
             if (e.SelectedItem == null)
                 return;
             var prichild = e.SelectedItem as PrinterViewModel;
+            prichild = await PrinterViewModel.PopulateForeignKeys(prichild);
             string action = await DisplayActionSheet("What would you like to know about the Printer?"
                 , "Projects Queued"
                 , "Printer Color");

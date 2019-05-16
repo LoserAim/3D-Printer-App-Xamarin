@@ -80,7 +80,6 @@ namespace PrintQue.ViewModel
             foreach (var req  in requests)
             {
                 var request = ReturnRequestViewModel(req);
-                request = await GetForeignKeys(request);
                 requestviewmodel.Add(request);
             }
             return requestviewmodel;
@@ -107,42 +106,49 @@ namespace PrintQue.ViewModel
             }
 
         }
+        private static List<RequestViewModel> ReturnListRequestViewModel(List<Request> list)
+        {
+            List<RequestViewModel> trans = new List<RequestViewModel>();
+            foreach (var item in list)
+            {
+                trans.Add(ReturnRequestViewModel(item));
+            }
+            return trans;
+        }
         //This function sorts the requests by statusID
         public static async Task<List<RequestViewModel>> SortByStatus(string searchText = null)
         {
-            List<RequestViewModel> requests = await GetAll();
             var status = await StatusViewModel.SearchByName(searchText);
-            List<RequestViewModel> sortedRequests = requests.Where(r => r.StatusID.Contains(status.ID)).ToList();
-            return sortedRequests;
+            List<Request> sortedRequests = await App.MobileService.GetTable<Request>().Where(sr => sr.StatusID.Contains(status.ID)).ToListAsync();
+            
+            return ReturnListRequestViewModel(sortedRequests);
 
         }
+
+        //Useless??
         public static async Task<RequestViewModel> SearchByName(string searchText = null)
         {
-            List<RequestViewModel> requests = await GetAll();
-            var sortedRequests = requests.FirstOrDefault(r => r.ProjectName.Contains(searchText));
-            return sortedRequests;
+            Request sortedRequests = (await App.MobileService.GetTable<Request>().Where(sr => sr.ProjectName.Contains(searchText)).ToListAsync()).FirstOrDefault();
+            return ReturnRequestViewModel(sortedRequests);
 
         }
         public static async Task<List<RequestViewModel>> SearchByPrinter(PrinterViewModel printerViewModel)
         {
-            List<RequestViewModel> requests = await GetAll();
-            var sortedRequests = requests.Where(r => r.PrinterID.Contains(printerViewModel.ID)).ToList();
-            return sortedRequests;
+            List<Request> sortedRequests = (await App.MobileService.GetTable<Request>().Where(sr => sr.PrinterID.Contains(printerViewModel.ID)).ToListAsync());
+            return ReturnListRequestViewModel(sortedRequests);
+
 
         }
         public static async Task<RequestViewModel> SearchByID(string ID)
         {
-            List<RequestViewModel> requests = await GetAll();
-            var sortedRequests = requests.FirstOrDefault(r => r.ID.Contains(ID));
-            return sortedRequests;
+            Request sortedRequests = (await App.MobileService.GetTable<Request>().Where(sr => sr.ID.Contains(ID)).ToListAsync()).FirstOrDefault();
+            return ReturnRequestViewModel(sortedRequests);
 
         }
         public static async Task<RequestViewModel> SearchProjectNameByUser(RequestViewModel requestViewModel)
         {
-            List<RequestViewModel> requests = await GetAll();
-            var sortedRequests = requests.FirstOrDefault(r => r.UserID == requestViewModel.UserID && r.ProjectName.Contains(requestViewModel.ProjectName));
-            return sortedRequests;
-
+            var sortedRequests = (await App.MobileService.GetTable<Request>().Where(r => r.UserID == requestViewModel.UserID && r.ProjectName.Contains(requestViewModel.ProjectName)).ToListAsync()).FirstOrDefault();
+            return ReturnRequestViewModel(sortedRequests);
         }
     }
 }

@@ -14,7 +14,7 @@ namespace PrintQue.ViewModel
         public PrintColorViewModel PrintColor { get; set; } = new PrintColorViewModel();
         public List<RequestViewModel> Requests { get; set; } = new List<RequestViewModel>();
 
-        public static async Task PopulateForeignKeys(PrinterViewModel printer)
+        public static async Task<PrinterViewModel> PopulateForeignKeys(PrinterViewModel printer)
         {
             if (printer.StatusID != null)
             {
@@ -29,11 +29,13 @@ namespace PrintQue.ViewModel
             {
                 printer.Requests = requests;
             }
+            return printer;
         }
         public static async Task Insert(PrinterViewModel printerViewModel)
         {
             var printer = new Printer()
             {
+                ID = printerViewModel.ID,
                 Name = printerViewModel.Name,
                 StatusID = printerViewModel.StatusID,
                 ColorID = printerViewModel.ColorID,
@@ -49,32 +51,36 @@ namespace PrintQue.ViewModel
             printers = await App.MobileService.GetTable<Printer>().ToListAsync();
             foreach (var p in printers)
             {
-                var printer = new PrinterViewModel()
-                {
-                    ID     = p.ID,
-                    Name = p.Name,
-                    StatusID = p.StatusID,
-                    ColorID = p.ColorID,
-                    ProjectsQueued = p.ProjectsQueued,
-
-                };
-
-                printersviewmodel.Add(printer);
+                printersviewmodel.Add(ReturnPrinterViewModel(p));
+               
             }
 
             return printersviewmodel;
         }
+        private static PrinterViewModel ReturnPrinterViewModel(Printer printer)
+        {
+            var printerviewmodel = new PrinterViewModel()
+            {
+                ID = printer.ID,
+
+                Name = printer.Name,
+                StatusID = printer.StatusID,
+                ColorID = printer.ColorID,
+                ProjectsQueued = printer.ProjectsQueued,
+
+            };
+            return printerviewmodel;
+        }
         public static async Task<PrinterViewModel> SearchByName(string searchText = null)
         {
-            List<PrinterViewModel> printers = await GetAll();
-
-            return printers.FirstOrDefault(g => g.Name == searchText);
+            Printer sorted = (await App.MobileService.GetTable<Printer>().Where(u => u.Name.Contains(searchText)).ToListAsync()).FirstOrDefault();
+            return ReturnPrinterViewModel(sorted);
         }
 
         public static async Task<PrinterViewModel> SearchByID(string ID)
         {
-            List<PrinterViewModel> printers = await GetAll();
-            return printers.FirstOrDefault(u => u.ID == ID);
+            Printer sorted = (await App.MobileService.GetTable<Printer>().Where(u => u.ID.Contains(ID)).ToListAsync()).FirstOrDefault();
+            return ReturnPrinterViewModel(sorted);
 
         }
 

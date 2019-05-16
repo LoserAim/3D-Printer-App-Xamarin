@@ -37,13 +37,11 @@ namespace PrintQue.ViewModel
             }
             else
             {
-
                 var user = await SearchByEmail(email);
 
                 if (user != null)
                 {
                     //admin
-                    
                     if (user.Admin == 1)
                     {
                         if (user.Password.Contains(password))
@@ -52,20 +50,14 @@ namespace PrintQue.ViewModel
                             return 1;
                         }
                         // TODO(VorpW): Assign App.LoggedInUserID when an admin logs in
-
                     }
                     else
                     {
-
                         if (user.Password.Contains(password.ToString()))
                         {
                             App.LoggedInUserID = user.ID;
                             return 2;
                         }
-
-
-
-
                     }
                 }
 
@@ -130,34 +122,39 @@ namespace PrintQue.ViewModel
 
         public static async Task Insert(UserViewModel userviewmodel)
         {
-            var user = new User()
+            var user = ReturnUser(userviewmodel);
+            try
             {
-                ID = userviewmodel.ID,
-                FirstName   = userviewmodel.FirstName,
-                LastName    = userviewmodel.LastName,
-                Email       = userviewmodel.Email,
-                Password    = userviewmodel.Password,
-                LatestMessage = userviewmodel.LatestMessage,
-                Admin = userviewmodel.Admin,
-            };
-            await App.MobileService.GetTable<User>().InsertAsync(user);
+                await App.MobileService.GetTable<User>().InsertAsync(user);
+                await Xamarin.Forms.Application.Current.MainPage.DisplayAlert("Success", "User was successfully registered!", "OK");
+            }
+            catch (NullReferenceException nre)
+            {
+                await Xamarin.Forms.Application.Current.MainPage.DisplayAlert("Failure", "User failed to be registered", "OK");
+
+            }
+            catch (Exception ex)
+            {
+                await Xamarin.Forms.Application.Current.MainPage.DisplayAlert("Failure", "User failed to be registered", "OK");
+
+            }
         }
 
         public static async Task<List<UserViewModel>> GetAll()
         {
-            
+
             List<UserViewModel> usersviewmodel = new List<UserViewModel>();
-            var users =await App.MobileService.GetTable<User>().ToListAsync();
-            foreach(var u in users)
+            var users = await App.MobileService.GetTable<User>().ToListAsync();
+            foreach (var u in users)
             {
                 var inser = new UserViewModel()
                 {
-                    ID          = u.ID,
-                    FirstName   = u.FirstName,
-                    LastName    = u.LastName,
-                    Email       = u.Email,
-                    Password    = u.Password,
-                    Admin       = u.Admin,
+                    ID = u.ID,
+                    FirstName = u.FirstName,
+                    LastName = u.LastName,
+                    Email = u.Email,
+                    Password = u.Password,
+                    Admin = u.Admin,
                     LatestMessage = u.LatestMessage,
 
                 };

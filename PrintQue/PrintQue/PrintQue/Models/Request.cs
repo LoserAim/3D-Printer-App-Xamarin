@@ -11,7 +11,7 @@ using System.Linq;
 
 namespace PrintQue.Models
 {
-    public class Request 
+    public class Request
     {
         public string    ID             { get; set; }
         public string   PrinterID       { get; set; }

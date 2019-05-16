@@ -136,7 +136,7 @@ namespace PrintQue.ViewModel
         }
         public async void Register()
         {
-
+            
             int canRegister = await UserViewModel.Register(User.Email, User.Password, User.FirstName, User.LastName);
             switch (canRegister)
             {
