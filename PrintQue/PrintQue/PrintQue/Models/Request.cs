@@ -16,7 +16,7 @@ namespace PrintQue.Models
         public string    ID             { get; set; }
         public string   PrinterID       { get; set; }
         public string   StatusID        { get; set; }
-        public string   UserID          { get; set; }
+        public string   ApplicationUserID          { get; set; }
         public DateTime DateMade        { get; set; }
         public DateTime DateRequested   { get; set; }
         public int      Duration        { get; set; }

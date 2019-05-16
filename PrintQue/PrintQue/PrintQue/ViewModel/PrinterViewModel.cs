@@ -51,7 +51,9 @@ namespace PrintQue.ViewModel
             printers = await App.MobileService.GetTable<Printer>().ToListAsync();
             foreach (var p in printers)
             {
-                printersviewmodel.Add(ReturnPrinterViewModel(p));
+                var item = ReturnPrinterViewModel(p);
+                item = await PopulateForeignKeys(item);
+                printersviewmodel.Add(item);
                
             }
 

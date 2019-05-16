@@ -15,9 +15,9 @@ namespace PrintQue.ViewModel
 {
     public class LoginViewModel : INotifyPropertyChanged
     {
-        private User user;
+        private UserViewModel user;
 
-        public User User
+        public UserViewModel User
         {
             get { return user; }
             set
@@ -37,7 +37,7 @@ namespace PrintQue.ViewModel
             set
             {
                 email = value;
-                User = new User()
+                User = new UserViewModel()
                 {
                     Email = this.Email,
                     Password = this.Password
@@ -56,7 +56,7 @@ namespace PrintQue.ViewModel
             set
             {
                 password = value;
-                User = new User()
+                User = new UserViewModel()
                 {
                     Email = this.Email,
                     Password = this.Password
@@ -74,12 +74,12 @@ namespace PrintQue.ViewModel
 
         public LoginViewModel()
         {
-            User = new User();
+            User = new UserViewModel();
             LoginCommand = new LoginCommand(this);
         }
         public async void Login()
         {
-            int canLogin = await UserViewModel.Login(User.Email, user.Password);
+            int canLogin = await UserViewModel.Login(User.Email, User.Password);
             switch (canLogin)
             {
                 case 0:

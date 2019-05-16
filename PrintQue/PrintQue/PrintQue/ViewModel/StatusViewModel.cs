@@ -55,8 +55,17 @@ namespace PrintQue.ViewModel
         }
         public static async Task<StatusViewModel> SearchByName(string searchText = null)
         {
-            Status user = (await App.MobileService.GetTable<Status>().Where(u => u.Name.Contains(searchText)).ToListAsync()).FirstOrDefault();
-            return ReturnStatusViewModel(user);
+            if(searchText != null)
+            {
+                Status user = (await App.MobileService.GetTable<Status>().Where(u => u.Name.Contains(searchText)).ToListAsync()).FirstOrDefault();
+                return ReturnStatusViewModel(user);
+            }
+            else
+            {
+                Status user = (await App.MobileService.GetTable<Status>().Where(u => u.Name.Contains("Pending")).ToListAsync()).FirstOrDefault();
+                return ReturnStatusViewModel(user);
+            }
+
         }
         public static async Task<StatusViewModel> SearchByID(string ID)
         {

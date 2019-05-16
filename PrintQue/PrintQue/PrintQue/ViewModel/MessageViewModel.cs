@@ -19,7 +19,7 @@ namespace PrintQue.ViewModel
             var messi = new Message()
             {
                 ID = messageViewModel.ID,
-                UserID = messageViewModel.UserID,
+                SenderID = messageViewModel.SenderID,
                 Body = messageViewModel.Body,
                 RequestID = messageViewModel.RequestID,
                 Sent = messageViewModel.Sent,
@@ -31,7 +31,7 @@ namespace PrintQue.ViewModel
             var messi = new MessageViewModel()
             {
                 ID = message.ID,
-                UserID = message.UserID,
+                SenderID = message.SenderID,
                 Body = message.Body,
                 RequestID = message.RequestID,
                 Sent = message.Sent,
@@ -65,8 +65,8 @@ namespace PrintQue.ViewModel
         }
         public static async  Task<MessageViewModel> GetForeignKeys(MessageViewModel obj)
         {
-            if (obj.UserID != null)
-                obj.User = await UserViewModel.SearchByID(obj.UserID);
+            if (obj.SenderID != null)
+                obj.User = await UserViewModel.SearchByID(obj.SenderID);
             if (obj.RequestID != null)
                 obj.Request = await RequestViewModel.SearchByID(obj.RequestID);
             return obj;
@@ -78,7 +78,7 @@ namespace PrintQue.ViewModel
         }
         public static async Task<List<MessageViewModel>> SearchByUserID(string ID)
         {
-            List<Message> sorted = (await App.MobileService.GetTable<Message>().Where(u => u.UserID.Contains(ID)).ToListAsync());
+            List<Message> sorted = (await App.MobileService.GetTable<Message>().Where(u => u.SenderID.Contains(ID)).ToListAsync());
             return ReturnListMessageViewModel(sorted);
 
         }

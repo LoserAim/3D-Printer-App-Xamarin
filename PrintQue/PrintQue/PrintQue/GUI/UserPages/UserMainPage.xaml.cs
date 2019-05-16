@@ -77,7 +77,7 @@ namespace PrintQue
             PrinterListView.IsRefreshing = false;
             PrinterListView.EndRefresh();
         }
-        private void CreateRequestButton_Clicked(object sender, EventArgs e)
+        private async void CreateRequestButton_Clicked(object sender, EventArgs e)
         {
             var menuItem = sender as Button;
             var selectedItem = menuItem.CommandParameter as PrinterViewModel;
@@ -85,10 +85,10 @@ namespace PrintQue
             {
                 Printer = selectedItem,
                 PrinterID = selectedItem.ID,
-                User = UserViewModel.SearchByID(App.LoggedInUserID).Result,
-                UserID = App.LoggedInUserID,
+                User = await UserViewModel.SearchByID(App.LoggedInUserID),
+                ApplicationUserID = App.LoggedInUserID,
             };
-            Navigation.PushAsync(new RequestDetailPage(request, 1));
+            await Navigation.PushAsync(new RequestDetailPage(request, 1));
         }
         
     }

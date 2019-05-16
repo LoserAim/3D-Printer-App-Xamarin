@@ -67,7 +67,7 @@
                 </ViewCell>
                 <ViewCell>
                     <StackLayout>
-                        <Slider HorizontalOptions="CenterAndExpand" x:Name="sli_Duration"  Maximum="8" Minimum="1" Value="4"/>
+                        <Slider HorizontalOptions="Fill" x:Name="sli_Duration"  Maximum="8" Minimum="1" Value="4"/>
                         <Label x:Name="lbl_sli_duration" 
                             HorizontalOptions="Center" 
                                Text="{Binding 

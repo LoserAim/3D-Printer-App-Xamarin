@@ -20,7 +20,7 @@ namespace PrintQue.ViewModel
             {
                 userViewModel.Messages = await MessageViewModel.SearchByUserID(userViewModel.ID);
                 var requests = await RequestViewModel.GetAll();
-                userViewModel.Requests = requests.Where(r => r.UserID.Contains(userViewModel.ID)).ToList();
+                userViewModel.Requests = requests.Where(r => r.ApplicationUserID.Contains(userViewModel.ID)).ToList();
             }
 
 
@@ -60,6 +60,7 @@ namespace PrintQue.ViewModel
                         }
                     }
                 }
+
 
             }
             return 0;
@@ -171,9 +172,21 @@ namespace PrintQue.ViewModel
         }
         public static async Task<UserViewModel> SearchByEmail(string email)
         {
-            User user = (await App.MobileService.GetTable<User>().Where(u => u.Email.Contains(email)).ToListAsync()).FirstOrDefault();
+            try
+            {
+                User user = (await App.MobileService.GetTable<User>().Where(u => u.Email.Contains(email)).ToListAsync()).FirstOrDefault();
+                return ReturnUserViewModel(user);
+            }
+            catch (NullReferenceException nre)
+            {
+                return null;
+            }
+            catch (Exception ex)
+            {
+                return null;
 
-            return ReturnUserViewModel(user);
+            }
+
         }
 
     }
