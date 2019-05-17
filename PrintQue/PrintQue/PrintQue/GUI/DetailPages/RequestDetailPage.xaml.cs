@@ -105,7 +105,7 @@ namespace PrintQue.GUI.DetailPages
             {
 
                 ProjectName = ent_ProjectName.Text,
-                ProjectFilePath = _request.ProjectFilePath;
+                ProjectFilePath = _request.ProjectFilePath,
                 DateRequested = new DateTime(_dateTimeRequestSet.Year, _dateTimeRequestSet.Month, _dateTimeRequestSet.Day),
                 Duration = Convert.ToInt32(lbl_sli_duration.Text),
                 DateMade = DateTime.Now,
