@@ -146,7 +146,7 @@ namespace PrintQue.ViewModel
             else
                 Message = "Registered failed";
 
-            //await Xamarin.Forms.Application.Current.MainPage.DisplayAlert("ALERY", Message, "OK");
+            await Xamarin.Forms.Application.Current.MainPage.DisplayAlert("ALERY", Message, "OK");
             //int canRegister = await UserViewModel.Register(User.Email, User.Password, User.FirstName, User.LastName);
             //switch (canRegister)
             //{
