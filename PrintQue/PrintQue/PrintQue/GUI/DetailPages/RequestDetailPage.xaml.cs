@@ -8,6 +8,7 @@ using PrintQue.ViewModel;
 using PrintQue.Widgets.CalendarWidget;
 using System;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -68,11 +69,11 @@ namespace PrintQue.GUI.DetailPages
             try
             {
                 FileData fileData = await CrossFilePicker.Current.PickFile();
-
+                string text = File.ReadAllText(fileData.FilePath);
                 // User cancelled file selection
                 if (fileData == null)
                     return;
-                _request.ProjectFilePath = JsonConvert.SerializeObject(fileData);
+                _request.ProjectFilePath = text;
                 SelectedFileLabel.Text = fileData.FileName;
             }
             catch (Exception ex)
@@ -102,9 +103,9 @@ namespace PrintQue.GUI.DetailPages
             var status = await StatusViewModel.SearchByName(Status_Picker.Text);
             var request = new RequestViewModel()
             {
-                
+
                 ProjectName = ent_ProjectName.Text,
-                //File = _request.File,
+                ProjectFilePath = _request.ProjectFilePath;
                 DateRequested = new DateTime(_dateTimeRequestSet.Year, _dateTimeRequestSet.Month, _dateTimeRequestSet.Day),
                 Duration = Convert.ToInt32(lbl_sli_duration.Text),
                 DateMade = DateTime.Now,

@@ -60,7 +60,7 @@ namespace PrintQue.GUI.UserPages
 
         public async void RefreshRequestsView()
         {
-            await Helper.AzureAppServiceHelper.SyncAsync();
+            //await Helper.AzureAppServiceHelper.SyncAsync();
             var requests = await RequestViewModel.GetAll();
             var UserRequests = new List<RequestViewModel>();
             UserRequests = requests.Where(u => u.UserID == App.LoggedInUserID).ToList();

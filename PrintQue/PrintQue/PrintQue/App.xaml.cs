@@ -5,6 +5,7 @@ using System;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using PrintQue.Models;
+using PrintQue.Helper;
 
 [assembly: XamlCompilation(XamlCompilationOptions.Compile)]
 namespace PrintQue
@@ -14,12 +15,12 @@ namespace PrintQue
         public static string DatabaseLocation = string.Empty;
         public static string    LoggedInUserID   = null;
         public static MobileServiceClient MobileService =new MobileServiceClient("http://3dprintqueue.azurewebsites.net");
-        public static IMobileServiceSyncTable<Request> requestsTable;
-        public static IMobileServiceSyncTable<Printer> printersTable;
-        public static IMobileServiceSyncTable<Status> statusesTable;
-        public static IMobileServiceSyncTable<PrintColor> printColorsTable;
+        //public static IMobileServiceSyncTable<Request> requestsTable;
+        //public static IMobileServiceSyncTable<Printer> printersTable;
+        //public static IMobileServiceSyncTable<Status> statusesTable;
+        //public static IMobileServiceSyncTable<PrintColor> printColorsTable;
 
-        public static IMobileServiceSyncTable<Message> messagesTable;
+        //public static IMobileServiceSyncTable<Message> messagesTable;
 
         public App()
         {
@@ -31,10 +32,13 @@ namespace PrintQue
 
         //private async void Getdata()
         //{
-        //    var test = await MobileService.GetTable<AspNetUsers>().ToListAsync();
+        //    var test = await MobileService.GetTable<Request>().ToListAsync();
         //    if(test != null)
         //    {
-
+        //        await AzureAppServiceHelper.SyncAsync();
+        //        var test2 = await requestsTable.ToListAsync();
+        //        if(test2 == null);
+                    
         //    }
         //}
 
@@ -46,18 +50,19 @@ namespace PrintQue
             MainPage = new NavigationPage(new LoginPage());
             //MainPage = new MainPage();
             DatabaseLocation = databaseLocation;
-            var store = new MobileServiceSQLiteStore(databaseLocation);
-            store.DefineTable<Request>();
-            store.DefineTable<PrintColor>();
-            store.DefineTable<Printer>();
-            store.DefineTable<Status>();
-            store.DefineTable<Message>();
-            MobileService.SyncContext.InitializeAsync(store);
-            requestsTable = MobileService.GetSyncTable<Request>();
-            printersTable = MobileService.GetSyncTable<Printer>();
-            statusesTable = MobileService.GetSyncTable<Status>();
-            printColorsTable = MobileService.GetSyncTable<PrintColor>();
-            messagesTable = MobileService.GetSyncTable<Message>();
+            //var store = new MobileServiceSQLiteStore(databaseLocation);
+            //store.DefineTable<Request>();
+            //store.DefineTable<PrintColor>();
+            //store.DefineTable<Printer>();
+            //store.DefineTable<Status>();
+            //store.DefineTable<Message>();
+            //MobileService.SyncContext.InitializeAsync(store);
+            //requestsTable = MobileService.GetSyncTable<Request>();
+            //printersTable = MobileService.GetSyncTable<Printer>();
+            //statusesTable = MobileService.GetSyncTable<Status>();
+            //printColorsTable = MobileService.GetSyncTable<PrintColor>();
+            //messagesTable = MobileService.GetSyncTable<Message>();
+            //var test = requestsTable.ToListAsync();
         }
 
         protected override void OnStart()

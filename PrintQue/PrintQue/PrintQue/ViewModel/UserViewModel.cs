@@ -19,8 +19,8 @@ namespace PrintQue.ViewModel
             if (userViewModel.ID != null)
             {
                 userViewModel.Messages = await MessageViewModel.SearchByUserID(userViewModel.ID);
-                var requests = await RequestViewModel.GetAll();
-                userViewModel.Requests = requests.Where(r => r.UserID.Contains(userViewModel.ID)).ToList();
+                var requests = await RequestViewModel.SearchByUser(userViewModel.ID);
+                userViewModel.Requests = requests;
             }
 
 

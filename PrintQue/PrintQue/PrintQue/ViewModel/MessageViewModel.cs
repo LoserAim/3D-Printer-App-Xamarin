@@ -42,13 +42,13 @@ namespace PrintQue.ViewModel
         public static async Task Insert(MessageViewModel messageviewmodel)
         {
             var messi = ReturnMessage(messageviewmodel);
-            await App.messagesTable.InsertAsync(messi);
-            await App.MobileService.SyncContext.PushAsync();
+            await App.MobileService.GetTable<Message>().InsertAsync(messi);
+            //await App.MobileService.SyncContext.PushAsync();
         }
         public static async Task<List<MessageViewModel>> GetAll()
         {
             List<Message> messages = new List<Message>();
-            messages = await App.messagesTable.ToListAsync();
+            messages = await App.MobileService.GetTable<Message>().ToListAsync();
 
             
             return ReturnListMessageViewModel(messages);
@@ -75,18 +75,18 @@ namespace PrintQue.ViewModel
         }
         public static async Task<MessageViewModel> SearchByID(string ID)
         {
-            Message sorted = (await App.messagesTable.Where(u => u.ID.Contains(ID)).ToListAsync()).FirstOrDefault();
+            Message sorted = (await App.MobileService.GetTable<Message>().Where(u => u.ID.Contains(ID)).ToListAsync()).FirstOrDefault();
             return ReturnMessageViewModel(sorted);
         }
         public static async Task<List<MessageViewModel>> SearchByUserID(string ID)
         {
-            List<Message> sorted = (await App.messagesTable.Where(u => u.SenderID.Contains(ID)).ToListAsync());
+            List<Message> sorted = (await App.MobileService.GetTable<Message>().Where(u => u.SenderID.Contains(ID)).ToListAsync());
             return ReturnListMessageViewModel(sorted);
 
         }
         public static async Task<List<MessageViewModel>> SearchByRequestID(string ID)
         {
-            List<Message> sorted = (await App.messagesTable.Where(u => u.RequestID.Contains(ID)).ToListAsync());
+            List<Message> sorted = (await App.MobileService.GetTable<Message>().Where(u => u.RequestID.Contains(ID)).ToListAsync());
             return ReturnListMessageViewModel(sorted);
         }
     }

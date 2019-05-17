@@ -22,14 +22,14 @@ namespace PrintQue.ViewModel
                 HexValue = printColorViewModel.HexValue,
 
             };
-            await App.printColorsTable.InsertAsync(printColor);
-            await App.MobileService.SyncContext.PushAsync();
+            await App.MobileService.GetTable<PrintColor>().InsertAsync(printColor);
+            //await App.MobileService.SyncContext.PushAsync();
         }
         public static async Task<List<PrintColorViewModel>> GetAll()
         {
             List<PrintColor> printColors = new List<PrintColor>();
             List<PrintColorViewModel> printColorsViewModel = new List<PrintColorViewModel>();
-            printColors = await App.printColorsTable.ToListAsync();
+            printColors = await App.MobileService.GetTable<PrintColor>().ToListAsync();
             foreach (var pc in printColors)
             {
                 var inser = new PrintColorViewModel()
@@ -70,7 +70,7 @@ namespace PrintQue.ViewModel
         }
         public static async Task<PrintColorViewModel> SearchByID(string ID)
         {
-            PrintColor printColor = (await App.printColorsTable.Where(pc => pc.ID.Contains(ID)).ToListAsync()).FirstOrDefault();
+            PrintColor printColor = (await App.MobileService.GetTable<PrintColor>().Where(pc => pc.ID.Contains(ID)).ToListAsync()).FirstOrDefault();
             return ReturnPrintColorViewModel(printColor);
 
         }
@@ -78,7 +78,7 @@ namespace PrintQue.ViewModel
         {
             if(searchText != null)
             {
-                PrintColor printColor = (await App.printColorsTable.Where(pc => pc.Name.Contains(searchText)).ToListAsync()).FirstOrDefault();
+                PrintColor printColor = (await App.MobileService.GetTable<PrintColor>().Where(pc => pc.Name.Contains(searchText)).ToListAsync()).FirstOrDefault();
                 return ReturnPrintColorViewModel(printColor);
             }
             else

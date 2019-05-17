@@ -43,7 +43,7 @@ namespace PrintQue
 
         public async void RefreshRequestsView()
         {
-            await Helper.AzureAppServiceHelper.SyncAsync();
+            //await Helper.AzureAppServiceHelper.SyncAsync();
 
             var req = await RequestViewModel.GetAll();
 
