@@ -71,7 +71,7 @@ namespace PrintQue.ViewModel
         }
         public static async Task<StatusViewModel> SearchByID(string ID)
         {
-            Status user = (await App.MobileService.GetTable<Status>().Where(u => u.ID.Contains(ID)).ToListAsync()).FirstOrDefault();
+            Status user = (await App.statusesTable.Where(u => u.ID.Contains(ID)).ToListAsync()).FirstOrDefault();
             return ReturnStatusViewModel(user);
         }
 
