@@ -4,6 +4,7 @@ using PrintQue.ViewModel.Commands;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
 using System.Text;
 
 namespace PrintQue.ViewModel
@@ -142,7 +143,13 @@ namespace PrintQue.ViewModel
             var response = await apiHelper.RegisterAsync(User);
 
             if (response)
+            {
                 Message = "Registered successfully";
+                var aspuser = (await App.MobileService.GetTable<AspNetUsers>().Where(u => u.Email.Contains(User.Email)).ToListAsync()).FirstOrDefault();
+                User.ID = aspuser.ID;
+                await UserViewModel.Insert(User);
+            }
+
             else
                 Message = "Registered failed";
 
