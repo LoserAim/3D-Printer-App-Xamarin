@@ -29,10 +29,20 @@ namespace PrintQue
             //MainPage = new MainPage();
         }
 
+        private async void Getdata()
+        {
+            var test = await MobileService.GetTable<AspNetUsers>().ToListAsync();
+            if(test != null)
+            {
+
+            }
+        }
+
         public App(string databaseLocation)
         {
             InitializeComponent();
-            //TestInsert();
+            Getdata();
+
             MainPage = new NavigationPage(new LoginPage());
             //MainPage = new MainPage();
             DatabaseLocation = databaseLocation;

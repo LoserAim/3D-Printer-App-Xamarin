@@ -69,7 +69,7 @@ namespace PrintQue
         {
             var request = (sender as MenuItem).CommandParameter as RequestViewModel;
             request.Status = await StatusViewModel.SearchByName("Approved");
-            request.StatusID = request.Status.ID;
+            request.StatusId = request.Status.ID;
             await RequestViewModel.Update(request);
             await DisplayAlert("Approved", request.ProjectName, "OK");
         }
@@ -78,7 +78,7 @@ namespace PrintQue
         {
             var request = (sender as MenuItem).CommandParameter as RequestViewModel;
             request.Status = await StatusViewModel.SearchByName("Denied");
-            request.StatusID = request.Status.ID;
+            request.StatusId = request.Status.ID;
             await RequestViewModel.Update(request);
             await DisplayAlert("Denied", request.ProjectName, "OK");
         }

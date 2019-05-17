@@ -4,6 +4,7 @@ using PrintQue.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -11,10 +12,10 @@ namespace PrintQue.Helper
 {
     public class ApiHelper
     {
-        public static async Task<bool> RegisterAsync(UserViewModel user)
+        public async Task<bool> RegisterAsync(UserViewModel user)
         {
             var client = new HttpClient();
-            var us = new ApplicationUser()
+            var us = new RegisterBindingModel()
             {
                 FirstName = user.FirstName,
                 LastName = user.LastName,
@@ -23,10 +24,17 @@ namespace PrintQue.Helper
                 Password = user.Password,
             };
             var json = JsonConvert.SerializeObject(us);
-            HttpContent content = new StringContent(json);
+            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+            var content = new StringContent(json, Encoding.UTF8, "application/json");
+            //HttpContent content = new StringContent(json);
+            HttpResponseMessage response;
             //Need to add url for Account register page
-            var response = await client.PostAsync("http://3dprintqueueweb.azurewebsites.net/Identity/Account/Register", content);
+            string url = "http://3dprintqueueweb.azurewebsites.net/api/Account/Register";
+            var uri = new Uri(url);
+            response = await client.PostAsync(uri, content);
+            //var response = await client.PostAsync(, content);
             return response.IsSuccessStatusCode;
+
         }
     }
 }

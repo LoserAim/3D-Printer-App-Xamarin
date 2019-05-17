@@ -11,7 +11,7 @@ namespace PrintQue.ViewModel
     public class RegisterViewModel : INotifyPropertyChanged
     {
         private UserViewModel user;
-
+        ApiHelper apiHelper;
         public UserViewModel User
         {
             get { return user; }
@@ -133,10 +133,20 @@ namespace PrintQue.ViewModel
         {
             User = new UserViewModel();
             RegisterCommand = new RegisterCommand(this);
+            apiHelper = new ApiHelper();
         }
+        public string Message { get; set; }
         public async void Register()
         {
-            
+
+            //var response = await apiHelper.RegisterAsync(User);
+
+            //if (response)
+            //    Message = "Registered successfully";
+            //else
+            //    Message = "Registered failed";
+
+            //await Xamarin.Forms.Application.Current.MainPage.DisplayAlert("ALERY", Message, "OK");
             int canRegister = await UserViewModel.Register(User.Email, User.Password, User.FirstName, User.LastName);
             switch (canRegister)
             {

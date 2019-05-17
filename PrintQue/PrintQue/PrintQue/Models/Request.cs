@@ -13,17 +13,18 @@ namespace PrintQue.Models
 {
     public class Request
     {
-        public string    ID             { get; set; }
-        public string   PrinterID       { get; set; }
-        public string   StatusID        { get; set; }
-        public string   ApplicationUserID          { get; set; }
-        public DateTime DateMade        { get; set; }
-        public DateTime DateRequested   { get; set; }
-        public int      Duration        { get; set; }
-        public string   ProjectName     { get; set; }
-        public string   Description     { get; set; }
-        public string   File            { get; set; }
-        public string   Personal        { get; set; }
+        public string ID { get; set; }
+        public string UserID { get; set; }
+        public string PrinterId { get; set; }
+        public string StatusId { get; set; }
+        public string ProjectName { get; set; }
+        public string ProjectFilePath { get; set; }
+        public DateTime DateRequested { get; set; }
+        public DateTime DateMade { get; set; }
+        public string ProjectDescript { get; set; }
+        public bool PersonalUse { get; set; }
+        public double Duration { get; set; }
+        public string ApplicationUserId { get; set; }
 
     }
 }

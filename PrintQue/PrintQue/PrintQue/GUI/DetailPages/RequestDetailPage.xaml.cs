@@ -72,7 +72,7 @@ namespace PrintQue.GUI.DetailPages
                 // User cancelled file selection
                 if (fileData == null)
                     return;
-                _request.File = JsonConvert.SerializeObject(fileData);
+                _request.ProjectFilePath = JsonConvert.SerializeObject(fileData);
                 SelectedFileLabel.Text = fileData.FileName;
             }
             catch (Exception ex)
@@ -108,14 +108,14 @@ namespace PrintQue.GUI.DetailPages
                 DateRequested = new DateTime(_dateTimeRequestSet.Year, _dateTimeRequestSet.Month, _dateTimeRequestSet.Day),
                 Duration = Convert.ToInt32(lbl_sli_duration.Text),
                 DateMade = DateTime.Now,
-                ApplicationUserID = user.ID,
+                UserID = user.ID,
                 User = user,
-                PrinterID = printer.ID,
+                PrinterId = printer.ID,
                 Printer = printer,
-                StatusID = status.ID,
+                StatusId = status.ID,
                 Status = status,
-                Personal = PersonalUse_Picker.Text,
-                Description = edi_Description.Text,
+                PersonalUse = Convert.ToBoolean(PersonalUse_Picker.Text),
+                ProjectDescript = edi_Description.Text,
             };
             var exists = await RequestViewModel.SearchProjectNameByUser(request);
             if (exists == null && insert == true)

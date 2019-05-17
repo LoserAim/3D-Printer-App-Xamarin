@@ -4,7 +4,7 @@ using System.Text;
 
 namespace PrintQue.Models
 {
-    public class ApplicationUser
+    public class RegisterBindingModel
     {
         public string Email { get; set; }
         public string Password { get; set; }
