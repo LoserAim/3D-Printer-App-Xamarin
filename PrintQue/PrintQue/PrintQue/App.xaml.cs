@@ -19,7 +19,7 @@ namespace PrintQue
         //public static IMobileServiceSyncTable<Printer> printersTable;
         //public static IMobileServiceSyncTable<Status> statusesTable;
         //public static IMobileServiceSyncTable<PrintColor> printColorsTable;
-
+        //
         //public static IMobileServiceSyncTable<Message> messagesTable;
 
         public App()

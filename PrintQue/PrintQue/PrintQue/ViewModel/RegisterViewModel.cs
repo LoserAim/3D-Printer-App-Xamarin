@@ -139,29 +139,29 @@ namespace PrintQue.ViewModel
         public async void Register()
         {
 
-            //var response = await apiHelper.RegisterAsync(User);
+            var response = await apiHelper.RegisterAsync(User);
 
-            //if (response)
-            //    Message = "Registered successfully";
-            //else
-            //    Message = "Registered failed";
+            if (response)
+                Message = "Registered successfully";
+            else
+                Message = "Registered failed";
 
             //await Xamarin.Forms.Application.Current.MainPage.DisplayAlert("ALERY", Message, "OK");
-            int canRegister = await UserViewModel.Register(User.Email, User.Password, User.FirstName, User.LastName);
-            switch (canRegister)
-            {
-                case 0:
-                    await Xamarin.Forms.Application.Current.MainPage.DisplayAlert("Error", "Try again", "OK");
-                    break;
-                case 1:
-                    var Num = UserViewModel.Insert(user);
-                    await Xamarin.Forms.Application.Current.MainPage.DisplayAlert("Success!", "You have successfully Registered in!", "OK");
-                    await Xamarin.Forms.Application.Current.MainPage.Navigation.PopAsync();
-                    break;
+            //int canRegister = await UserViewModel.Register(User.Email, User.Password, User.FirstName, User.LastName);
+            //switch (canRegister)
+            //{
+            //    case 0:
+            //        await Xamarin.Forms.Application.Current.MainPage.DisplayAlert("Error", "Try again", "OK");
+            //        break;
+            //    case 1:
+            //        var Num = UserViewModel.Insert(user);
+            //        await Xamarin.Forms.Application.Current.MainPage.DisplayAlert("Success!", "You have successfully Registered in!", "OK");
+            //        await Xamarin.Forms.Application.Current.MainPage.Navigation.PopAsync();
+            //        break;
 
 
 
-            }
+            //}
         }
     }
 }

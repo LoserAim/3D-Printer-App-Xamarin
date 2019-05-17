@@ -18,14 +18,9 @@ namespace PrintQue.ViewModel
         public UserViewModel Sender { get; set; }
         public RequestViewModel Request { get; set; }
 
-        public static async void PostMessage(string body, UserViewModel user = null)
+        public static async void PostMessage(MessageViewModel newMsg, UserViewModel user = null)
         {
-            var newMsg = new MessageViewModel()
-            {
-                Body = body,
-                Sender = await UserViewModel.SearchByID(App.LoggedInUserID),
-                SenderID = App.LoggedInUserID,
-            };
+
             var message = new MimeMessage();
             message.Subject = "AUTOMATED MESSAGE - DO NOT REPLY";
             if (user == null)
@@ -42,7 +37,7 @@ namespace PrintQue.ViewModel
 
             }
             var builder = new BodyBuilder();
-            builder.TextBody = body;
+            builder.TextBody = newMsg.Body;
             message.Body = builder.ToMessageBody();
             try
             {
@@ -62,32 +57,7 @@ namespace PrintQue.ViewModel
 
             }
 
-            //SmtpClient client = new SmtpClient
-            //{
-            //    Port = 587,
-            //    Host = "smtp.gmail.com",
-            //    EnableSsl = true,
-            //    Timeout = 10000,
-            //    DeliveryMethod = SmtpDeliveryMethod.Network,
-            //    UseDefaultCredentials = false,
-            //    Credentials = new System.Net.NetworkCredential("THEPRE.S.Q.L@gmail.com", "CST3162018")
-            //};
-            //var userToEmail = await UserViewModel.SearchByID(App.LoggedInUserID);
-            ////at the moment the users name is set as their email
-            //MailMessage message = new MailMessage("OregonTech3DPrintClub@donotreply.com", userToEmail.Email, "3D Print Club", newMsg.Body.ToString())
-            //{
-            //    BodyEncoding = Encoding.UTF8,
-            //    DeliveryNotificationOptions = DeliveryNotificationOptions.OnFailure
-            //};
 
-            //client.Send(message);
-
-
-            //newMsg.Sender = userToEmail;
-            //newMsg.TimeSent = DateTime.Now;
-            //newMsg.Request = (await RequestViewModel.SearchByUser(App.LoggedInUserID)).OrderBy(d => d.DateMade).FirstOrDefault();
-
-            //await Insert(newMsg);
 
         }
 
@@ -96,9 +66,9 @@ namespace PrintQue.ViewModel
             var messi = new Message()
             {
                 ID = messageViewModel.ID,
-                SenderID = messageViewModel.SenderID,
+                SenderId = messageViewModel.SenderId,
                 Body = messageViewModel.Body,
-                RequestID = messageViewModel.RequestID,
+                RequestId = messageViewModel.RequestId,
                 TimeSent = messageViewModel.TimeSent,
             };
             return messi;
@@ -108,9 +78,9 @@ namespace PrintQue.ViewModel
             var messi = new MessageViewModel()
             {
                 ID = message.ID,
-                SenderID = message.SenderID,
+                SenderId = message.SenderId,
                 Body = message.Body,
-                RequestID = message.RequestID,
+                RequestId = message.RequestId,
                 TimeSent = message.TimeSent,
             };
             return messi;
@@ -124,8 +94,10 @@ namespace PrintQue.ViewModel
         public static async Task<List<MessageViewModel>> GetAll()
         {
             List<Message> messages = new List<Message>();
+            
             messages = await App.MobileService.GetTable<Message>().ToListAsync();
-
+            if(messages == null)
+                return null;
             
             return ReturnListMessageViewModel(messages);
         }
@@ -143,10 +115,10 @@ namespace PrintQue.ViewModel
         }
         public static async  Task<MessageViewModel> GetForeignKeys(MessageViewModel obj)
         {
-            if (obj.SenderID != null)
-                obj.Sender = await UserViewModel.SearchByID(obj.SenderID);
-            if (obj.RequestID != null)
-                obj.Request = await RequestViewModel.SearchByID(obj.RequestID);
+            if (obj.SenderId != null)
+                obj.Sender = await UserViewModel.SearchByID(obj.SenderId);
+            if (obj.RequestId != null)
+                obj.Request = await RequestViewModel.SearchByID(obj.RequestId);
             return obj;
         }
         public static async Task<MessageViewModel> SearchByID(string ID)
@@ -156,13 +128,13 @@ namespace PrintQue.ViewModel
         }
         public static async Task<List<MessageViewModel>> SearchByUserID(string ID)
         {
-            List<Message> sorted = (await App.MobileService.GetTable<Message>().Where(u => u.SenderID.Contains(ID)).ToListAsync());
+            List<Message> sorted = (await App.MobileService.GetTable<Message>().Where(u => u.SenderId.Contains(ID)).ToListAsync());
             return ReturnListMessageViewModel(sorted);
 
         }
         public static async Task<List<MessageViewModel>> SearchByRequestID(string ID)
         {
-            List<Message> sorted = (await App.MobileService.GetTable<Message>().Where(u => u.RequestID.Contains(ID)).ToListAsync());
+            List<Message> sorted = (await App.MobileService.GetTable<Message>().Where(u => u.RequestId.Contains(ID)).ToListAsync());
             return ReturnListMessageViewModel(sorted);
         }
     }

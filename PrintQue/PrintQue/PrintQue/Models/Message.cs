@@ -13,8 +13,8 @@ namespace PrintQue.Models
     public class Message
     {
         public string ID { get; set; }
-        public string SenderID { get; set; }
-        public string RequestID { get; set; }
+        public string SenderId { get; set; }
+        public string RequestId { get; set; }
         public DateTime TimeSent { get; set; }
         public string Body { get; set; }
 

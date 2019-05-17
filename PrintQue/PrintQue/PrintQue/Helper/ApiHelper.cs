@@ -3,6 +3,7 @@ using PrintQue.Models;
 using PrintQue.ViewModel;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
@@ -35,6 +36,25 @@ namespace PrintQue.Helper
             //var response = await client.PostAsync(, content);
             return response.IsSuccessStatusCode;
 
+        }
+
+        public async Task<bool> LoginAsync(UserViewModel user)
+        {
+            var keyValues = new List<KeyValuePair<string, string>>
+            {
+                new KeyValuePair<string, string>("username", user.Email),
+                new KeyValuePair<string, string>("password", user.Password),
+                new KeyValuePair<string, string>("grant_type", "password"),
+
+            };
+            var request = new HttpRequestMessage(
+                HttpMethod.Post, "http://3dprintqueueweb.azurewebsites.net/api/Account/Register");
+
+            request.Content = new FormUrlEncodedContent(keyValues);
+            var client = new HttpClient();
+            var response = await client.SendAsync(request);
+            var content = await response.Content.ReadAsStringAsync();
+            return response.IsSuccessStatusCode;
         }
     }
 }
