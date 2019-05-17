@@ -1,4 +1,5 @@
-﻿using PrintQue.Models;
+﻿using Microsoft.WindowsAzure.MobileServices;
+using PrintQue.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,17 +17,19 @@ namespace PrintQue.ViewModel
         {
             var printColor = new PrintColor()
             {
+                ID = printColorViewModel.ID,
                 Name = printColorViewModel.Name,
                 HexValue = printColorViewModel.HexValue,
 
             };
-            await App.MobileService.GetTable<PrintColor>().InsertAsync(printColor);
+            await App.printColorsTable.InsertAsync(printColor);
+            await App.MobileService.SyncContext.PushAsync();
         }
         public static async Task<List<PrintColorViewModel>> GetAll()
         {
             List<PrintColor> printColors = new List<PrintColor>();
             List<PrintColorViewModel> printColorsViewModel = new List<PrintColorViewModel>();
-            printColors = await App.MobileService.GetTable<PrintColor>().ToListAsync();
+            printColors = await App.printColorsTable.ToListAsync();
             foreach (var pc in printColors)
             {
                 var inser = new PrintColorViewModel()
@@ -40,17 +43,49 @@ namespace PrintQue.ViewModel
 
             return printColorsViewModel;
         }
+        private static List<PrintColorViewModel> ReturnListPrintColorViewModel(List<PrintColor> printColors)
+        {
+            List<PrintColorViewModel> printColorsViewModel = new List<PrintColorViewModel>();
+            foreach (var pc in printColors)
+            {
+                var inser = new PrintColorViewModel()
+                {
+                    ID = pc.ID,
+                    Name = pc.Name,
+                    HexValue = pc.HexValue,
+                };
+                printColorsViewModel.Add(inser);
+            }
+            return printColorsViewModel;
+        }
+        private static PrintColorViewModel ReturnPrintColorViewModel(PrintColor printColor)
+        {
+            PrintColorViewModel printColorViewModel = new PrintColorViewModel()
+            {
+                ID = printColor.ID,
+                Name = printColor.Name,
+                HexValue = printColor.HexValue,
+            };
+            return printColorViewModel;
+        }
         public static async Task<PrintColorViewModel> SearchByID(string ID)
         {
-            List<PrintColorViewModel> printColors = await GetAll();
-            return printColors.FirstOrDefault(u => u.ID == ID);
+            PrintColor printColor = (await App.printColorsTable.Where(pc => pc.ID.Contains(ID)).ToListAsync()).FirstOrDefault();
+            return ReturnPrintColorViewModel(printColor);
 
         }
         public static async Task<PrintColorViewModel> SearchByName(string searchText = null)
         {
-            List<PrintColorViewModel> printColors = await GetAll();
-
-            return printColors.FirstOrDefault(g => g.Name == searchText);
+            if(searchText != null)
+            {
+                PrintColor printColor = (await App.printColorsTable.Where(pc => pc.Name.Contains(searchText)).ToListAsync()).FirstOrDefault();
+                return ReturnPrintColorViewModel(printColor);
+            }
+            else
+            {
+                return null;
+            }
+            
         }
     }
 }

@@ -43,6 +43,7 @@ namespace PrintQue
 
         public async void RefreshRequestsView()
         {
+            await Helper.AzureAppServiceHelper.SyncAsync();
 
             var req = await RequestViewModel.GetAll();
 
@@ -86,6 +87,7 @@ namespace PrintQue
         private void RequestListView_Refreshing(object sender, EventArgs e)
         {
             RefreshRequestsView();
+
             RequestListView.ItemsSource = _requests;
             RequestListView.IsRefreshing = false;
             RequestListView.EndRefresh();

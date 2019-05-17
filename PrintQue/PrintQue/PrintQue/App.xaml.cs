@@ -19,7 +19,7 @@ namespace PrintQue
         public static IMobileServiceSyncTable<Status> statusesTable;
         public static IMobileServiceSyncTable<PrintColor> printColorsTable;
 
-
+        public static IMobileServiceSyncTable<Message> messagesTable;
 
         public App()
         {
@@ -29,19 +29,19 @@ namespace PrintQue
             //MainPage = new MainPage();
         }
 
-        private async void Getdata()
-        {
-            var test = await MobileService.GetTable<AspNetUsers>().ToListAsync();
-            if(test != null)
-            {
+        //private async void Getdata()
+        //{
+        //    var test = await MobileService.GetTable<AspNetUsers>().ToListAsync();
+        //    if(test != null)
+        //    {
 
-            }
-        }
+        //    }
+        //}
 
         public App(string databaseLocation)
         {
             InitializeComponent();
-            Getdata();
+            //Getdata();
 
             MainPage = new NavigationPage(new LoginPage());
             //MainPage = new MainPage();
@@ -51,12 +51,13 @@ namespace PrintQue
             store.DefineTable<PrintColor>();
             store.DefineTable<Printer>();
             store.DefineTable<Status>();
-
+            store.DefineTable<Message>();
             MobileService.SyncContext.InitializeAsync(store);
             requestsTable = MobileService.GetSyncTable<Request>();
             printersTable = MobileService.GetSyncTable<Printer>();
             statusesTable = MobileService.GetSyncTable<Status>();
             printColorsTable = MobileService.GetSyncTable<PrintColor>();
+            messagesTable = MobileService.GetSyncTable<Message>();
         }
 
         protected override void OnStart()

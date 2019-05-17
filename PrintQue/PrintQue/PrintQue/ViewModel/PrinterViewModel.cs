@@ -1,4 +1,5 @@
-﻿using PrintQue.Models;
+﻿using Microsoft.WindowsAzure.MobileServices;
+using PrintQue.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -42,13 +43,14 @@ namespace PrintQue.ViewModel
                 ProjectsQueued = printerViewModel.ProjectsQueued,
 
             };
-            await App.MobileService.GetTable<Printer>().InsertAsync(printer);
+            await App.printersTable.InsertAsync(printer);
+            await App.MobileService.SyncContext.PushAsync();
         }
         public static async Task<List<PrinterViewModel>> GetAll()
         {
             List<Printer> printers = new List<Printer>();
             List<PrinterViewModel> printersviewmodel = new List<PrinterViewModel>();
-            printers = await App.MobileService.GetTable<Printer>().ToListAsync();
+            printers = await App.printersTable.ToListAsync();
             foreach (var p in printers)
             {
                 var item = ReturnPrinterViewModel(p);
@@ -75,13 +77,13 @@ namespace PrintQue.ViewModel
         }
         public static async Task<PrinterViewModel> SearchByName(string searchText = null)
         {
-            Printer sorted = (await App.MobileService.GetTable<Printer>().Where(u => u.Name.Contains(searchText)).ToListAsync()).FirstOrDefault();
+            Printer sorted = (await App.printersTable.Where(u => u.Name.Contains(searchText)).ToListAsync()).FirstOrDefault();
             return ReturnPrinterViewModel(sorted);
         }
 
         public static async Task<PrinterViewModel> SearchByID(string ID)
         {
-            Printer sorted = (await App.MobileService.GetTable<Printer>().Where(u => u.ID.Contains(ID)).ToListAsync()).FirstOrDefault();
+            Printer sorted = (await App.printersTable.Where(u => u.ID.Contains(ID)).ToListAsync()).FirstOrDefault();
             return ReturnPrinterViewModel(sorted);
 
         }

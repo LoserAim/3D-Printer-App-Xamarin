@@ -1,4 +1,5 @@
-﻿using PrintQue.Models;
+﻿using Microsoft.WindowsAzure.MobileServices;
+using PrintQue.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -38,13 +39,14 @@ namespace PrintQue.ViewModel
         public static async Task Insert(StatusViewModel statusViewModel)
         {
             var status = ReturnStatus(statusViewModel);
-            await App.MobileService.GetTable<Status>().InsertAsync(status);
+            await App.statusesTable.InsertAsync(status);
+            await App.MobileService.SyncContext.PushAsync();
         }
         public static async Task<List<StatusViewModel>> GetAll()
         {
             List<Status> statuses = new List<Status>();
             List<StatusViewModel> statusViewModels = new List<StatusViewModel>();
-            statuses = await App.MobileService.GetTable<Status>().ToListAsync();
+            statuses = await App.statusesTable.ToListAsync();
             foreach (var item in statuses)
             {
                 var status = ReturnStatusViewModel(item);
@@ -57,19 +59,19 @@ namespace PrintQue.ViewModel
         {
             if(searchText != null)
             {
-                Status user = (await App.MobileService.GetTable<Status>().Where(u => u.Name.Contains(searchText)).ToListAsync()).FirstOrDefault();
+                Status user = (await App.statusesTable.Where(u => u.Name.Contains(searchText)).ToListAsync()).FirstOrDefault();
                 return ReturnStatusViewModel(user);
             }
             else
             {
-                Status user = (await App.MobileService.GetTable<Status>().Where(u => u.Name.Contains("Pending")).ToListAsync()).FirstOrDefault();
+                Status user = (await App.statusesTable.Where(u => u.Name.Contains("Pending")).ToListAsync()).FirstOrDefault();
                 return ReturnStatusViewModel(user);
             }
 
         }
         public static async Task<StatusViewModel> SearchByID(string ID)
         {
-            Status user = (await App.MobileService.GetTable<Status>().Where(u => u.ID.Contains(ID)).ToListAsync()).FirstOrDefault();
+            Status user = (await App.statusesTable.Where(u => u.ID.Contains(ID)).ToListAsync()).FirstOrDefault();
             return ReturnStatusViewModel(user);
         }
 
