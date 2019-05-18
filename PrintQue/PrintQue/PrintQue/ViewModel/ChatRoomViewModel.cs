@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Linq;
 using System.Text;
 using System.Windows.Input;
 using Xamarin.Forms;
@@ -11,9 +12,18 @@ namespace PrintQue.ViewModel
 {
     public class ChatRoomViewModel : INotifyPropertyChanged
     {
-
+        private string _textToSend;
+        private RequestViewModel _request;
         public ObservableCollection<MessageViewModel> Messages { get; set; } = new ObservableCollection<MessageViewModel>();
-        public string TextToSend { get; set; }
+        public string TextToSend
+        {
+            get { return _textToSend; }
+            set
+            {
+                _textToSend = value;
+                OnPropertyChanged("TextToSend");
+            }
+        }
         public event PropertyChangedEventHandler PropertyChanged;
         public bool ShowScrollTap { get; set; } = false; //Show the jump icon 
         public bool LastMessageVisible { get; set; } = true;
@@ -35,18 +45,44 @@ namespace PrintQue.ViewModel
             //Messages.Insert(0, new MessageViewModel() { Body = "How are you?", Sender = App.LoggedInUser, SenderId = App.LoggedInUser.ID });
             MessageAppearingCommand = new Command<MessageViewModel>(OnMessageAppearing);
             MessageDisappearingCommand = new Command<MessageViewModel>(OnMessageDisappearing);
-
             OnSendCommand = new Command(() =>
             {
-                if (!string.IsNullOrEmpty(TextToSend))
-                {
-                    Messages.Insert(0, new MessageViewModel() { Body = TextToSend, Sender = App.LoggedInUser, SenderId = App.LoggedInUser.ID });
-                    TextToSend = string.Empty;
-                }
-
+                SendMessage();
             });
-            
+            if (request != null)
+            {
+                SetMessages(request);
+                _request = request;
+            }
 
+
+
+        }
+
+        public async void SetMessages(RequestViewModel request)
+        {
+            Messages = new ObservableCollection<MessageViewModel>(await MessageViewModel.SearchByUserID(request.ApplicationUserId));
+        }
+        public async void SendMessage()
+        {
+            if (!string.IsNullOrEmpty(TextToSend))
+            {
+                var messi = new MessageViewModel()
+                {
+                    Body = TextToSend,
+                    Sender = App.LoggedInUser,
+                    SenderId = App.LoggedInUser.ID,
+
+                };
+                Messages.Insert(0, messi);
+                TextToSend = string.Empty;
+
+                messi.Request = (await RequestViewModel.SearchByUser(App.LoggedInUser.ID)).OrderByDescending(r => r.DateMade).FirstOrDefault();
+                messi.TimeSent = DateTime.Now;
+
+                await MessageViewModel.Insert(messi);
+                
+            }
         }
         void OnMessageAppearing(MessageViewModel message)
         {
