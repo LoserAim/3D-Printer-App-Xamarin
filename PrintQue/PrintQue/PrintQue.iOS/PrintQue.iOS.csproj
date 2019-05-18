@@ -181,6 +181,9 @@
     <Reference Include="Xamarin.iOS" />
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="MailKit">
+      <Version>2.1.5.1</Version>
+    </PackageReference>
     <PackageReference Include="Microsoft.Azure.Mobile.Client">
       <Version>4.1.1</Version>
     </PackageReference>

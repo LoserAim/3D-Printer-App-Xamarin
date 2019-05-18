@@ -4,11 +4,12 @@
              x:Class="PrintQue.RegisterPage">
     <StackLayout VerticalOptions="Center" Margin="30,10">
 
-        <Entry x:Name="NameEntry" Placeholder="First Name"/>
-        <Entry x:Name="userNameEntry" Placeholder="Username or Email Adress" Keyboard="Email"/>
-        <Entry x:Name="userPasswordEntry" Placeholder="Password" IsPassword="True"/>
-        <Entry x:Name="PasswordConfirmEntry" Placeholder="Confirm Password" IsPassword="True"/>
-        <Button x:Name="LoginButton" Text="Register" Clicked="RegisterButton_Clicked" Margin="0,35"  BackgroundColor="DodgerBlue" TextColor="White"/>
+        <Entry x:Name="FirstNameEntry" Placeholder="First Name" Text="{Binding FirstName, Mode=TwoWay}"/>
+        <Entry x:Name="LastNameEntry" Placeholder="Last Name" Text="{Binding LastName, Mode=TwoWay}"/>
+        <Entry x:Name="userNameEntry" Placeholder="Email Adress" Keyboard="Email" Text="{Binding Email, Mode=TwoWay}"/>
+        <Entry x:Name="userPasswordEntry" Placeholder="Password" IsPassword="True" Text="{Binding Password, Mode=TwoWay}"/>
+        <Entry x:Name="PasswordConfirmEntry" Placeholder="Confirm Password" IsPassword="True" Text="{Binding confirmPassword, Mode=TwoWay}"/>
+        <Button x:Name="LoginButton" Text="Register" Command="{Binding RegisterCommand}" CommandParameter="{Binding User}" Margin="0,35"  BackgroundColor="DodgerBlue" TextColor="White"/>
     </StackLayout>
 
 </ContentPage>

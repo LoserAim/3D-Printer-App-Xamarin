@@ -14,7 +14,6 @@
         <ToolbarItem Text="Add Printer" Activated="ToolbarItem_Add_Printer_Activated" Order="Secondary"/>
         <ToolbarItem Text="Add Color" Activated="ToolbarItem_Add_Color_Activated" Order="Secondary"/>
         <ToolbarItem Text="Add Status" Activated="ToolbarItem_Add_Status_Activated" Order="Secondary"/>
-        <ToolbarItem Text="Drop Tables" Activated="ToolbarItem_Drop_Tables_Activated" Order="Secondary"/>
     </TabbedPage.ToolbarItems>
 
 

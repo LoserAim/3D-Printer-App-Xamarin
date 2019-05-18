@@ -18,7 +18,7 @@ namespace PrintQue.ViewModel.Commands
 
         public bool CanExecute(object parameter)
         {
-            var user = (User)parameter;
+            var user = (UserViewModel)parameter;
             if (user == null)
                 return false;
             if (string.IsNullOrEmpty(user.Email) || string.IsNullOrEmpty(user.Password))

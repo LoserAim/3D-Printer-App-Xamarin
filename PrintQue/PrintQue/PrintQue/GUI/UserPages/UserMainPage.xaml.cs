@@ -26,12 +26,14 @@ namespace PrintQue
 
         }
 
-        private ObservableCollection<Printer> _printers;
+        private ObservableCollection<PrinterViewModel> _printers;
         private bool isDataLoaded;
         public async void RefreshPrinterListView()
         {
-            var pri = await Printer.GetAll();
-            _printers = new ObservableCollection<Printer>(pri);
+            //await Helper.AzureAppServiceHelper.SyncAsync();
+
+            var pri = await PrinterViewModel.GetAll();
+            _printers = new ObservableCollection<PrinterViewModel>(pri);
             PrinterListView.ItemsSource = _printers;
         }
         public async void SyncOfflineDatabase()
@@ -52,7 +54,8 @@ namespace PrintQue
         {
             if (e.SelectedItem == null)
                 return;
-            var prichild = e.SelectedItem as Printer;
+            var prichild = e.SelectedItem as PrinterViewModel;
+            prichild = await PrinterViewModel.PopulateForeignKeys(prichild);
             string action = await DisplayActionSheet("What would you like to know about the Printer?"
                 , "Projects Queued"
                 , "Printer Color");
@@ -76,18 +79,18 @@ namespace PrintQue
             PrinterListView.IsRefreshing = false;
             PrinterListView.EndRefresh();
         }
-        private void CreateRequestButton_Clicked(object sender, EventArgs e)
+        private async void CreateRequestButton_Clicked(object sender, EventArgs e)
         {
             var menuItem = sender as Button;
-            var selectedItem = menuItem.CommandParameter as Printer;
-            var request = new Request()
+            var selectedItem = menuItem.CommandParameter as PrinterViewModel;
+            var request = new RequestViewModel()
             {
                 Printer = selectedItem,
-                PrinterID = selectedItem.ID,
-                User = User.SearchByID(App.LoggedInUserID).Result,
+                PrinterId = selectedItem.ID,
+                User = await UserViewModel.SearchByID(App.LoggedInUserID),
                 UserID = App.LoggedInUserID,
             };
-            Navigation.PushAsync(new RequestDetailPage(request, 1));
+            await Navigation.PushAsync(new RequestDetailPage(request, 1));
         }
         
     }

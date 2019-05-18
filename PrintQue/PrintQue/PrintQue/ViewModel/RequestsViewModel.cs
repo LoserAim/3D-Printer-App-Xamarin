@@ -4,22 +4,33 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace PrintQue.ViewModel
 {
-    public class RequestsViewModel
+    public class RequestsViewModel : Request
     {
-        public ObservableCollection<Request> Requests { get; set; }
+        public ObservableCollection<RequestViewModel> Requests { get; set; } = new ObservableCollection<RequestViewModel>();
 
-        public RequestsViewModel()
+        public async Task RefreshRequests()
         {
-            Requests = new ObservableCollection<Request>();
+            var req = await RequestViewModel.GetAll();
+            if(req != null)
+            {
+                Requests.Clear();
+                foreach (var request in req)
+                {
+                    Requests.Add(request);
+                }
+            }
+            
+
         }
 
         public async void UpdateRequests(string _searchFilter = null)
         {
 
-            var req = await Request.GetAll();
+            var req = await RequestViewModel.GetAll();
             if(req != null)
             {
                 Requests.Clear();
@@ -53,7 +64,7 @@ namespace PrintQue.ViewModel
         {
 
 
-            var req = await Request.GetAll();
+            var req = await RequestViewModel.GetAll();
 
             if (req != null)
             {
@@ -62,7 +73,7 @@ namespace PrintQue.ViewModel
                 {
 
                     foreach (var request in req.Where(r => r.ProjectName.Contains(_searchFilter)
-                    || r.User.Name.Contains(_searchFilter)))
+                    || r.User.FirstName.Contains(_searchFilter)))
                     {
                         Requests.Add(request);
                     }

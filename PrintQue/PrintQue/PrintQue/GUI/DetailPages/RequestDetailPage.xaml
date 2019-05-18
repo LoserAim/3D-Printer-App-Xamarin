@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage 
 
-    Title="{Binding ProjectName}"
+    Title="Request Details"
     xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="PrintQue.GUI.DetailPages.RequestDetailPage">
@@ -31,7 +31,7 @@
                     </ViewCell>
             </TableSection>
             <TableSection x:Name="PrinterSelectorSection">
-                <EntryCell  x:Name="ent_ProjectName" Label="ProjectName" Text="{Binding ProjectName}"/>
+                <EntryCell  x:Name="ent_ProjectName" Label="ProjectName" Text="{Binding ProjectName}" />
 
                 <ViewCell Tapped="Printer_Selector_Tapped">
                     <StackLayout Orientation="Horizontal" Padding="13, 5">
@@ -67,7 +67,7 @@
                 </ViewCell>
                 <ViewCell>
                     <StackLayout>
-                        <Slider HorizontalOptions="CenterAndExpand" x:Name="sli_Duration"  Maximum="8" Minimum="1" Value="4"/>
+                        <Slider HorizontalOptions="Fill" x:Name="sli_Duration"  Maximum="8" Minimum="1" Value="4"/>
                         <Label x:Name="lbl_sli_duration" 
                             HorizontalOptions="Center" 
                                Text="{Binding 
@@ -85,7 +85,7 @@
                 <ViewCell>
                     <StackLayout Padding="0,10,0,0">
                         <Label Text="Description"/>
-                        <Editor x:Name="edi_Description" Text="{Binding Description}" VerticalOptions="FillAndExpand" AutoSize="TextChanges" HeightRequest="100"/>
+                        <Editor x:Name="edi_Description" Text="{Binding ProjectDescript}" VerticalOptions="FillAndExpand" AutoSize="TextChanges" HeightRequest="100"/>
 
                     </StackLayout>
                 </ViewCell>

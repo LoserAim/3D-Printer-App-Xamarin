@@ -1,4 +1,5 @@
 ﻿using PrintQue.Models;
+using PrintQue.ViewModel;
 using SQLite;
 using System;
 using System.Collections.Generic;
@@ -23,7 +24,7 @@ namespace PrintQue.GUI.SelectorPages
         {
             base.OnAppearing();
             var StringList = new List<string>();
-            foreach (var p in await PrintColor.GetAll())
+            foreach (var p in await PrintColorViewModel.GetAll())
             {
                 StringList.Add(p.Name);
                 
