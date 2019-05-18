@@ -24,6 +24,8 @@ namespace PrintQue.ViewModel
         }
 
         public RegisterCommand RegisterCommand { get; set; }
+
+
         public string LastName
         {
             get { return lastName; }
@@ -85,7 +87,20 @@ namespace PrintQue.ViewModel
         private string firstName;
         private string lastName;
 
+
+
+
+
+        //Important for viewmodels. Notifies Commands of new changes
         public event PropertyChangedEventHandler PropertyChanged;
+        private void OnPropertyChanged(string propertyName)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+        
+
+
+
 
         public string Password
         {
@@ -124,10 +139,7 @@ namespace PrintQue.ViewModel
 
         }
 
-        private void OnPropertyChanged(string propertyName)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
+
 
 
         public RegisterViewModel()
@@ -153,7 +165,7 @@ namespace PrintQue.ViewModel
             else
                 Message = "Registered failed";
 
-            await Xamarin.Forms.Application.Current.MainPage.DisplayAlert("ALERY", Message, "OK");
+            await Xamarin.Forms.Application.Current.MainPage.DisplayAlert("ALERT", Message, "OK");
             //int canRegister = await UserViewModel.Register(User.Email, User.Password, User.FirstName, User.LastName);
             //switch (canRegister)
             //{

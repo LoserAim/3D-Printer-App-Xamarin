@@ -11,9 +11,9 @@ namespace PrintQue.ViewModel
     public class RequestViewModel : Request
     {
        
-        public Printer Printer { get; set; }
-        public Status Status { get; set; }
-        public User User { get; set; }
+        public PrinterViewModel Printer { get; set; }
+        public StatusViewModel Status { get; set; }
+        public UserViewModel User { get; set; }
         public List<MessageViewModel> Messages { get; set; } = new List<MessageViewModel>();
         public static async Task Insert(RequestViewModel requestViewModel)
         {
