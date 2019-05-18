@@ -64,7 +64,7 @@ namespace PrintQue
         }
         private async void RefreshMessageListView()
         {
-            var mes = await MessageViewModel.GetAll();
+            var mes = await MessageViewModel.SearchByUserID(App.LoggedInUserID);
             _messages = new ObservableCollection<MessageViewModel>(mes);
             Message_ListView.ItemsSource = _messages;
         }
