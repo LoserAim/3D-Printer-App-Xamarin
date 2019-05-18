@@ -11,7 +11,7 @@
 
     <TabbedPage.ToolbarItems>
         <ToolbarItem Icon="run.png"  Activated="ToolbarItem_Run_Activated"  Order="Primary" />
-        <ToolbarItem Text="Create Request" Icon="plus.png"  Order="Primary"/>
+        <ToolbarItem Text="Create Request" Icon="plus.png" Command="{Binding NavCommand}" Order="Primary"/>
 
     </TabbedPage.ToolbarItems>
 

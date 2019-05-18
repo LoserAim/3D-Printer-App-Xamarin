@@ -36,7 +36,10 @@ namespace PrintQue
             _printers = new ObservableCollection<PrinterViewModel>(pri);
             PrinterListView.ItemsSource = _printers;
         }
-
+        public async void SyncOfflineDatabase()
+        {
+            await AzureAppServiceHelper.SyncAsync();
+        }
         protected override void OnAppearing()
         {
             if (isDataLoaded)
