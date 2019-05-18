@@ -3,7 +3,6 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Linq;
 using System.Text;
 using System.Windows.Input;
 using Xamarin.Forms;
@@ -12,18 +11,9 @@ namespace PrintQue.ViewModel
 {
     public class ChatRoomViewModel : INotifyPropertyChanged
     {
-        private string _textToSend;
-        private RequestViewModel _request;
+
         public ObservableCollection<MessageViewModel> Messages { get; set; } = new ObservableCollection<MessageViewModel>();
-        public string TextToSend
-        {
-            get { return _textToSend; }
-            set
-            {
-                _textToSend = value;
-                OnPropertyChanged("TextToSend");
-            }
-        }
+        public string TextToSend { get; set; }
         public event PropertyChangedEventHandler PropertyChanged;
         public bool ShowScrollTap { get; set; } = false; //Show the jump icon 
         public bool LastMessageVisible { get; set; } = true;
@@ -32,12 +22,12 @@ namespace PrintQue.ViewModel
         public Queue<MessageViewModel> DelayedMessages { get; set; } = new Queue<MessageViewModel>();
         public ICommand MessageAppearingCommand { get; set; }
         public ICommand MessageDisappearingCommand { get; set; }
-        public OnSendCommand OnSendCommand { get; set; }
+        public ICommand OnSendCommand { get; set; }
         private void OnPropertyChanged(string propertyName)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
-        public ChatRoomViewModel(RequestViewModel request = null)
+        public ChatRoomViewModel(RequestViewModel request=null)
         {
             Messages = new ObservableCollection<MessageViewModel>();
             //When you send a message where the SenderID is equal to the App.LoggedInUser.ID then the message will be blue
@@ -45,21 +35,18 @@ namespace PrintQue.ViewModel
             //Messages.Insert(0, new MessageViewModel() { Body = "How are you?", Sender = App.LoggedInUser, SenderId = App.LoggedInUser.ID });
             MessageAppearingCommand = new Command<MessageViewModel>(OnMessageAppearing);
             MessageDisappearingCommand = new Command<MessageViewModel>(OnMessageDisappearing);
-            OnSendCommand = new OnSendCommand(this);
 
-            if(request != null)
+            OnSendCommand = new Command(() =>
             {
+                if (!string.IsNullOrEmpty(TextToSend))
+                {
+                    Messages.Insert(0, new MessageViewModel() { Body = TextToSend, Sender = App.LoggedInUser, SenderId = App.LoggedInUser.ID });
+                    TextToSend = string.Empty;
+                }
 
-                SetMessages(request);
-                _request = request;
-                
-            }
+            });
+            
 
-
-        }
-        public async void SetMessages(RequestViewModel request)
-        {
-            Messages = new ObservableCollection<MessageViewModel>(await MessageViewModel.SearchByUserID(request.ApplicationUserId));
         }
         void OnMessageAppearing(MessageViewModel message)
         {
@@ -76,24 +63,6 @@ namespace PrintQue.ViewModel
                     LastMessageVisible = true;
                     PendingMessageCount = 0;
                 });
-            }
-        }
-        public async void SendMessage()
-        {
-            if (!string.IsNullOrEmpty(TextToSend))
-            {
-                var messi = new MessageViewModel()
-                {
-                    Body = TextToSend,
-                    Sender = App.LoggedInUser,
-                    SenderId = App.LoggedInUser.ID,
-                    Request = (await RequestViewModel.SearchByUser(App.LoggedInUser.ID)).
-                    OrderByDescending(r => r.DateMade).FirstOrDefault(),
-                    TimeSent = DateTime.Now,
-                };
-                Messages.Insert(0, messi);
-                await MessageViewModel.Insert(messi);
-                TextToSend = string.Empty;
             }
         }
         void OnMessageDisappearing(MessageViewModel message)

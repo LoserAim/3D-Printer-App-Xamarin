@@ -17,6 +17,7 @@ namespace PrintQue.ViewModel
     {
         public UserViewModel Sender { get; set; }
         public RequestViewModel Request { get; set; }
+
         public static async void PostMessage(MessageViewModel newMsg, UserViewModel user = null)
         {
 
@@ -24,14 +25,13 @@ namespace PrintQue.ViewModel
             message.Subject = "AUTOMATED MESSAGE - DO NOT REPLY";
             if (user == null)
             {
-                //User Sending
                 message.From.Add(new MailboxAddress(string.Concat(newMsg.Sender.FirstName + " " + newMsg.Sender.LastName), newMsg.Sender.Email));
                 message.To.Add(new MailboxAddress(string.Concat(newMsg.Sender.FirstName + " " + newMsg.Sender.LastName), "THEPRE.S.Q.L@gmail.com"));
 
             }
             else
             {
-                //Admin Sending
+
                 message.From.Add(new MailboxAddress(string.Concat(newMsg.Sender.FirstName + " " + newMsg.Sender.LastName), "OregonTech3DPrintClub@donotreply.com"));
                 message.To.Add(new MailboxAddress(string.Concat(user.FirstName + " " + user.LastName), user.Email));
 
@@ -87,10 +87,6 @@ namespace PrintQue.ViewModel
         }
         public static async Task Insert(MessageViewModel messageviewmodel)
         {
-            if (App.LoggedInUser.Admin == 1)
-                PostMessage(messageviewmodel, messageviewmodel.Request.User);
-            else
-                PostMessage(messageviewmodel);
             var messi = ReturnMessage(messageviewmodel);
             await App.MobileService.GetTable<Message>().InsertAsync(messi);
             //await App.MobileService.SyncContext.PushAsync();

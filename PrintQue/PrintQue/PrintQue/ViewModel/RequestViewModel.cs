@@ -29,7 +29,7 @@ namespace PrintQue.ViewModel
                 ID = requestViewModel.ID,
                 PrinterId = requestViewModel.PrinterId,
                 StatusId = requestViewModel.StatusId,
-                ApplicationUserId = requestViewModel.ApplicationUserId,
+                UserID = requestViewModel.UserID,
                 DateMade = requestViewModel.DateMade,
                 DateRequested = requestViewModel.DateRequested,
                 Duration = requestViewModel.Duration,
@@ -48,7 +48,7 @@ namespace PrintQue.ViewModel
                 ID = request.ID,
                 PrinterId = request.PrinterId,
                 StatusId = request.StatusId,
-                ApplicationUserId = request.ApplicationUserId,
+                UserID = request.UserID,
                 DateMade = request.DateMade,
                 DateRequested = request.DateRequested,
                 Duration = request.Duration,
@@ -66,8 +66,8 @@ namespace PrintQue.ViewModel
                 requestViewModel.Printer = await PrinterViewModel.SearchByID(requestViewModel.PrinterId);
             if (requestViewModel.StatusId != null)
                 requestViewModel.Status = await StatusViewModel.SearchByID(requestViewModel.StatusId);
-            if (requestViewModel.ApplicationUserId != null)
-                requestViewModel.User = await UserViewModel.SearchByID(requestViewModel.ApplicationUserId);
+            if (requestViewModel.UserID != null)
+                requestViewModel.User = await UserViewModel.SearchByID(requestViewModel.UserID);
             if (requestViewModel.ID != null)
                 requestViewModel.Messages = await MessageViewModel.SearchByRequestID(requestViewModel.ID);
 
@@ -174,7 +174,7 @@ namespace PrintQue.ViewModel
         }
         public static async Task<List<RequestViewModel>> SearchByUser(string ID)
         {
-            var requests = ReturnListRequestViewModel(await App.MobileService.GetTable<Request>().Where(r => r.ApplicationUserId.Contains(ID)).ToListAsync());
+            var requests = ReturnListRequestViewModel(await App.MobileService.GetTable<Request>().Where(r => r.UserID.Contains(ID)).ToListAsync());
 
             if (requests != null)
             {
@@ -202,10 +202,7 @@ namespace PrintQue.ViewModel
         }
         public static async Task<RequestViewModel> SearchProjectNameByUser(RequestViewModel requestViewModel)
         {
-            var sortedRequests = (await App.MobileService.GetTable<Request>().Where(
-                r => r.ApplicationUserId == requestViewModel.ApplicationUserId 
-                && r.ProjectName.Contains(requestViewModel.ProjectName))
-                .ToListAsync()).FirstOrDefault();
+            var sortedRequests = (await App.MobileService.GetTable<Request>().Where(r => r.UserID == requestViewModel.UserID && r.ProjectName.Contains(requestViewModel.ProjectName)).ToListAsync()).FirstOrDefault();
 
             if (sortedRequests != null)
             {

@@ -41,13 +41,11 @@ namespace PrintQue.ViewModel
 
                 if (user != null)
                 {
-                    var claim = (await App.MobileService.GetTable<AspNetUserClaims>().Where(c => c.UserId == user.ID).ToListAsync()).FirstOrDefault();
                     //admin
-                    if (claim != null && claim.ClaimValue.Contains("Admin"))
+                    if (user.Admin == 1)
                     {
                         if (user.Password.Contains(password))
                         {
-                            user.Admin = 1;
                             App.LoggedInUser = user;
                             return 1;
                         }

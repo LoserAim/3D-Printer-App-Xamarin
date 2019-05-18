@@ -48,7 +48,7 @@ namespace PrintQue.Helper
 
             };
             var request = new HttpRequestMessage(
-                HttpMethod.Post, "http://3dprintqueueweb.azurewebsites.net/Token");
+                HttpMethod.Post, "http://3dprintqueueweb.azurewebsites.net/api/Account/Register");
 
             request.Content = new FormUrlEncodedContent(keyValues);
             var client = new HttpClient();
