@@ -41,18 +41,18 @@ namespace PrintQue.ViewModel
 
                 if (user != null)
                 {
-                    var claim = (await App.MobileService.GetTable<AspNetUserClaims>().Where(c => c.UserId == user.ID).ToListAsync()).FirstOrDefault();
+                    //var claim = new AspNetUserClaims();//(await App.MobileService.GetTable<AspNetUserClaims>().Where(c => c.UserId == user.ID).ToListAsync()).FirstOrDefault();
                     //admin
-                    if (claim != null && claim.ClaimValue.Contains("Admin"))
+                    //if (claim != null && claim.ClaimValue.Contains("Admin"))
+                    //{
+                    if (user.Password.Contains(password))
                     {
-                        if (user.Password.Contains(password))
-                        {
-                            user.Admin = 1;
-                            App.LoggedInUser = user;
-                            return 1;
-                        }
-                        // TODO(VorpW): Assign App.LoggedInUserID when an admin logs in
+                        user.Admin = 1;
+                        App.LoggedInUser = user;
+                        return 1;
                     }
+                        // TODO(VorpW): Assign App.LoggedInUserID when an admin logs in
+                    //}
                     else
                     {
                         if (user.Password.Contains(password.ToString()))
