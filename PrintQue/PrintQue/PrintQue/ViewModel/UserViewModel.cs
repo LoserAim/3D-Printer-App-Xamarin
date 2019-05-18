@@ -46,7 +46,7 @@ namespace PrintQue.ViewModel
                     {
                         if (user.Password.Contains(password))
                         {
-                            App.LoggedInUserID = user.ID;
+                            App.LoggedInUser = user;
                             return 1;
                         }
                         // TODO(VorpW): Assign App.LoggedInUserID when an admin logs in
@@ -55,7 +55,7 @@ namespace PrintQue.ViewModel
                     {
                         if (user.Password.Contains(password.ToString()))
                         {
-                            App.LoggedInUserID = user.ID;
+                            App.LoggedInUser = user;
                             return 2;
                         }
                     }

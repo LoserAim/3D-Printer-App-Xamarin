@@ -87,8 +87,8 @@ namespace PrintQue
             {
                 Printer = selectedItem,
                 PrinterId = selectedItem.ID,
-                User = await UserViewModel.SearchByID(App.LoggedInUserID),
-                UserID = App.LoggedInUserID,
+                User = App.LoggedInUser,
+                UserID = App.LoggedInUser.ID,
             };
             await Navigation.PushAsync(new RequestDetailPage(request, 1));
         }

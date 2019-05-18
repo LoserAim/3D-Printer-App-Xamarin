@@ -148,7 +148,7 @@ namespace PrintQue.ViewModel
             RegisterCommand = new RegisterCommand(this);
             apiHelper = new ApiHelper();
         }
-        public string Message { get; set; }
+
         public async void Register()
         {
 
@@ -156,31 +156,20 @@ namespace PrintQue.ViewModel
 
             if (response)
             {
-                Message = "Registered successfully";
                 var aspuser = (await App.MobileService.GetTable<AspNetUsers>().Where(u => u.Email.Contains(User.Email)).ToListAsync()).FirstOrDefault();
                 User.ID = aspuser.ID;
                 await UserViewModel.Insert(User);
+                await Xamarin.Forms.Application.Current.MainPage.DisplayAlert("Success!", "You have successfully Registered in!", "OK");
+                await Xamarin.Forms.Application.Current.MainPage.Navigation.PopAsync();
             }
 
             else
-                Message = "Registered failed";
-
-            await Xamarin.Forms.Application.Current.MainPage.DisplayAlert("ALERT", Message, "OK");
-            //int canRegister = await UserViewModel.Register(User.Email, User.Password, User.FirstName, User.LastName);
-            //switch (canRegister)
-            //{
-            //    case 0:
-            //        await Xamarin.Forms.Application.Current.MainPage.DisplayAlert("Error", "Try again", "OK");
-            //        break;
-            //    case 1:
-            //        var Num = UserViewModel.Insert(user);
-            //        await Xamarin.Forms.Application.Current.MainPage.DisplayAlert("Success!", "You have successfully Registered in!", "OK");
-            //        await Xamarin.Forms.Application.Current.MainPage.Navigation.PopAsync();
-            //        break;
+            {
+                await Xamarin.Forms.Application.Current.MainPage.DisplayAlert("Error", "Try again", "OK");
+            }
 
 
 
-            //}
         }
     }
 }
