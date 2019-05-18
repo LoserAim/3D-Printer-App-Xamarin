@@ -63,7 +63,7 @@ namespace PrintQue.GUI.UserPages
             //await Helper.AzureAppServiceHelper.SyncAsync();
             var requests = await RequestViewModel.GetAll();
             var UserRequests = new List<RequestViewModel>();
-            UserRequests = requests.Where(u => u.UserID == App.LoggedInUser.ID).ToList();
+            UserRequests = requests.Where(u => u.ApplicationUserId == App.LoggedInUser.ID).ToList();
             _requests = new ObservableCollection<RequestViewModel>(UserRequests);
             RequestListView.ItemsSource = _requests;
 
