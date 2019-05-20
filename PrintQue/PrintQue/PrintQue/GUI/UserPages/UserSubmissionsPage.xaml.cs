@@ -42,36 +42,30 @@ namespace PrintQue.GUI.UserPages
     [XamlCompilation(XamlCompilationOptions.Compile)]
 	public partial class UserSubmissionsPage : ContentPage
 	{
-        private ObservableCollection<RequestViewModel> _requests;
-        private bool _isDataLoaded = false;
+        UserSubmissionsViewModel viewModel;
+        private bool _isDataLoaded;
         public UserSubmissionsPage()
 		{
+            viewModel = new UserSubmissionsViewModel();
+            BindingContext = viewModel;
+            _isDataLoaded = false;
 			InitializeComponent();
 		}
 
         protected override void OnAppearing()
         {
-            //if (_isDataLoaded)
-            //    return;
-           // _isDataLoaded = true;
-            RefreshRequestsView();
+            if (_isDataLoaded)
+                return;
+            _isDataLoaded = true;
+            viewModel.UpdateRequestsList();
             base.OnAppearing();
         }
 
-        public async void RefreshRequestsView()
-        {
-            //await Helper.AzureAppServiceHelper.SyncAsync();
-            var requests = await RequestViewModel.SearchByUser(App.LoggedInUser.ID);
-            if(requests != null)
-                 _requests = new ObservableCollection<RequestViewModel>(requests);
-            RequestListView.ItemsSource = _requests;
-
-        }
 
         private void RequestListView_Refreshing(object sender, System.EventArgs e)
         {
-            RequestListView.BeginRefresh();            
-            RefreshRequestsView();     
+            RequestListView.BeginRefresh();
+            viewModel.UpdateRequestsList();
             RequestListView.EndRefresh();
         }
 

@@ -179,12 +179,14 @@ namespace PrintQue.ViewModel
 
 
         }
+
         public static async Task<List<RequestViewModel>> SearchByUser(string ID)
         {
             var requests = ReturnListRequestViewModel(await App.MobileService.GetTable<Request>().Where(r => r.ApplicationUserId.Contains(ID)).ToListAsync());
-
+            
             if (requests != null)
             {
+                
                 return requests;
             }
             else
@@ -199,6 +201,7 @@ namespace PrintQue.ViewModel
             Request sortedRequests = (await App.MobileService.GetTable<Request>().Where(sr => sr.ID.Contains(ID)).ToListAsync()).FirstOrDefault();
             if (sortedRequests != null)
             {
+
                 return ReturnRequestViewModel(sortedRequests);
             }
             else
@@ -213,6 +216,7 @@ namespace PrintQue.ViewModel
 
             if (sortedRequests != null)
             {
+
                 return ReturnRequestViewModel(sortedRequests);
             }
             else
