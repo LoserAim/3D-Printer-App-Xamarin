@@ -11,7 +11,7 @@ namespace PrintQue.ViewModel
 
         public UserSubmissionsViewModel()
         {
-            UpdateRequestsList();
+            //UpdateRequestsList();
         }
         public async void UpdateRequestsList()
         {

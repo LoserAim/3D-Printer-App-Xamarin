@@ -64,8 +64,9 @@ namespace PrintQue.GUI.UserPages
 
         private void RequestListView_Refreshing(object sender, System.EventArgs e)
         {
-            RequestListView.BeginRefresh();
+            
             viewModel.UpdateRequestsList();
+            RequestListView.IsRefreshing = false;
             RequestListView.EndRefresh();
         }
 

@@ -31,6 +31,7 @@ namespace PrintQue.GUI.DetailPages
             BindingContext = request;
             _request = request;
             _status = Status;
+            _dateTimeRequestSet = DateTime.Now;
             switch (_status)
             {
                 case 0:
@@ -69,6 +70,10 @@ namespace PrintQue.GUI.DetailPages
             try
             {
                 FileData fileData = await CrossFilePicker.Current.PickFile();
+                if(!fileData.FileName.Contains(".stl"))
+                {
+                    await DisplayAlert("Error!","You can only submit .stl files! Please pick a file type of .stl!", "OK");
+                }
                 string text = File.ReadAllText(fileData.FilePath);
                 // User cancelled file selection
                 if (fileData == null)
