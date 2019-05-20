@@ -18,7 +18,7 @@ namespace PrintQue.ViewModel
         public UserViewModel Sender { get; set; }
         public RequestViewModel Request { get; set; }
 
-        public static async void PostMessage(MessageViewModel newMsg, UserViewModel user = null)
+        public static void PostMessage(MessageViewModel newMsg, UserViewModel user = null)
         {
 
             var message = new MimeMessage();

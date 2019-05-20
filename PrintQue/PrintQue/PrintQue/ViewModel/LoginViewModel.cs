@@ -26,14 +26,14 @@ namespace PrintQue.ViewModel
                 OnPropertyChanged("User");
             }
         }
-        private bool _isBusy;
-        public bool IsBusy
+        private bool _isLoading;
+        public bool IsLoading
         {
-            get { return _isBusy; }
+            get { return _isLoading; }
             set
             {
-                _isBusy = value;
-                OnPropertyChanged("IsBusy");
+                _isLoading = value;
+                OnPropertyChanged("IsLoading");
             }
         }
         public LoginCommand LoginCommand { get; set; }
@@ -88,20 +88,20 @@ namespace PrintQue.ViewModel
         }
         public async void Login()
         {
-            IsBusy = true;
+            IsLoading = true;
             int canLogin = await UserViewModel.Login(User.Email, User.Password);
             switch (canLogin)
             {
                 case 0:
-                    IsBusy = false;
+                    IsLoading = false;
                     await Xamarin.Forms.Application.Current.MainPage.DisplayAlert("Error", "Try again", "OK");
                     break;
                 case 1:
-                    IsBusy = false;
+                    IsLoading = false;
                     await Xamarin.Forms.Application.Current.MainPage.Navigation.PushAsync(new AdminTabContainer());
                     break;
                 case 2:
-                    IsBusy = false;
+                    IsLoading = false;
                     await Xamarin.Forms.Application.Current.MainPage.Navigation.PushAsync(new UserTabContainer());
                     break;
             }
