@@ -25,13 +25,13 @@
                                 x:Name="Users_Picker"
                                 VerticalOptions="Center"
                                 HorizontalOptions="EndAndExpand"
-                                Text="{Binding User.Email}"
+                                Text="{Binding user.Email}"
                                 TextColor="Gray"/>
                         </StackLayout>
                     </ViewCell>
             </TableSection>
             <TableSection x:Name="PrinterSelectorSection">
-                <EntryCell  x:Name="ent_ProjectName" Label="ProjectName" Text="{Binding ProjectName}" />
+                <EntryCell  x:Name="ent_ProjectName" Label="ProjectName" Text="{Binding projectName}" />
 
                 <ViewCell Tapped="Printer_Selector_Tapped">
                     <StackLayout Orientation="Horizontal" Padding="13, 5">
@@ -40,7 +40,7 @@
                                 x:Name="Printers_Picker"
                                 VerticalOptions="Center"
                                 HorizontalOptions="EndAndExpand"
-                                Text="{Binding Printer.Name}"
+                                Text="{Binding printer.Name}"
                                 TextColor="Gray"/>
                     </StackLayout>
                 </ViewCell>
@@ -53,7 +53,7 @@
                                     x:Name="Status_Picker"
                                     VerticalOptions="Center"
                                     HorizontalOptions="EndAndExpand"
-                                    Text="{Binding Status.Name}"
+                                    Text="{Binding status.Name}"
                                     TextColor="Gray"/>
                         </StackLayout>
                     </ViewCell>
@@ -85,7 +85,7 @@
                 <ViewCell>
                     <StackLayout Padding="0,10,0,0">
                         <Label Text="Description"/>
-                        <Editor x:Name="edi_Description" Text="{Binding ProjectDescript}" VerticalOptions="FillAndExpand" AutoSize="TextChanges" HeightRequest="100"/>
+                        <Editor x:Name="edi_Description" Text="{Binding projectDescript}" VerticalOptions="FillAndExpand" AutoSize="TextChanges" HeightRequest="100"/>
 
                     </StackLayout>
                 </ViewCell>
@@ -96,7 +96,7 @@
                                 x:Name="PersonalUse_Picker"
                                 VerticalOptions="Center"
                                 HorizontalOptions="EndAndExpand"
-                                Text="{Binding PersonalUse}"
+                                Text="{Binding personalUse}"
                                 TextColor="Gray"/>
                     </StackLayout>
                 </ViewCell>
