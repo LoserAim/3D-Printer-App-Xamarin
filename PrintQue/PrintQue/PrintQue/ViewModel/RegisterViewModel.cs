@@ -22,6 +22,16 @@ namespace PrintQue.ViewModel
                 OnPropertyChanged("User");
             }
         }
+        private bool _isBusy;
+        public bool IsBusy
+        {
+            get { return _isBusy; }
+            set
+            {
+                _isBusy = value;
+                OnPropertyChanged("IsBusy");
+            }
+        }
 
         public RegisterCommand RegisterCommand { get; set; }
 
@@ -151,7 +161,7 @@ namespace PrintQue.ViewModel
 
         public async void Register()
         {
-
+            IsBusy = true;
             var response = await apiHelper.RegisterAsync(User);
 
             if (response)
@@ -159,12 +169,14 @@ namespace PrintQue.ViewModel
                 var aspuser = (await App.MobileService.GetTable<AspNetUsers>().Where(u => u.Email.Contains(User.Email)).ToListAsync()).FirstOrDefault();
                 User.ID = aspuser.ID;
                 await UserViewModel.Insert(User);
-                await Xamarin.Forms.Application.Current.MainPage.DisplayAlert("Success!", "You have successfully Registered in!", "OK");
+                IsBusy = false;
+                await Xamarin.Forms.Application.Current.MainPage.DisplayAlert("Success!", "You have successfully Registered!", "OK");
                 await Xamarin.Forms.Application.Current.MainPage.Navigation.PopAsync();
             }
 
             else
             {
+                IsBusy = false;
                 await Xamarin.Forms.Application.Current.MainPage.DisplayAlert("Error", "Try again", "OK");
             }
 

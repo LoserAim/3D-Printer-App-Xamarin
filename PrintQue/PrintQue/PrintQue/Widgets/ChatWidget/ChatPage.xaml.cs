@@ -13,17 +13,27 @@ namespace PrintQue.Widgets.ChatWidget
 	[XamlCompilation(XamlCompilationOptions.Compile)]
 	public partial class ChatPage : ContentPage
 	{
+        ChatRoomViewModel viewModel;
         public ICommand ScrollListCommand { get; set; }
         public ChatPage()
         {
             InitializeComponent();
-            this.BindingContext = new ChatRoomViewModel();
+            viewModel = new ChatRoomViewModel();
+            this.BindingContext = viewModel;
             ScrollListCommand = new Command(() =>
             {
                 Device.BeginInvokeOnMainThread(() =>
                   ChatList.ScrollTo((this.BindingContext as ChatRoomViewModel).Messages.Last(), ScrollToPosition.End, false)
               );
             });
+        }
+        protected override void OnAppearing()
+        {
+            //if (_isDataLoaded)
+            //    return;
+            // _isDataLoaded = true;
+            viewModel.UpdateChatList();
+            base.OnAppearing();
         }
 
         public void ScrollTap(object sender, System.EventArgs e)

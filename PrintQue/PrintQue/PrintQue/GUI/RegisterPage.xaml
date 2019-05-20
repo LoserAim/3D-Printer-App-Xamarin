@@ -2,8 +2,11 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="PrintQue.RegisterPage">
-    <StackLayout VerticalOptions="Center" Margin="30,10">
+    <StackLayout>
+        <ActivityIndicator IsVisible="{Binding IsBusy, Mode=TwoWay}" IsRunning="{Binding IsBusy, Mode=TwoWay}" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand"/>
 
+
+        <StackLayout VerticalOptions="Center" Margin="30,10" IsVisible="{Binding IsBusy, Mode=TwoWay}">
         <Entry x:Name="FirstNameEntry" Placeholder="First Name" Text="{Binding FirstName, Mode=TwoWay}"/>
         <Entry x:Name="LastNameEntry" Placeholder="Last Name" Text="{Binding LastName, Mode=TwoWay}"/>
         <Entry x:Name="userNameEntry" Placeholder="Email Adress" Keyboard="Email" Text="{Binding Email, Mode=TwoWay}"/>
@@ -11,5 +14,5 @@
         <Entry x:Name="PasswordConfirmEntry" Placeholder="Confirm Password" IsPassword="True" Text="{Binding confirmPassword, Mode=TwoWay}"/>
         <Button x:Name="LoginButton" Text="Register" Command="{Binding RegisterCommand}" CommandParameter="{Binding User}" Margin="0,35"  BackgroundColor="DodgerBlue" TextColor="White"/>
     </StackLayout>
-
+    </StackLayout>
 </ContentPage>

@@ -47,6 +47,7 @@ namespace PrintQue.ViewModel
             MessageDisappearingCommand = new Command<MessageViewModel>(OnMessageDisappearing);
             OnSendCommand = new Command(() =>
             {
+
                 SendMessage();
             });
             if (request != null)
@@ -58,30 +59,53 @@ namespace PrintQue.ViewModel
 
 
         }
-
+        public async void UpdateChatList()
+        {
+            
+            var user = await UserViewModel.SearchByID(App.LoggedInUser.ID);
+            if (user.Requests != null)
+            {
+                Messages.Clear();
+                var messi = new List<MessageViewModel>();
+                foreach (var n in user.Requests)
+                {
+                    foreach (var m in (await MessageViewModel.SearchByRequestID(n.ID)))
+                    {
+                        Messages.Insert(0, new MessageViewModel() { Body = m.Body, SenderId = m.SenderId });
+                    }
+                }
+                Messages.OrderByDescending(m => m.TimeSent);
+            }
+        }
         public async void SetMessages(RequestViewModel request)
         {
             Messages = new ObservableCollection<MessageViewModel>(await MessageViewModel.SearchByUserID(request.ApplicationUserId));
         }
         public async void SendMessage()
         {
-            if (!string.IsNullOrEmpty(TextToSend))
+            var re = (await RequestViewModel.SearchByUser(App.LoggedInUser.ID)).Count();
+            if (!string.IsNullOrEmpty(TextToSend) && re > 0)
             {
                 var messi = new MessageViewModel()
                 {
                     Body = TextToSend,
-                    Sender = App.LoggedInUser,
                     SenderId = App.LoggedInUser.ID,
 
                 };
                 Messages.Insert(0, messi);
                 TextToSend = string.Empty;
-
+                messi.Sender = App.LoggedInUser;
                 messi.Request = (await RequestViewModel.SearchByUser(App.LoggedInUser.ID)).OrderByDescending(r => r.DateMade).FirstOrDefault();
+                messi.RequestId = messi.Request.ID;
                 messi.TimeSent = DateTime.Now;
 
                 await MessageViewModel.Insert(messi);
                 
+            }
+            else if (re == 0)
+            {
+                await Xamarin.Forms.Application.Current.MainPage.DisplayAlert("Alert", "You have not made a request! Go create one to message an admin.", "OK");
+
             }
         }
         void OnMessageAppearing(MessageViewModel message)

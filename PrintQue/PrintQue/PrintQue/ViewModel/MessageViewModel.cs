@@ -48,12 +48,10 @@ namespace PrintQue.ViewModel
                 client.Send(message);
                 client.Disconnect(true);
 
-                await Xamarin.Forms.Application.Current.MainPage.DisplayAlert("Success!", "You have successfully sent email!", "OK");
 
             }
             catch (Exception e)
             {
-                await Xamarin.Forms.Application.Current.MainPage.DisplayAlert("Failure!", "You have successfully failed at everything! Go die!", "OK");
 
             }
 
@@ -87,6 +85,10 @@ namespace PrintQue.ViewModel
         }
         public static async Task Insert(MessageViewModel messageviewmodel)
         {
+            if (App.LoggedInUser.Admin == 1)
+                PostMessage(messageviewmodel, messageviewmodel.Request.User);
+            else
+                PostMessage(messageviewmodel);
             var messi = ReturnMessage(messageviewmodel);
             await App.MobileService.GetTable<Message>().InsertAsync(messi);
             //await App.MobileService.SyncContext.PushAsync();

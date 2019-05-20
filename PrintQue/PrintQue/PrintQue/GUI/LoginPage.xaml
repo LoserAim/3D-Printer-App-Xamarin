@@ -4,9 +4,11 @@
             xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="PrintQue.LoginPage">
-
-    <StackLayout VerticalOptions="Center" 
-                 Margin="30,10">
+    <!--<StackLayout>
+        <ActivityIndicator IsVisible="{Binding IsBusy, Mode=TwoWay}" IsRunning="{Binding IsBusy, Mode=TwoWay}" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand"/>-->
+        <StackLayout VerticalOptions="Center" 
+                 Margin="30,10"
+                 IsVisible="{Binding IsBusy, Mode=TwoWay}">
 
         <Entry x:Name="userNameEntry" 
                Placeholder="Email" 
@@ -32,6 +34,6 @@
                HorizontalOptions="Center" 
                TextColor="CadetBlue"/>
 
-    </StackLayout>
-
+        </StackLayout>
+    <!--</StackLayout>-->
 </ContentPage>

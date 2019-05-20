@@ -88,7 +88,7 @@ namespace PrintQue
                 Printer = selectedItem,
                 PrinterId = selectedItem.ID,
                 User = App.LoggedInUser,
-                UserID = App.LoggedInUser.ID,
+                ApplicationUserId = App.LoggedInUser.ID,
             };
             await Navigation.PushAsync(new RequestDetailPage(request, 1));
         }

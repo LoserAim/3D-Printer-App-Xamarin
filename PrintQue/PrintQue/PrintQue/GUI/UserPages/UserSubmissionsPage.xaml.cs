@@ -51,9 +51,9 @@ namespace PrintQue.GUI.UserPages
 
         protected override void OnAppearing()
         {
-            if (_isDataLoaded)
-                return;
-            _isDataLoaded = true;
+            //if (_isDataLoaded)
+            //    return;
+           // _isDataLoaded = true;
             RefreshRequestsView();
             base.OnAppearing();
         }
@@ -61,10 +61,9 @@ namespace PrintQue.GUI.UserPages
         public async void RefreshRequestsView()
         {
             //await Helper.AzureAppServiceHelper.SyncAsync();
-            var requests = await RequestViewModel.GetAll();
-            var UserRequests = new List<RequestViewModel>();
-            UserRequests = requests.Where(u => u.UserID == App.LoggedInUser.ID).ToList();
-            _requests = new ObservableCollection<RequestViewModel>(UserRequests);
+            var requests = await RequestViewModel.SearchByUser(App.LoggedInUser.ID);
+            if(requests != null)
+                 _requests = new ObservableCollection<RequestViewModel>(requests);
             RequestListView.ItemsSource = _requests;
 
         }

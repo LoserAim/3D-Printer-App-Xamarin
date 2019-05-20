@@ -109,7 +109,7 @@ namespace PrintQue.GUI.DetailPages
                 DateRequested = new DateTime(_dateTimeRequestSet.Year, _dateTimeRequestSet.Month, _dateTimeRequestSet.Day),
                 Duration = Convert.ToInt32(lbl_sli_duration.Text),
                 DateMade = DateTime.Now,
-                UserID = user.ID,
+                ApplicationUserId = user.ID,
                 User = user,
                 PrinterId = printer.ID,
                 Printer = printer,

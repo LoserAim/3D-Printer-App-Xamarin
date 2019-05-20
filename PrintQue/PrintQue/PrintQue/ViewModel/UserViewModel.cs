@@ -167,7 +167,7 @@ namespace PrintQue.ViewModel
         public static async Task<UserViewModel> SearchByID(string ID)
         {
             User user = (await App.MobileService.GetTable<User>().Where(u => u.ID.Contains(ID)).ToListAsync()).FirstOrDefault();
-            return ReturnUserViewModel(user);
+            return (await GetForeignKeys(ReturnUserViewModel(user)));
 
         }
         public static async Task<UserViewModel> SearchByEmail(string email)
