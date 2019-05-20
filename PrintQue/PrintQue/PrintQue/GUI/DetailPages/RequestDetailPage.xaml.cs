@@ -18,11 +18,44 @@ namespace PrintQue.GUI.DetailPages
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class RequestDetailPage : ContentPage
     {
+        private RequestViewModel _request;
+        private bool insert;
+        private int _status;
         RequestDetailsViewModel viewModel;
         public RequestDetailPage(RequestViewModel request = null, int Status = 0)
         {
             InitializeComponent();
-            viewModel = new RequestDetailsViewModel(request, Status);
+            _request = request;
+            _status = Status;
+            switch (_status)
+            {
+                case 0:
+                    //Admin insert
+                    insert = true;
+                    ToolbarItems.RemoveAt(1);
+                    ToolbarItems.RemoveAt(1);
+                    break;
+                case 1:
+                    //User insert
+                    RequestDetails.Root.Remove(StatusEditor);
+                    RequestDetails.Root.Remove(UserSelectorSection);
+                    insert = true;
+                    ToolbarItems.RemoveAt(1);
+                    ToolbarItems.RemoveAt(1);
+                    break;
+                case 2:
+                    //Admin Edit
+                    insert = false;
+
+                    break;
+                case 3:
+                    //User Edit
+                    RequestDetails.Root.Remove(StatusEditor);
+                    RequestDetails.Root.Remove(UserSelectorSection);
+                    insert = false;
+                    break;
+            }
+            viewModel = new RequestDetailsViewModel();
             BindingContext = viewModel;
         }
     }

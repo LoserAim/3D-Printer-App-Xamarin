@@ -165,41 +165,15 @@ namespace PrintQue.ViewModel
             }
         }
 
-        public RequestDetailsViewModel(RequestViewModel request = null, int Status = 0)
+        private string _selectedFileLabel;
+        public string selectedFileLabel
         {
-            _request = request;
-            statusSwitch = Status;
-            switch (statusSwitch)
+            get { return _selectedFileLabel; }
+            set
             {
-                case 0:
-                    //Admin insert
-                    insert = true;
-                    Application.Current.MainPage.ToolbarItems.RemoveAt(1);
-                    Application.Current.MainPage.ToolbarItems.RemoveAt(1);
-                    break;
-                case 1:
-                    //User insert
-                    RequestDetails.Root.Remove(StatusEditor);
-                    RequestDetails.Root.Remove(UserSelectorSection);
-                    insert = true;
-                    Application.Current.MainPage.ToolbarItems.RemoveAt(1);
-                    Application.Current.MainPage.ToolbarItems.RemoveAt(1);
-                    break;
-                case 2:
-                    //Admin Edit
-                    insert = false;
-
-                    break;
-                case 3:
-                    //User Edit
-                    RequestDetails.Root.Remove(StatusEditor);
-                    RequestDetails.Root.Remove(UserSelectorSection);
-                    insert = false;
-                    break;
-
+                _selectedFileLabel = value;
+                OnPropertyChanged("projectDescript");
             }
-
-
         }
 
         private async void SelectFile_Clicked(object sender, EventArgs e)
@@ -212,7 +186,7 @@ namespace PrintQue.ViewModel
                 if (fileData == null)
                     return;
                 _request.ProjectFilePath = text;
-                SelectedFileLabel.Text = fileData.FileName;
+                _selectedFileLabel = fileData.FileName;
             }
             catch (Exception ex)
             {
@@ -236,9 +210,9 @@ namespace PrintQue.ViewModel
         }
         private async void ToolbarItem_Save_Activated(object sender, EventArgs e)
         {
-            var user = await UserViewModel.SearchByEmail(Users_Picker.Text);
-            var printer = await PrinterViewModel.SearchByName(Printers_Picker.Text);
-            var status = await StatusViewModel.SearchByName(Status_Picker.Text);
+            var user = await UserViewModel.SearchByEmail(Users_Picker.Text); // fix same as selectedFileLabel
+            var printer = await PrinterViewModel.SearchByName(Printers_Picker.Text); //fix
+            var status = await StatusViewModel.SearchByName(Status_Picker.Text); //fix
             var request = new RequestViewModel()
             {
 
