@@ -165,17 +165,6 @@ namespace PrintQue.ViewModel
             }
         }
 
-        private string _selectedFileLabel;
-        public string selectedFileLabel
-        {
-            get { return _selectedFileLabel; }
-            set
-            {
-                _selectedFileLabel = value;
-                OnPropertyChanged("projectDescript");
-            }
-        }
-
         private async void SelectFile_Clicked(object sender, EventArgs e)
         {
             try
@@ -186,7 +175,7 @@ namespace PrintQue.ViewModel
                 if (fileData == null)
                     return;
                 _request.ProjectFilePath = text;
-                _selectedFileLabel = fileData.FileName;
+                SelectedFileLabel.Text = fileData.FileName;
             }
             catch (Exception ex)
             {

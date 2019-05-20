@@ -78,7 +78,7 @@
                 </ViewCell>
                 <ViewCell>
                     <StackLayout Padding="0,10,0,0" Orientation="Horizontal">
-                        <Label x:Name="SelectedFileLabel" HorizontalTextAlignment="Center" Text="{Binding selectedFileLabel}"></Label>
+                        <Label x:Name="SelectedFileLabel" HorizontalTextAlignment="Center" Text="No File Selected"></Label>
                         <Button x:Name="SelectFile" Clicked="SelectFile_Clicked" Text="Select Model File" HorizontalOptions="FillAndExpand"></Button>
                     </StackLayout>
                 </ViewCell>
