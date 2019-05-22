@@ -71,7 +71,7 @@ namespace PrintQue.ViewModel
                 {
                     foreach (var m in (await MessageViewModel.SearchByRequestID(n.ID)))
                     {
-                        Messages.Insert(0, new MessageViewModel() { Body = m.Body, SenderId = m.SenderId, Sender = m.Sender });
+                        Messages.Insert(0, new MessageViewModel() { Body = m.Body, SenderId = m.SenderId });
                     }
                 }
                 Messages.OrderByDescending(m => m.TimeSent);

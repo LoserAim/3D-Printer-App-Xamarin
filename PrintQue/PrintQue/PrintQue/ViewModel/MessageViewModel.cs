@@ -136,15 +136,8 @@ namespace PrintQue.ViewModel
         }
         public static async Task<List<MessageViewModel>> SearchByRequestID(string ID)
         {
-            List<Message> messages = (await App.MobileService.GetTable<Message>().Where(u => u.RequestId.Contains(ID)).ToListAsync());
-            List<MessageViewModel> messageViewModel = new List<MessageViewModel>();
-            foreach (var item in messages)
-            {
-                var obj = ReturnMessageViewModel(item);
-                obj.Sender = await UserViewModel.SearchByID(obj.SenderId);
-                messageViewModel.Add(obj);
-            }
-            return messageViewModel;
+            List<Message> sorted = (await App.MobileService.GetTable<Message>().Where(u => u.RequestId.Contains(ID)).ToListAsync());
+            return ReturnListMessageViewModel(sorted);
         }
     }
 }
