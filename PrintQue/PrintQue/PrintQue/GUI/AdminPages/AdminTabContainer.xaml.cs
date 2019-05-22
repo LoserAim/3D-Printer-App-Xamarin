@@ -53,7 +53,7 @@ namespace PrintQue
             if (response)
 
             {
-                App.LoggedInUserID = null;
+                App.LoggedInUser = null;
 
                 await Navigation.PopAsync();
             }

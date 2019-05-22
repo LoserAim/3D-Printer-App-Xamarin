@@ -22,8 +22,20 @@ namespace PrintQue.ViewModel
                 OnPropertyChanged("User");
             }
         }
+        private bool _isBusy;
+        public bool IsBusy
+        {
+            get { return _isBusy; }
+            set
+            {
+                _isBusy = value;
+                OnPropertyChanged("IsBusy");
+            }
+        }
 
         public RegisterCommand RegisterCommand { get; set; }
+
+
         public string LastName
         {
             get { return lastName; }
@@ -85,7 +97,20 @@ namespace PrintQue.ViewModel
         private string firstName;
         private string lastName;
 
+
+
+
+
+        //Important for viewmodels. Notifies Commands of new changes
         public event PropertyChangedEventHandler PropertyChanged;
+        private void OnPropertyChanged(string propertyName)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+        
+
+
+
 
         public string Password
         {
@@ -124,10 +149,7 @@ namespace PrintQue.ViewModel
 
         }
 
-        private void OnPropertyChanged(string propertyName)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
+
 
 
         public RegisterViewModel()
@@ -136,39 +158,30 @@ namespace PrintQue.ViewModel
             RegisterCommand = new RegisterCommand(this);
             apiHelper = new ApiHelper();
         }
-        public string Message { get; set; }
+
         public async void Register()
         {
-
+            IsBusy = true;
             var response = await apiHelper.RegisterAsync(User);
 
             if (response)
             {
-                Message = "Registered successfully";
                 var aspuser = (await App.MobileService.GetTable<AspNetUsers>().Where(u => u.Email.Contains(User.Email)).ToListAsync()).FirstOrDefault();
                 User.ID = aspuser.ID;
                 await UserViewModel.Insert(User);
+                IsBusy = false;
+                await Xamarin.Forms.Application.Current.MainPage.DisplayAlert("Success!", "You have successfully Registered!", "OK");
+                await Xamarin.Forms.Application.Current.MainPage.Navigation.PopAsync();
             }
 
             else
-                Message = "Registered failed";
-
-            await Xamarin.Forms.Application.Current.MainPage.DisplayAlert("ALERY", Message, "OK");
-            //int canRegister = await UserViewModel.Register(User.Email, User.Password, User.FirstName, User.LastName);
-            //switch (canRegister)
-            //{
-            //    case 0:
-            //        await Xamarin.Forms.Application.Current.MainPage.DisplayAlert("Error", "Try again", "OK");
-            //        break;
-            //    case 1:
-            //        var Num = UserViewModel.Insert(user);
-            //        await Xamarin.Forms.Application.Current.MainPage.DisplayAlert("Success!", "You have successfully Registered in!", "OK");
-            //        await Xamarin.Forms.Application.Current.MainPage.Navigation.PopAsync();
-            //        break;
+            {
+                IsBusy = false;
+                await Xamarin.Forms.Application.Current.MainPage.DisplayAlert("Error", "Try again", "OK");
+            }
 
 
 
-            //}
         }
     }
 }

@@ -6,6 +6,7 @@ using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using PrintQue.Models;
 using PrintQue.Helper;
+using PrintQue.ViewModel;
 
 [assembly: XamlCompilation(XamlCompilationOptions.Compile)]
 namespace PrintQue
@@ -13,7 +14,7 @@ namespace PrintQue
     public partial class App : Application
     {
         public static string DatabaseLocation = string.Empty;
-        public static string    LoggedInUserID   = null;
+        public static UserViewModel    LoggedInUser   = null;
         public static MobileServiceClient MobileService =new MobileServiceClient("http://3dprintqueue.azurewebsites.net");
         //public static IMobileServiceSyncTable<Request> requestsTable;
         //public static IMobileServiceSyncTable<Printer> printersTable;
