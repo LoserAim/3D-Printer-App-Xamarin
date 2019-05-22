@@ -2,13 +2,22 @@
 <ViewCell xmlns="http://xamarin.com/schemas/2014/forms" 
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="PrintQue.ChatTemplates.OutgoingViewCell">
-    <Frame BackgroundColor="Gray"
-            Rotation="180"
-            FlowDirection="LeftToRight"
-            Padding="10"
-            HasShadow="false"
-            Margin="80,10,10,10">
-        <Label Text="{Binding Body}"
-                  TextColor="White"/>
-    </Frame>
+    <StackLayout>
+        <Frame BackgroundColor="Gray"
+                Rotation="180"
+                FlowDirection="LeftToRight"
+                Padding="10"
+                HasShadow="false"
+                Margin="80,10,10,10">
+            <Label Text="{Binding Body}"
+                      TextColor="White"/>
+        </Frame>
+        <Label Text="{Binding Sender.LastName}"
+               TextColor="Black"
+               FontSize="Micro"
+               FlowDirection="LeftToRight"
+               Rotation="180"
+               Margin="65,0,2,0"/>
+    </StackLayout>
+
 </ViewCell>

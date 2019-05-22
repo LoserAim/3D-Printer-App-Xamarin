@@ -22,7 +22,7 @@ namespace PrintQue.Helper
                 return null;
             messageVm.Sender = App.LoggedInUser;
             
-            return (messageVm.SenderId == App.LoggedInUser.ID) ? incomingDataTemplate : outgoingDataTemplate;
+            return (messageVm.SenderId == App.LoggedInUser.ID) ? outgoingDataTemplate : incomingDataTemplate ;
         }
     }
 }
