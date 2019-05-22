@@ -5,48 +5,49 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="PrintQue.LoginPage">
 
-        <StackLayout VerticalOptions="Center" 
-                 Margin="30,10"
-                 >
-        <StackLayout HeightRequest="40" VerticalOptions="End">
-            <ActivityIndicator IsRunning="{Binding IsLoading, Mode=TwoWay}"
-                             IsVisible="{Binding IsLoading, Mode=TwoWay}"
-                              HeightRequest="40"
-                              VerticalOptions="CenterAndExpand"
-                              HorizontalOptions="CenterAndExpand">
-                <ActivityIndicator.WidthRequest>
-                    <OnPlatform x:TypeArguments="x:Double" iOS="100" Android="100" />
-                </ActivityIndicator.WidthRequest>
-                <ActivityIndicator.Color>
-                    <OnPlatform x:TypeArguments="Color"
-                          iOS="#2499CE" />
-                </ActivityIndicator.Color>
-            </ActivityIndicator>
-        </StackLayout>
+    <AbsoluteLayout Padding="20"  VerticalOptions="Center">
+
         <Entry x:Name="userNameEntry" 
                Placeholder="Email" 
                Keyboard="Email"
-               Text="{Binding Email, Mode=TwoWay}"/>
+               Text="{Binding Email, Mode=TwoWay}"
+               AbsoluteLayout.LayoutBounds="0,40,1,40" AbsoluteLayout.LayoutFlags="XProportional,WidthProportional"
+               HorizontalOptions="FillAndExpand"/>
         <Entry x:Name="userPasswordEntry" 
                Placeholder="Password" 
                IsPassword="True"
-               Text="{Binding Password, Mode=TwoWay}"/>
+               Text="{Binding Password, Mode=TwoWay}"
+               AbsoluteLayout.LayoutBounds="0,85,1,40" AbsoluteLayout.LayoutFlags="XProportional,WidthProportional"
+               HorizontalOptions="FillAndExpand"/>
         <Button x:Name="LoginButton" 
                 Text="Log in" 
                 Command="{Binding LoginCommand}"
                 CommandParameter="{Binding User}"
-                Margin="0,35"  
                 BackgroundColor="DodgerBlue" 
-                TextColor="White"/>
-
-        <Label Text="Don't have an account?" 
+                TextColor="White"
+                AbsoluteLayout.LayoutBounds="0,130,1,40" AbsoluteLayout.LayoutFlags="XProportional,WidthProportional"
+                HorizontalOptions="FillAndExpand"/>
+        <StackLayout>
+            <Label Text="Don't have an account?" 
                HorizontalOptions="Center"/>
-        <Label x:Name="RegisterLabel" 
+            <Label x:Name="RegisterLabel" 
                Text="Register"
-               
-               HorizontalOptions="Center" 
+               HorizontalOptions="Center"
                TextColor="CadetBlue"/>
 
         </StackLayout>
+
+        <ContentView x:Name="actIndBackground"
+             BackgroundColor="#222222" Opacity="0.5"
+             AbsoluteLayout.LayoutFlags="All"
+             AbsoluteLayout.LayoutBounds="0,0,1,1"
+             IsVisible="{Binding IsLoading}">
+        </ContentView>
+        <ActivityIndicator x:Name="actInd"
+             AbsoluteLayout.LayoutFlags="PositionProportional"
+             AbsoluteLayout.LayoutBounds="0.5,0.5,-1,-1"
+             IsRunning="{Binding IsLoading}"
+             IsVisible="{Binding IsLoading}" />
+    </AbsoluteLayout>
 
 </ContentPage>
