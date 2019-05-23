@@ -5,13 +5,13 @@ using System.Windows.Input;
 
 namespace PrintQue.ViewModel.Commands
 {
-    public class DeleteCommand : ICommand
+    public class FilePickerCommand : ICommand
     {
         public event EventHandler CanExecuteChanged;
-        public RequestDetailsViewModel viewModel;
-        public DeleteCommand(RequestDetailsViewModel detailsViewModel)
+        public RequestDetailsViewModel viewModel { get; set; }
+        public FilePickerCommand(RequestDetailsViewModel ViewModel)
         {
-            viewModel = detailsViewModel;
+            viewModel = ViewModel;
         }
         public bool CanExecute(object parameter)
         {
@@ -20,7 +20,7 @@ namespace PrintQue.ViewModel.Commands
 
         public void Execute(object parameter)
         {
-            viewModel.DeleteData();
+            viewModel.ExecutFilePicker();
         }
     }
 }

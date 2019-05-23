@@ -17,12 +17,17 @@ namespace PrintQue.ViewModel.Commands
 
         public bool CanExecute(object parameter)
         {
+            var request = (RequestViewModel)parameter;
+            if (request == null)
+                return false;
+            if (string.IsNullOrEmpty(request.ProjectName) || string.IsNullOrEmpty(request.ProjectDescript))
+                return false;
             return true;
         }
 
         public void Execute(object parameter)
         {
-            throw new NotImplementedException();
+            viewModel.SaveData();
         }
     }
 }

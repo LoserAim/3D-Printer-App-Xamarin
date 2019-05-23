@@ -5,22 +5,22 @@ using System.Windows.Input;
 
 namespace PrintQue.ViewModel.Commands
 {
-    public class DeleteCommand : ICommand
+    public class PushChatPagesCommand : ICommand
     {
         public event EventHandler CanExecuteChanged;
-        public RequestDetailsViewModel viewModel;
-        public DeleteCommand(RequestDetailsViewModel detailsViewModel)
+        public RequestDetailsViewModel viewModel { get; set; }
+        public PushChatPagesCommand(RequestDetailsViewModel ViewModel)
         {
-            viewModel = detailsViewModel;
+            viewModel = ViewModel;
         }
         public bool CanExecute(object parameter)
         {
-            return true;
+            return false;
         }
 
         public void Execute(object parameter)
         {
-            viewModel.DeleteData();
+            throw new NotImplementedException();
         }
     }
 }

@@ -1,14 +1,18 @@
-﻿using PrintQue.ViewModel.Commands;
+﻿using Plugin.FilePicker;
+using Plugin.FilePicker.Abstractions;
+using PrintQue.ViewModel.Commands;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
+using System.IO;
 using System.Text;
 
 namespace PrintQue.ViewModel
 {
     public class RequestDetailsViewModel : INotifyPropertyChanged
     {
-
+        public bool insert;
         public event PropertyChangedEventHandler PropertyChanged;
         private void OnPropertyChanged(string propertyName)
         {
@@ -18,6 +22,9 @@ namespace PrintQue.ViewModel
         private string _projectFilePath;
         private DateTime _dateRequested;
         private DateTime _dateMade;
+        private string _selectedFileText;
+
+
         private string _projectDescript;
         private bool _personalUse;
         private double _duration;
@@ -52,6 +59,15 @@ namespace PrintQue.ViewModel
                 OnPropertyChanged("Status");
             }
         }
+        public string SelectedFileText
+        {
+            get { return _selectedFileText; }
+            set
+            {
+                _selectedFileText = value;
+                OnPropertyChanged("SelectedFileText");
+            }
+        }
         public string ProjectName
         {
             get { return _projectName; }
@@ -71,7 +87,6 @@ namespace PrintQue.ViewModel
                 };
             }
         }
- 
         public string ProjectFilePath
         {
             get { return _projectFilePath; }
@@ -200,8 +215,12 @@ namespace PrintQue.ViewModel
             }
         }
         public SaveOrUpdateCommand SaveOrUpdateCommand { get; set; }
+        public DeleteCommand DeleteCommand { get; set; }
+        public PushChatPagesCommand PushChatPagesCommand { get; set; }
+        public FilePickerCommand FilePickerCommand { get; set; }
         public RequestDetailsViewModel(RequestViewModel request)
         {
+            
             DateMade = request.DateMade;
             DateRequested = request.DateRequested;
             Duration = request.Duration;
@@ -209,7 +228,73 @@ namespace PrintQue.ViewModel
             ProjectDescript = request.ProjectDescript;
             ProjectFilePath = request.ProjectFilePath;
             PersonalUse = request.PersonalUse;
+            Request = request;
+            Status = request.Status;
+            Printer = request.Printer;
+            User = request.User;
             SaveOrUpdateCommand = new SaveOrUpdateCommand(this);
+            DeleteCommand = new DeleteCommand(this);
+            PushChatPagesCommand = new PushChatPagesCommand(this);
+            FilePickerCommand = new FilePickerCommand(this);
+        }
+        public async void SaveData()
+        {
+            var user = await UserViewModel.SearchByEmail(User.Email);
+            var printer = await PrinterViewModel.SearchByName(Printer.Name);
+            var status = await StatusViewModel.SearchByName(Status.Name);
+            var request = Request;
+            var exists = await RequestViewModel.SearchProjectNameByUser(request);
+            if (exists == null && insert == true)
+            {
+                await RequestViewModel.Insert(request);
+                await Xamarin.Forms.Application.Current.MainPage.Navigation.PopAsync();
+
+            }
+            else if (!insert)
+            {
+                request.ID = exists.ID;
+                await RequestViewModel.Update(request);
+                await Xamarin.Forms.Application.Current.MainPage.Navigation.PopAsync();
+
+            }
+            else if (exists != null && insert == true)
+            {
+
+                await Xamarin.Forms.Application.Current.MainPage.DisplayAlert("ERROR", "Project Name already Used. Please choose another", "OK");
+
+            }
+            else
+            {
+                await Xamarin.Forms.Application.Current.MainPage.DisplayAlert("ERROR", "Could not save details of Request", "OK");
+
+            }
+        }
+        public void DeleteData()
+        {
+
+        }
+        internal async void ExecutFilePicker()
+        {
+            try
+            {
+                FileData fileData = await CrossFilePicker.Current.PickFile();
+                if (!fileData.FileName.Contains(".stl"))
+                {
+                    await Xamarin.Forms.Application.Current.MainPage.DisplayAlert("Error!", "You can only submit .stl files! Please pick a file type of .stl!", "OK");
+                    return;
+                }
+                
+                // User cancelled file selection
+                if (fileData == null)
+                    return;
+                string text = File.ReadAllText(fileData.FilePath);
+                ProjectFilePath = text;
+                SelectedFileText = fileData.FileName;
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine("Exception choosing file: " + ex.ToString());
+            }
         }
     }
 }
