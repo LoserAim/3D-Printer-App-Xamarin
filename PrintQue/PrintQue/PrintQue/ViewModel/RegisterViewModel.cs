@@ -36,38 +36,38 @@ namespace PrintQue.ViewModel
         public RegisterCommand RegisterCommand { get; set; }
 
 
-        public string LastName
+        public string Last_Name
         {
-            get { return lastName; }
+            get { return last_Name; }
             set
             {
-                lastName = value;
+                Last_Name = value;
                 User = new UserViewModel()
                 {
-                    FirstName = this.FirstName,
-                    LastName = this.LastName,
+                    First_Name = this.First_Name,
+                    Last_Name = this.Last_Name,
                     Email = this.Email,
                     Password = this.Password,
                     confirmPassword = this.confirmPassword,
                 };
-                OnPropertyChanged("LastName");
+                OnPropertyChanged("Last_Name");
             }
         }
-        public string FirstName
+        public string First_Name
         {
-            get { return firstName; }
+            get { return first_Name; }
             set
             {
-                firstName = value;
+                First_Name = value;
                 User = new UserViewModel()
                 {
-                    FirstName = this.FirstName,
-                    LastName = this.LastName,
+                    First_Name = this.First_Name,
+                    Last_Name = this.Last_Name,
                     Email = this.Email,
                     Password = this.Password,
                     confirmPassword = this.confirmPassword,
                 };
-                OnPropertyChanged("FirstName");
+                OnPropertyChanged("First_Name");
             }
         }
 
@@ -82,8 +82,8 @@ namespace PrintQue.ViewModel
                 email = value;
                 User = new UserViewModel()
                 {
-                    FirstName = this.FirstName,
-                    LastName = this.LastName,
+                    First_Name = this.First_Name,
+                    Last_Name = this.Last_Name,
                     Email = this.Email,
                     Password = this.Password,
                     confirmPassword = this.confirmPassword,
@@ -94,8 +94,8 @@ namespace PrintQue.ViewModel
 
         private string password;
         private string confirmpassword;
-        private string firstName;
-        private string lastName;
+        private string first_Name;
+        private string last_Name;
 
 
 
@@ -120,8 +120,8 @@ namespace PrintQue.ViewModel
                 password = value;
                 User = new UserViewModel()
                 {
-                    FirstName = this.FirstName,
-                    LastName = this.LastName,
+                    First_Name = this.First_Name,
+                    Last_Name = this.Last_Name,
                     Email = this.Email,
                     Password = this.Password,
                     confirmPassword = this.confirmPassword,
@@ -138,8 +138,8 @@ namespace PrintQue.ViewModel
                 confirmpassword = value;
                 User = new UserViewModel()
                 {
-                    FirstName = this.FirstName,
-                    LastName = this.LastName,
+                    First_Name = this.First_Name,
+                    Last_Name = this.Last_Name,
                     Email = this.Email,
                     Password = this.Password,
                     confirmPassword = this.confirmPassword, 
@@ -162,14 +162,10 @@ namespace PrintQue.ViewModel
         public async void Register()
         {
             IsBusy = true;
-            var response = await apiHelper.RegisterAsync(User);
+            var response = await apiHelper.RegisterAsync(First_Name, Last_Name, Email, Password, confirmpassword);
 
             if (response)
-            {
-                var aspuser = (await App.MobileService.GetTable<AspNetUsers>().Where(u => u.Email.Contains(User.Email)).ToListAsync()).FirstOrDefault();
-                User.ID = aspuser.ID;
-                await UserViewModel.Insert(User);
-                IsBusy = false;
+            {                IsBusy = false;
                 await Xamarin.Forms.Application.Current.MainPage.DisplayAlert("Success!", "You have successfully Registered!", "OK");
                 await Xamarin.Forms.Application.Current.MainPage.Navigation.PopAsync();
             }

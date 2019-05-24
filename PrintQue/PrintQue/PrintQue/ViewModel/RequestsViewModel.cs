@@ -73,7 +73,7 @@ namespace PrintQue.ViewModel
                 {
 
                     foreach (var request in req.Where(r => r.ProjectName.Contains(_searchFilter)
-                    || r.User.FirstName.Contains(_searchFilter)))
+                    || r.User.First_Name.Contains(_searchFilter)))
                     {
                         Requests.Add(request);
                     }

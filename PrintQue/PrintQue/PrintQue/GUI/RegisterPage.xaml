@@ -20,8 +20,8 @@
                     </ActivityIndicator.Color>
                 </ActivityIndicator>
             </StackLayout>
-        <Entry x:Name="FirstNameEntry" Placeholder="First Name" Text="{Binding FirstName, Mode=TwoWay}"/>
-        <Entry x:Name="LastNameEntry" Placeholder="Last Name" Text="{Binding LastName, Mode=TwoWay}"/>
+        <Entry x:Name="First_NameEntry" Placeholder="First Name" Text="{Binding First_Name, Mode=TwoWay}"/>
+        <Entry x:Name="Last_NameEntry" Placeholder="Last Name" Text="{Binding Last_Name, Mode=TwoWay}"/>
         <Entry x:Name="userNameEntry" Placeholder="Email Adress" Keyboard="Email" Text="{Binding Email, Mode=TwoWay}"/>
         <Entry x:Name="userPasswordEntry" Placeholder="Password" IsPassword="True" Text="{Binding Password, Mode=TwoWay}"/>
         <Entry x:Name="PasswordConfirmEntry" Placeholder="Confirm Password" IsPassword="True" Text="{Binding confirmPassword, Mode=TwoWay}"/>

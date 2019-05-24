@@ -20,7 +20,7 @@ namespace PrintQue.ViewModel.Commands
             var user = (UserViewModel)parameter;
             if (user == null)
                 return false;
-            if (string.IsNullOrEmpty(user.Email) || string.IsNullOrEmpty(user.Password) || string.IsNullOrEmpty(user.confirmPassword) || string.IsNullOrEmpty(user.FirstName) || string.IsNullOrEmpty(user.LastName))
+            if (string.IsNullOrEmpty(user.Email) || string.IsNullOrEmpty(user.Password) || string.IsNullOrEmpty(user.confirmPassword) || string.IsNullOrEmpty(user.First_Name) || string.IsNullOrEmpty(user.Last_Name))
                 return false;
             if (!string.Equals(user.Password, user.confirmPassword))
                 return false;

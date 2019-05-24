@@ -98,7 +98,9 @@ namespace PrintQue.ViewModel
                 messi.Request = (await RequestViewModel.SearchByUser(App.LoggedInUser.ID)).OrderByDescending(r => r.DateMade).FirstOrDefault();
                 messi.RequestId = messi.Request.ID;
                 messi.TimeSent = DateTime.Now;
-
+                var user = await UserViewModel.SearchByID(App.LoggedInUser.ID);
+                user.LatestMessage = DateTime.Now;
+                await UserViewModel.UpdateUser(user);
                 await MessageViewModel.Insert(messi);
                 
             }

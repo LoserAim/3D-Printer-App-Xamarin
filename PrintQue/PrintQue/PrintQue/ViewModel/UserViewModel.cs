@@ -8,12 +8,13 @@ using System.Threading.Tasks;
 
 namespace PrintQue.ViewModel
 {
-    public class UserViewModel : User
+    public class UserViewModel : AspNetUsers
     {
+        public string Password { get; set; }
         public string confirmPassword { get; set; }
         public List<MessageViewModel> Messages { get; set; } = new List<MessageViewModel>();
         public List<RequestViewModel> Requests { get; set; } = new List<RequestViewModel>();
-
+        public int Admin { get; set; }
         private static async Task<UserViewModel> GetForeignKeys(UserViewModel userViewModel)
         {
 
@@ -40,9 +41,8 @@ namespace PrintQue.ViewModel
             var logger = new UserViewModel()
             {
                 Email = email,
-                Password = password,
             };
-            bool canLogin = await ApiHelper.LoginAsync(logger);
+            bool canLogin = await ApiHelper.LoginAsync(email, password);
             
 
             if (canLogin)
@@ -54,7 +54,7 @@ namespace PrintQue.ViewModel
                 {
 
                     App.LoggedInUser = user;
-                    user.Admin = 1;
+                    App.LoggedInUser.Admin = 1;
                     return 1;
                     
                 }
@@ -71,13 +71,13 @@ namespace PrintQue.ViewModel
             return 0;
         }
 
-        public static async Task<int> Register(string email, string password, string firstname, string lastname)
+        public static async Task<int> Register(string email, string password, string First_Name, string Last_Name)
         {
             bool isUsernameEmpty = string.IsNullOrEmpty(email);
             bool isPasswordEmpty = string.IsNullOrEmpty(password);
-            bool isFirstNameEmpty = string.IsNullOrEmpty(firstname);
-            bool isLastNameEmpty = string.IsNullOrEmpty(lastname);
-            if (isUsernameEmpty || isPasswordEmpty || isFirstNameEmpty || isLastNameEmpty)
+            bool isFirst_NameEmpty = string.IsNullOrEmpty(First_Name);
+            bool isLast_NameEmpty = string.IsNullOrEmpty(Last_Name);
+            if (isUsernameEmpty || isPasswordEmpty || isFirst_NameEmpty || isLast_NameEmpty)
             {
                 //then show error
                 return 0;
@@ -102,43 +102,64 @@ namespace PrintQue.ViewModel
             var item = new UserViewModel()
             {
                 ID = user.ID,
+                UserName = user.UserName,
                 Email = user.Email,
+                NodrmalizerUserName = user.NodrmalizerUserName,
+                NormalizedEmail = user.NormalizedEmail,
+                EmailConfirmed = user.EmailConfirmed,
+                PasswordHash = user.PasswordHash,
+                SecurityStamp = user.SecurityStamp,
+                ConcurrencyStamp = user.ConcurrencyStamp,
+                PhoneNumber = user.PhoneNumber,
+                PhoneNumberConfirmed = user.PhoneNumberConfirmed,
+                TwoFactorEnabled = user.TwoFactorEnabled,
+                LockoutEnd = user.LockoutEnd,
+                LockoutEnabled = user.LockoutEnabled,
+                First_Name = user.First_Name,
+                Last_Name = user.Last_Name,
+                AccessFailedCount = user.AccessFailedCount,
                 LatestMessage = user.LatestMessage,
             };
             return item;
         }
-        private static User ReturnUser(UserViewModel userviewmodel)
+        private static AspNetUsers ReturnUser(UserViewModel userviewmodel)
         {
-            var item = new User()
+            var item = new AspNetUsers()
             {
                 ID = userviewmodel.ID,
-                FirstName = userviewmodel.FirstName,
-                LastName = userviewmodel.LastName,
+                UserName = userviewmodel.UserName,
                 Email = userviewmodel.Email,
-                Password = userviewmodel.Password,
+                NodrmalizerUserName = userviewmodel.NodrmalizerUserName,
+                NormalizedEmail = userviewmodel.NormalizedEmail,
+                EmailConfirmed = userviewmodel.EmailConfirmed,
+                PasswordHash = userviewmodel.PasswordHash,
+                SecurityStamp = userviewmodel.SecurityStamp,
+                ConcurrencyStamp = userviewmodel.ConcurrencyStamp,
+                PhoneNumber = userviewmodel.PhoneNumber,
+                PhoneNumberConfirmed = userviewmodel.PhoneNumberConfirmed,
+                TwoFactorEnabled = userviewmodel.TwoFactorEnabled,
+                LockoutEnd = userviewmodel.LockoutEnd,
+                LockoutEnabled = userviewmodel.LockoutEnabled,
+                First_Name = userviewmodel.First_Name,
+                Last_Name = userviewmodel.Last_Name,
+                AccessFailedCount = userviewmodel.AccessFailedCount,
                 LatestMessage = userviewmodel.LatestMessage,
-                Admin = userviewmodel.Admin,
             };
             return item;
         }
 
-        public static async Task Insert(UserViewModel userviewmodel)
+        public static async Task<bool> UpdateUser(UserViewModel user)
         {
-            var user = ReturnUser(userviewmodel);
+            var us = ReturnUser(user);
             try
             {
-                await App.MobileService.GetTable<User>().InsertAsync(user);
-                await Xamarin.Forms.Application.Current.MainPage.DisplayAlert("Success", "User was successfully registered!", "OK");
-            }
-            catch (NullReferenceException nre)
-            {
-                await Xamarin.Forms.Application.Current.MainPage.DisplayAlert("Failure", "User failed to be registered", "OK");
+                await App.MobileService.GetTable<AspNetUsers>().UpdateAsync(us);
+                return true;
 
             }
             catch (Exception ex)
             {
-                await Xamarin.Forms.Application.Current.MainPage.DisplayAlert("Failure", "User failed to be registered", "OK");
-
+                return false;
             }
         }
 
@@ -146,21 +167,10 @@ namespace PrintQue.ViewModel
         {
 
             List<UserViewModel> usersviewmodel = new List<UserViewModel>();
-            var users = await App.MobileService.GetTable<User>().ToListAsync();
+            var users = await App.MobileService.GetTable<AspNetUsers>().ToListAsync();
             foreach (var u in users)
             {
-                var inser = new UserViewModel()
-                {
-                    ID = u.ID,
-                    FirstName = u.FirstName,
-                    LastName = u.LastName,
-                    Email = u.Email,
-                    Password = u.Password,
-                    Admin = u.Admin,
-                    LatestMessage = u.LatestMessage,
-
-                };
-                usersviewmodel.Add(inser);
+                usersviewmodel.Add(ReturnUserViewModel(u));
             }
             //ADD PULL OF FOREIGN KEYS
             return usersviewmodel;
