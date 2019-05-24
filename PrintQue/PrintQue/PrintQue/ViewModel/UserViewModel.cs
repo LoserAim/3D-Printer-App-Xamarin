@@ -104,7 +104,7 @@ namespace PrintQue.ViewModel
                 ID = user.ID,
                 UserName = user.UserName,
                 Email = user.Email,
-                NodrmalizerUserName = user.NodrmalizerUserName,
+                NormalizedUserName = user.NormalizedUserName,
                 NormalizedEmail = user.NormalizedEmail,
                 EmailConfirmed = user.EmailConfirmed,
                 PasswordHash = user.PasswordHash,
@@ -129,7 +129,7 @@ namespace PrintQue.ViewModel
                 ID = userviewmodel.ID,
                 UserName = userviewmodel.UserName,
                 Email = userviewmodel.Email,
-                NodrmalizerUserName = userviewmodel.NodrmalizerUserName,
+                NormalizedUserName = userviewmodel.NormalizedUserName,
                 NormalizedEmail = userviewmodel.NormalizedEmail,
                 EmailConfirmed = userviewmodel.EmailConfirmed,
                 PasswordHash = userviewmodel.PasswordHash,
@@ -148,19 +148,13 @@ namespace PrintQue.ViewModel
             return item;
         }
 
-        public static async Task<bool> UpdateUser(UserViewModel user)
+        public static async Task UpdateUser(UserViewModel user)
         {
             var us = ReturnUser(user);
-            try
-            {
-                await App.MobileService.GetTable<AspNetUsers>().UpdateAsync(us);
-                return true;
 
-            }
-            catch (Exception ex)
-            {
-                return false;
-            }
+                await App.MobileService.GetTable<AspNetUsers>().UpdateAsync(us);
+
+
         }
 
         public static async Task<List<UserViewModel>> GetAll()
