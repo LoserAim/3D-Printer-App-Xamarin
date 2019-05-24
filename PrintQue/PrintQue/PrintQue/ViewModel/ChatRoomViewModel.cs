@@ -74,7 +74,7 @@ namespace PrintQue.ViewModel
                         Messages.Insert(0, new MessageViewModel() { Body = m.Body, SenderId = m.SenderId });
                     }
                 }
-                Messages.OrderByDescending(m => m.TimeSent);
+                Messages.OrderBy(m => m.TimeSent);
             }
         }
         public async void SetMessages(RequestViewModel request)
