@@ -6,9 +6,9 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="PrintQue.GUI.DetailPages.RequestDetailPage">
     <ContentPage.ToolbarItems>
-        <ToolbarItem Icon="save.png" Activated="ToolbarItem_Save_Activated" Order="Primary"/>
-        <ToolbarItem x:Name="tool_Message" Icon="message.png" Activated="ToolbarItem_Message_Activated" Order="Primary"/>
-        <ToolbarItem x:Name="tool_Delete" Icon="trash.png"  Activated="ToolbarItem_Delete_Activated" Order="Primary"/>
+        <ToolbarItem Icon="save.png" Command="{Binding SaveOrUpdateCommand}" CommandParameter="{Binding Request}" Order="Primary"/>
+        <ToolbarItem x:Name="tool_Message" Icon="message.png" Command="{Binding PushChatPagesCommand}" Order="Primary"/>
+        <ToolbarItem x:Name="tool_Delete" Icon="trash.png"  Command="{Binding DeleteCommand}" CommandParameter="{Binding Request}" Order="Primary"/>
     </ContentPage.ToolbarItems>
     <TableView Intent="Form" 
                HasUnevenRows="True"
@@ -16,6 +16,25 @@
                x:Name="RequestDetails">
             <TableRoot>
             <TableSection Title="Requests Details">
+                <EntryCell  x:Name="ent_ProjectName" Label="ProjectName" Text="{Binding ProjectName, Mode=TwoWay}" />
+                <ViewCell>
+                    <StackLayout Padding="0,10,0,0">
+                        <Label Text="Description"/>
+                        <Editor x:Name="edi_Description" Text="{Binding ProjectDescript, Mode=TwoWay}" VerticalOptions="FillAndExpand" AutoSize="TextChanges" HeightRequest="100"/>
+
+                    </StackLayout>
+                </ViewCell>
+                <ViewCell Tapped="PersonalUse_Selector_Tapped">
+                    <StackLayout Orientation="Horizontal" Padding="13, 5">
+                        <Label Text="Assigned PersonalUse" VerticalOptions="Center"/>
+                        <Label 
+                                x:Name="PersonalUse_Picker"
+                                VerticalOptions="Center"
+                                HorizontalOptions="EndAndExpand"
+                                Text="{Binding PersonalUse, Mode=TwoWay}"
+                                TextColor="Gray"/>
+                    </StackLayout>
+                </ViewCell>
             </TableSection>
             <TableSection x:Name="UserSelectorSection">
                     <ViewCell Tapped="User_Selector_Tapped">
@@ -25,13 +44,13 @@
                                 x:Name="Users_Picker"
                                 VerticalOptions="Center"
                                 HorizontalOptions="EndAndExpand"
-                                Text="{Binding User.Email}"
+                                Text="{Binding User.Email, Mode=TwoWay}"
                                 TextColor="Gray"/>
                         </StackLayout>
                     </ViewCell>
             </TableSection>
             <TableSection x:Name="PrinterSelectorSection">
-                <EntryCell  x:Name="ent_ProjectName" Label="ProjectName" Text="{Binding ProjectName}" />
+                
 
                 <ViewCell Tapped="Printer_Selector_Tapped">
                     <StackLayout Orientation="Horizontal" Padding="13, 5">
@@ -40,7 +59,7 @@
                                 x:Name="Printers_Picker"
                                 VerticalOptions="Center"
                                 HorizontalOptions="EndAndExpand"
-                                Text="{Binding Printer.Name}"
+                                Text="{Binding Printer.Name, Mode=TwoWay}"
                                 TextColor="Gray"/>
                     </StackLayout>
                 </ViewCell>
@@ -53,7 +72,7 @@
                                     x:Name="Status_Picker"
                                     VerticalOptions="Center"
                                     HorizontalOptions="EndAndExpand"
-                                    Text="{Binding Status.Name}"
+                                    Text="{Binding Status.Name, Mode=TwoWay}"
                                     TextColor="Gray"/>
                         </StackLayout>
                     </ViewCell>
@@ -61,13 +80,13 @@
             <TableSection>
                 <ViewCell>
                     <StackLayout Padding="0,10,0,0">
-                        <Label x:Name="PrintTimeLabel" HorizontalTextAlignment="Center" Text="Print Time: ASAP"></Label>
-                        <Button Text="Want to schedule your print?" Clicked="ScheduleDay_Clicked"></Button>
+                        <Label x:Name="PrintTimeLabel" HorizontalTextAlignment="Center" Text="{Binding PrintTimeLabel}"></Label>
+                        <Button Text="Want to schedule your print?" Command="{Binding SetDateCommand}"></Button>
                     </StackLayout>
                 </ViewCell>
                 <ViewCell>
                     <StackLayout>
-                        <Slider HorizontalOptions="Fill" x:Name="sli_Duration"  Maximum="8" Minimum="1" Value="4"/>
+                        <Slider HorizontalOptions="Fill" x:Name="sli_Duration"  Maximum="8" Minimum="1" Value="{Binding Path=Duration,Mode=TwoWay}"/>
                         <Label x:Name="lbl_sli_duration" 
                             HorizontalOptions="Center" 
                                Text="{Binding 
@@ -78,28 +97,12 @@
                 </ViewCell>
                 <ViewCell>
                     <StackLayout Padding="0,10,0,0" Orientation="Horizontal">
-                        <Label x:Name="SelectedFileLabel" HorizontalTextAlignment="Center" Text="No File Selected"></Label>
-                        <Button x:Name="SelectFile" Clicked="SelectFile_Clicked" Text="Select Model File" HorizontalOptions="FillAndExpand"></Button>
+                        <Label x:Name="SelectedFileLabel" HorizontalTextAlignment="Center" Text="{Binding SelectedFileText}"></Label>
+                        <Button x:Name="SelectFile" Command="{Binding FilePickerCommand}" Text="Select Model File" HorizontalOptions="FillAndExpand"></Button>
                     </StackLayout>
                 </ViewCell>
-                <ViewCell>
-                    <StackLayout Padding="0,10,0,0">
-                        <Label Text="Description"/>
-                        <Editor x:Name="edi_Description" Text="{Binding ProjectDescript}" VerticalOptions="FillAndExpand" AutoSize="TextChanges" HeightRequest="100"/>
+               
 
-                    </StackLayout>
-                </ViewCell>
-                <ViewCell Tapped="PersonalUse_Selector_Tapped">
-                    <StackLayout Orientation="Horizontal" Padding="13, 5">
-                        <Label Text="Assigned PersonalUse" VerticalOptions="Center"/>
-                        <Label 
-                                x:Name="PersonalUse_Picker"
-                                VerticalOptions="Center"
-                                HorizontalOptions="EndAndExpand"
-                                Text="{Binding PersonalUse}"
-                                TextColor="Gray"/>
-                    </StackLayout>
-                </ViewCell>
 
             </TableSection>
         </TableRoot>

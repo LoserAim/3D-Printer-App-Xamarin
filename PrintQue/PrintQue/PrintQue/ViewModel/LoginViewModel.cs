@@ -4,7 +4,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+using PrintQue.Helper;
 using PrintQue.Models;
 using PrintQue.ViewModel.Commands;
 
@@ -13,6 +13,7 @@ using PrintQue.ViewModel.Commands;
 
 namespace PrintQue.ViewModel
 {
+
     public class LoginViewModel : INotifyPropertyChanged
     {
         private UserViewModel user;
@@ -89,7 +90,7 @@ namespace PrintQue.ViewModel
         public async void Login()
         {
             IsLoading = true;
-            int canLogin = await UserViewModel.Login(User.Email, User.Password);
+            int canLogin = await UserViewModel.Login(Email, Password);
             switch (canLogin)
             {
                 case 0:

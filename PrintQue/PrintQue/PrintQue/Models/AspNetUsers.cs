@@ -22,7 +22,6 @@ namespace PrintQue.Models
         public bool LockoutEnabled { get; set; }
         public string First_Name { get; set; }
         public string Last_Name { get; set; }
-        public bool deleted { get; set;  }
         public int AccessFailedCount { get; set; }
         public DateTime LatestMessage { get; set; }
     }

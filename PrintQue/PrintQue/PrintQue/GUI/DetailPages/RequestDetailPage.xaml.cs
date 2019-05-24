@@ -8,7 +8,7 @@ using PrintQue.ViewModel;
 using PrintQue.Widgets.CalendarWidget;
 using System;
 using System.Diagnostics;
-using System.IO;
+
 using System.Linq;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -22,7 +22,7 @@ namespace PrintQue.GUI.DetailPages
         private RequestViewModel _request;
         private bool insert;
         private int _status;
-
+        RequestDetailsViewModel viewModel;
 
         public RequestDetailPage(RequestViewModel request =null, int Status =0)
         {
@@ -31,12 +31,15 @@ namespace PrintQue.GUI.DetailPages
             BindingContext = request;
             _request = request;
             _status = Status;
+            viewModel = new RequestDetailsViewModel(request);
+
+            BindingContext = viewModel;
             _dateTimeRequestSet = DateTime.Now;
             switch (_status)
             {
                 case 0:
                     //Admin insert
-                    insert = true;
+                    viewModel.insert = true;
                     ToolbarItems.RemoveAt(1);
                     ToolbarItems.RemoveAt(1);
                     break;
@@ -44,20 +47,20 @@ namespace PrintQue.GUI.DetailPages
                     //User insert
                     RequestDetails.Root.Remove(StatusEditor);
                     RequestDetails.Root.Remove(UserSelectorSection);
-                    insert = true;
+                    viewModel.insert = true;
                     ToolbarItems.RemoveAt(1);
                     ToolbarItems.RemoveAt(1);
                     break;
                 case 2:
                     //Admin Edit
-                    insert = false;
+                    viewModel.insert = false;
 
                     break;
                 case 3:
                     //User Edit
                     RequestDetails.Root.Remove(StatusEditor);
                     RequestDetails.Root.Remove(UserSelectorSection);
-                    insert = false;
+                    viewModel.insert = false;
                     break;
 
             }
@@ -65,42 +68,19 @@ namespace PrintQue.GUI.DetailPages
 
         }
 
-        private async void SelectFile_Clicked(object sender, EventArgs e)
-        {
-            try
-            {
-                FileData fileData = await CrossFilePicker.Current.PickFile();
-                if(!fileData.FileName.Contains(".stl"))
-                {
-                    await DisplayAlert("Error!","You can only submit .stl files! Please pick a file type of .stl!", "OK");
-                }
-                string text = File.ReadAllText(fileData.FilePath);
-                // User cancelled file selection
-                if (fileData == null)
-                    return;
-                _request.ProjectFilePath = text;
-                SelectedFileLabel.Text = fileData.FileName;
-            }
-            catch (Exception ex)
-            {
-                Debug.WriteLine("Exception choosing file: " + ex.ToString());
-            }
-        }
-        private void ToolbarItem_Message_Activated(object sender, EventArgs e)
-        {
-            DisplayAlert("Message Clicked!", "W00t!", "OK");
-        }
-        private async void ToolbarItem_Delete_Activated(object sender, EventArgs e)
-        {
-            bool answer = await DisplayAlert("ALERT", "Are you sure you would like to delete this request?", "OK", "Cancel");
-            if(answer)
-            {
-                await RequestViewModel.Remove(_request);
 
-                await DisplayAlert("ALERT", "Request Deleted", "OK");
- 
-            }
-        }
+
+        //private async void ToolbarItem_Delete_Activated(object sender, EventArgs e)
+        //{
+        //    bool answer = await DisplayAlert("ALERT", "Are you sure you would like to delete this request?", "OK", "Cancel");
+        //    if(answer)
+        //    {
+        //        await RequestViewModel.Remove(_request);
+
+        //        await DisplayAlert("ALERT", "Request Deleted", "OK");
+
+        //    }
+        //}
         private async void ToolbarItem_Save_Activated(object sender, EventArgs e)
         {
             var user = await UserViewModel.SearchByEmail(Users_Picker.Text);
