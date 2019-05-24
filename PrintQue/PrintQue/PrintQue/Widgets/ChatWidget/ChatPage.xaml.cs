@@ -23,16 +23,29 @@ namespace PrintQue.Widgets.ChatWidget
             ScrollListCommand = new Command(() =>
             {
                 Device.BeginInvokeOnMainThread(() =>
-                  ChatList.ScrollTo((this.BindingContext as ChatRoomViewModel).Messages.Last(), ScrollToPosition.End, false)
+                {
+                    try
+                    {
+                        ChatList.ScrollTo((this.BindingContext as ChatRoomViewModel).Messages.Last(), ScrollToPosition.End, false)
+                    }
+                    catch (Exception ex)
+            {
+
+            }
+
+        }
+                    
+
               );
             });
         }
-        protected override void OnAppearing()
+        protected async override void OnAppearing()
         {
             //if (_isDataLoaded)
             //    return;
             // _isDataLoaded = true;
             viewModel.UpdateChatList();
+
             base.OnAppearing();
         }
 

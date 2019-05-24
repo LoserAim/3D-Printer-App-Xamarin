@@ -54,9 +54,18 @@ namespace PrintQue.Helper
             //Need to add url for Account register page
             string url = "http://3dprintqueueweb.azurewebsites.net/api/Account/Login";
             var uri = new Uri(url);
-            response = await client.PostAsync(uri, content);
+            try
+            {
+                response = await client.PostAsync(uri, content);
+                return response.IsSuccessStatusCode;
+            }
+            catch (Exception ex)
+            {
+
+                return false;
+            }
             //var response = await client.PostAsync(, content);
-            return response.IsSuccessStatusCode;
+            
 
         }
     }
