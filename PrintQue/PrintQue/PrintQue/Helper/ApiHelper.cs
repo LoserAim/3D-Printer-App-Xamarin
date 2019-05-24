@@ -13,16 +13,16 @@ namespace PrintQue.Helper
 {
     public class ApiHelper
     {
-        public async Task<bool> RegisterAsync(UserViewModel user)
+        public async Task<bool> RegisterAsync(string First_Name, string Last_Name, string Email, string Password, string confirmPassword )
         {
             var client = new HttpClient();
             var us = new RegisterBindingModel()
             {
-                FirstName = user.FirstName,
-                LastName = user.LastName,
-                ConfirmPassword = user.confirmPassword,
-                Email = user.Email,
-                Password = user.Password,
+                First_Name = First_Name,
+                Last_Name = Last_Name,
+                ConfirmPassword = confirmPassword,
+                Email = Email,
+                Password = Password,
             };
             var json = JsonConvert.SerializeObject(us);
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
@@ -38,13 +38,13 @@ namespace PrintQue.Helper
 
         }
       
-        public static async Task<bool> LoginAsync(UserViewModel user)
+        public static async Task<bool> LoginAsync(string Email, string Password)
         {
             var client = new HttpClient();
             var us = new LoginBindingModel()
             {
-                Email = user.Email,
-                Password = user.Password,
+                Email = Email,
+                Password = Password,
             };
             var json = JsonConvert.SerializeObject(us);
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));

@@ -25,15 +25,15 @@ namespace PrintQue.ViewModel
             message.Subject = "AUTOMATED MESSAGE - DO NOT REPLY";
             if (user == null)
             {
-                message.From.Add(new MailboxAddress(string.Concat(newMsg.Sender.FirstName + " " + newMsg.Sender.LastName), newMsg.Sender.Email));
-                message.To.Add(new MailboxAddress(string.Concat(newMsg.Sender.FirstName + " " + newMsg.Sender.LastName), "THEPRE.S.Q.L@gmail.com"));
+                message.From.Add(new MailboxAddress(string.Concat(newMsg.Sender.First_Name + " " + newMsg.Sender.Last_Name), newMsg.Sender.Email));
+                message.To.Add(new MailboxAddress(string.Concat(newMsg.Sender.First_Name + " " + newMsg.Sender.Last_Name), "THEPRE.S.Q.L@gmail.com"));
 
             }
             else
             {
 
-                message.From.Add(new MailboxAddress(string.Concat(newMsg.Sender.FirstName + " " + newMsg.Sender.LastName), "OregonTech3DPrintClub@donotreply.com"));
-                message.To.Add(new MailboxAddress(string.Concat(user.FirstName + " " + user.LastName), user.Email));
+                message.From.Add(new MailboxAddress(string.Concat(newMsg.Sender.First_Name + " " + newMsg.Sender.Last_Name), "OregonTech3DPrintClub@donotreply.com"));
+                message.To.Add(new MailboxAddress(string.Concat(user.First_Name + " " + user.Last_Name), user.Email));
 
             }
             var builder = new BodyBuilder();
