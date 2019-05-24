@@ -1,4 +1,5 @@
-﻿using PrintQue.Models;
+﻿using PrintQue.Helper;
+using PrintQue.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,43 +27,47 @@ namespace PrintQue.ViewModel
 
             return userViewModel;
         }
+        public static async Task<bool> IsAdmin(UserViewModel user)
+        {
+            var admin = (await App.MobileService.GetTable<AspNetUserClaims>().Where(c => c.UserId == user.ID).ToListAsync()).FirstOrDefault();
+            if(admin != null)
+                if (admin.ClaimValue.Contains("Admin"))
+                    return true;
+            return false;
+        }
         public static async Task<int> Login(string email, string password)
         {
-            bool isUsernameEmpty = string.IsNullOrEmpty(email);
-            bool isPasswordEmpty = string.IsNullOrEmpty(password);
-            if (isUsernameEmpty || isPasswordEmpty)
+            var logger = new UserViewModel()
             {
-                //then show error
-                return 0;
-            }
-            else
+                Email = email,
+                Password = password,
+            };
+            bool canLogin = await ApiHelper.LoginAsync(logger);
+            
+
+            if (canLogin)
             {
                 var user = await SearchByEmail(email);
-
-                if (user != null)
+                var admin = await IsAdmin(user);
+                //admin
+                if (admin)
                 {
-                    //admin
-                    if (user.Admin == 1)
-                    {
-                        if (user.Password.Contains(password))
-                        {
-                            App.LoggedInUser = user;
-                            return 1;
-                        }
-                        // TODO(VorpW): Assign App.LoggedInUserID when an admin logs in
-                    }
-                    else
-                    {
-                        if (user.Password.Contains(password.ToString()))
-                        {
-                            App.LoggedInUser = user;
-                            return 2;
-                        }
-                    }
+
+                    App.LoggedInUser = user;
+                    user.Admin = 1;
+                    return 1;
+                    
                 }
+                else
+                {
 
-
+                        App.LoggedInUser = user;
+                        return 2;
+                }
             }
+
+
+            
             return 0;
         }
 
@@ -92,17 +97,13 @@ namespace PrintQue.ViewModel
 
             }
         }
-        private static UserViewModel ReturnUserViewModel(User user)
+        private static UserViewModel ReturnUserViewModel(AspNetUsers user)
         {
             var item = new UserViewModel()
             {
                 ID = user.ID,
-                FirstName = user.FirstName,
-                LastName = user.LastName,
                 Email = user.Email,
-                Password = user.Password,
                 LatestMessage = user.LatestMessage,
-                Admin = user.Admin,
             };
             return item;
         }
@@ -166,7 +167,7 @@ namespace PrintQue.ViewModel
         }
         public static async Task<UserViewModel> SearchByID(string ID)
         {
-            User user = (await App.MobileService.GetTable<User>().Where(u => u.ID.Contains(ID)).ToListAsync()).FirstOrDefault();
+            var user = (await App.MobileService.GetTable<AspNetUsers>().Where(u => u.ID.Contains(ID)).ToListAsync()).FirstOrDefault();
             return (await GetForeignKeys(ReturnUserViewModel(user)));
 
         }
@@ -174,7 +175,7 @@ namespace PrintQue.ViewModel
         {
             try
             {
-                User user = (await App.MobileService.GetTable<User>().Where(u => u.Email.Contains(email)).ToListAsync()).FirstOrDefault();
+                AspNetUsers user = (await App.MobileService.GetTable<AspNetUsers>().Where(u => u.Email.Contains(email)).ToListAsync()).FirstOrDefault();
                 return ReturnUserViewModel(user);
             }
             catch (NullReferenceException nre)

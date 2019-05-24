@@ -20,7 +20,10 @@ namespace PrintQue.ViewModel.Commands
             var request = (RequestViewModel)parameter;
             if (request == null)
                 return false;
-            if (string.IsNullOrEmpty(request.ProjectName) || string.IsNullOrEmpty(request.ProjectDescript))
+            if (string.IsNullOrEmpty(request.ProjectName) || string.IsNullOrEmpty(request.ProjectDescript) 
+                || string.IsNullOrEmpty(request.User.Email)
+                || string.IsNullOrEmpty(request.Printer.Name)
+                || string.IsNullOrEmpty(request.Status.Name))
                 return false;
             return true;
         }

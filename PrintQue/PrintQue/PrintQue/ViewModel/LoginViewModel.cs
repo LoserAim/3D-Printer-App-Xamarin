@@ -17,7 +17,7 @@ namespace PrintQue.ViewModel
     public class LoginViewModel : INotifyPropertyChanged
     {
         private UserViewModel user;
-        ApiHelper apiHelper;
+
         public UserViewModel User
         {
             get { return user; }
@@ -84,33 +84,28 @@ namespace PrintQue.ViewModel
 
         public LoginViewModel()
         {
-            apiHelper = new ApiHelper();
             User = new UserViewModel();
             LoginCommand = new LoginCommand(this);
         }
         public async void Login()
         {
             IsLoading = true;
-            bool canLogin = await apiHelper.LoginAsync(User);
-            if(!canLogin)
+            int canLogin = await UserViewModel.Login(Email, Password);
+            switch (canLogin)
             {
-
+                case 0:
+                    IsLoading = false;
+                    await Xamarin.Forms.Application.Current.MainPage.DisplayAlert("Error", "Try again", "OK");
+                    break;
+                case 1:
+                    IsLoading = false;
+                    await Xamarin.Forms.Application.Current.MainPage.Navigation.PushAsync(new AdminTabContainer());
+                    break;
+                case 2:
+                    IsLoading = false;
+                    await Xamarin.Forms.Application.Current.MainPage.Navigation.PushAsync(new UserTabContainer());
+                    break;
             }
-            //switch (canLogin)
-            //{
-            //    case 0:
-            //        IsLoading = false;
-            //        await Xamarin.Forms.Application.Current.MainPage.DisplayAlert("Error", "Try again", "OK");
-            //        break;
-            //    case 1:
-            //        IsLoading = false;
-            //        await Xamarin.Forms.Application.Current.MainPage.Navigation.PushAsync(new AdminTabContainer());
-            //        break;
-            //    case 2:
-            //        IsLoading = false;
-            //        await Xamarin.Forms.Application.Current.MainPage.Navigation.PushAsync(new UserTabContainer());
-            //        break;
-            //}
         }
     }
 }

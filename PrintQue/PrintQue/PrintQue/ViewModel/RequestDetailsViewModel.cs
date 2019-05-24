@@ -1,5 +1,6 @@
 ﻿using Plugin.FilePicker;
 using Plugin.FilePicker.Abstractions;
+using PrintQue.GUI.UserPages;
 using PrintQue.ViewModel.Commands;
 using System;
 using System.Collections.Generic;
@@ -12,12 +13,15 @@ namespace PrintQue.ViewModel
 {
     public class RequestDetailsViewModel : INotifyPropertyChanged
     {
+        private DateTime _dateTimeRequestSet;
         public bool insert;
         public event PropertyChangedEventHandler PropertyChanged;
         private void OnPropertyChanged(string propertyName)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
+
+
         private string _projectName;
         private string _projectFilePath;
         private DateTime _dateRequested;
@@ -84,6 +88,9 @@ namespace PrintQue.ViewModel
                     ProjectDescript = this.ProjectDescript,
                     ProjectFilePath = this.ProjectFilePath,
                     PersonalUse = this.PersonalUse,
+                    User = this.User,
+                    Printer = this.Printer,
+                    Status = this.Status,
                 };
             }
         }
@@ -103,6 +110,9 @@ namespace PrintQue.ViewModel
                     ProjectDescript = this.ProjectDescript,
                     ProjectFilePath = this.ProjectFilePath,
                     PersonalUse = this.PersonalUse,
+                    User = this.User,
+                    Printer = this.Printer,
+                    Status = this.Status,
                 };
             }
         }
@@ -122,6 +132,9 @@ namespace PrintQue.ViewModel
                     ProjectDescript = this.ProjectDescript,
                     ProjectFilePath = this.ProjectFilePath,
                     PersonalUse = this.PersonalUse,
+                    User = this.User,
+                    Printer = this.Printer,
+                    Status = this.Status,
                 };
             }
         }
@@ -141,6 +154,9 @@ namespace PrintQue.ViewModel
                     ProjectDescript = this.ProjectDescript,
                     ProjectFilePath = this.ProjectFilePath,
                     PersonalUse = this.PersonalUse,
+                    User = this.User,
+                    Printer = this.Printer,
+                    Status = this.Status,
                 };
             }
         }
@@ -160,6 +176,9 @@ namespace PrintQue.ViewModel
                     ProjectDescript = this.ProjectDescript,
                     ProjectFilePath = this.ProjectFilePath,
                     PersonalUse = this.PersonalUse,
+                    User = this.User,
+                    Printer = this.Printer,
+                    Status = this.Status,
                 };
             }
         }
@@ -179,6 +198,9 @@ namespace PrintQue.ViewModel
                     ProjectDescript = this.ProjectDescript,
                     ProjectFilePath = this.ProjectFilePath,
                     PersonalUse = this.PersonalUse,
+                    User = this.User,
+                    Printer = this.Printer,
+                    Status = this.Status,
                 };
             }
         }
@@ -198,6 +220,9 @@ namespace PrintQue.ViewModel
                     ProjectDescript = this.ProjectDescript,
                     ProjectFilePath = this.ProjectFilePath,
                     PersonalUse = this.PersonalUse,
+                    User = this.User,
+                    Printer = this.Printer,
+                    Status = this.Status,
                 };
             }
         }
@@ -218,6 +243,7 @@ namespace PrintQue.ViewModel
         public DeleteCommand DeleteCommand { get; set; }
         public PushChatPagesCommand PushChatPagesCommand { get; set; }
         public FilePickerCommand FilePickerCommand { get; set; }
+        public SetDateCommand SetDateCommand { get; set; }
         public RequestDetailsViewModel(RequestViewModel request)
         {
             
@@ -232,10 +258,13 @@ namespace PrintQue.ViewModel
             Status = request.Status;
             Printer = request.Printer;
             User = request.User;
+
+            PrintTimeLabel = "Print Time: " + DateMade.ToString();
             SaveOrUpdateCommand = new SaveOrUpdateCommand(this);
             DeleteCommand = new DeleteCommand(this);
             PushChatPagesCommand = new PushChatPagesCommand(this);
             FilePickerCommand = new FilePickerCommand(this);
+            SetDateCommand = new SetDateCommand(this);
         }
         public async void SaveData()
         {
@@ -243,6 +272,12 @@ namespace PrintQue.ViewModel
             var printer = await PrinterViewModel.SearchByName(Printer.Name);
             var status = await StatusViewModel.SearchByName(Status.Name);
             var request = Request;
+            request.User = user;
+            request.Printer = printer;
+            request.Status = status;
+            request.ApplicationUserId = user.ID;
+            request.PrinterId = printer.ID;
+            request.StatusId = status.ID;
             var exists = await RequestViewModel.SearchProjectNameByUser(request);
             if (exists == null && insert == true)
             {
@@ -294,6 +329,29 @@ namespace PrintQue.ViewModel
             catch (Exception ex)
             {
                 Debug.WriteLine("Exception choosing file: " + ex.ToString());
+            }
+        }
+        internal async void OpenDatePicker()
+        {
+            var page = new UserScheduleDateTimePage();
+
+            page.OnDateTimeSubmitted += OnDateTimeSubmitted;
+
+            await Xamarin.Forms.Application.Current.MainPage.Navigation.PushAsync(page);
+        }
+        private void OnDateTimeSubmitted(DateTime datetime)
+        {
+            DateMade = datetime;
+            PrintTimeLabel = "Print Time: " + datetime.ToString();
+        }
+        private string _printTimeLabel;
+        public string PrintTimeLabel
+        {
+            get { return _printTimeLabel; }
+            set
+            {
+                _printTimeLabel = value;
+                OnPropertyChanged("PrintTimeLabel");
             }
         }
     }

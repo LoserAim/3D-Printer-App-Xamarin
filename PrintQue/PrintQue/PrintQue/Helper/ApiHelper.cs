@@ -37,8 +37,8 @@ namespace PrintQue.Helper
             return response.IsSuccessStatusCode;
 
         }
-
-        public async Task<bool> LoginAsync(UserViewModel user)
+      
+        public static async Task<bool> LoginAsync(UserViewModel user)
         {
             var client = new HttpClient();
             var us = new LoginBindingModel()
@@ -58,19 +58,6 @@ namespace PrintQue.Helper
             //var response = await client.PostAsync(, content);
             return response.IsSuccessStatusCode;
 
-
-
-
-
-
-            //var request = new HttpRequestMessage(
-            //    HttpMethod.Post, "http://3dprintqueueweb.azurewebsites.net/api/Account/Register");
-
-            //request.Content = new FormUrlEncodedContent(keyValues);
-            //var client = new HttpClient();
-            //var response = await client.SendAsync(request);
-            //var content = await response.Content.ReadAsStringAsync();
-            //return response.IsSuccessStatusCode;
         }
     }
 }
