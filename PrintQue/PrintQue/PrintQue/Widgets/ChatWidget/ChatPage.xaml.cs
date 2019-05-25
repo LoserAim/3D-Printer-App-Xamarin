@@ -26,7 +26,7 @@ namespace PrintQue.Widgets.ChatWidget
                 {
                     try
                     {
-                        ChatList.ScrollTo((this.BindingContext as ChatRoomViewModel).Messages.Last(), ScrollToPosition.End, false)
+                        ChatList.ScrollTo((this.BindingContext as ChatRoomViewModel).Messages.Last(), ScrollToPosition.End, false);
                     }
                     catch (Exception ex)
             {
@@ -39,7 +39,7 @@ namespace PrintQue.Widgets.ChatWidget
               );
             });
         }
-        protected async override void OnAppearing()
+        protected override void OnAppearing()
         {
             //if (_isDataLoaded)
             //    return;

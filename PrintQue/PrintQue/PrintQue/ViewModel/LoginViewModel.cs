@@ -7,15 +7,23 @@ using System.Threading.Tasks;
 using PrintQue.Helper;
 using PrintQue.Models;
 using PrintQue.ViewModel.Commands;
-
-
-
+using Xamarin.Essentials;
 
 namespace PrintQue.ViewModel
 {
 
     public class LoginViewModel : INotifyPropertyChanged
     {
+        private bool rememberMe;
+        public bool RememberMe
+        {
+            get { return rememberMe; }
+            set
+            {
+                rememberMe = value;
+                OnPropertyChanged("RememberMe");
+            }
+        }
         private UserViewModel user;
 
         public UserViewModel User
@@ -87,6 +95,28 @@ namespace PrintQue.ViewModel
             User = new UserViewModel();
             LoginCommand = new LoginCommand(this);
         }
+        private async void RememberUser()
+        {
+            if (RememberMe)
+            {
+                Preferences.Set("RememberMe", true);
+                try
+                {
+                    await SecureStorage.SetAsync("User_Email", Email);
+                    await SecureStorage.SetAsync("User_Password", Password);
+                }
+                catch (Exception ex)
+                {
+                    // Possible that device doesn't support secure storage on device.
+                }
+            }
+            else
+            {
+                Preferences.Set("RememberMe", false);
+                SecureStorage.Remove("User_Email");
+                SecureStorage.Remove("User_Password");
+            }
+        }
         public async void Login()
         {
             IsLoading = true;
@@ -98,10 +128,12 @@ namespace PrintQue.ViewModel
                     await Xamarin.Forms.Application.Current.MainPage.DisplayAlert("Error", "Try again", "OK");
                     break;
                 case 1:
+                    RememberUser();
                     IsLoading = false;
                     await Xamarin.Forms.Application.Current.MainPage.Navigation.PushAsync(new AdminTabContainer());
                     break;
                 case 2:
+                    RememberUser();
                     IsLoading = false;
                     await Xamarin.Forms.Application.Current.MainPage.Navigation.PushAsync(new UserTabContainer());
                     break;

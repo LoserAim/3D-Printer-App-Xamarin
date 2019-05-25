@@ -64,6 +64,7 @@ namespace PrintQue
             //printColorsTable = MobileService.GetSyncTable<PrintColor>();
             //messagesTable = MobileService.GetSyncTable<Message>();
             //var test = requestsTable.ToListAsync();
+
         }
 
         protected override void OnStart()

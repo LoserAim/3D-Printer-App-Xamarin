@@ -41,7 +41,7 @@ namespace PrintQue.ViewModel
             get { return last_Name; }
             set
             {
-                Last_Name = value;
+                last_Name = value;
                 User = new UserViewModel()
                 {
                     First_Name = this.First_Name,
@@ -58,7 +58,7 @@ namespace PrintQue.ViewModel
             get { return first_Name; }
             set
             {
-                First_Name = value;
+                first_Name = value;
                 User = new UserViewModel()
                 {
                     First_Name = this.First_Name,

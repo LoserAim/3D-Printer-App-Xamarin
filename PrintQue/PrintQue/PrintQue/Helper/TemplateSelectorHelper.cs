@@ -1,8 +1,7 @@
 ﻿
 using PrintQue.ChatTemplates;
 using PrintQue.ViewModel;
-
-
+using System;
 using Xamarin.Forms;
 namespace PrintQue.Helper
 {
@@ -21,8 +20,15 @@ namespace PrintQue.Helper
             if (messageVm == null)
                 return null;
             messageVm.Sender = App.LoggedInUser;
+            try
+            {
+                return (messageVm.SenderId == App.LoggedInUser.ID) ? incomingDataTemplate : outgoingDataTemplate;
+            }
+            catch(Exception ex)
+            {
+                return outgoingDataTemplate;
+            }
             
-            return (messageVm.SenderId == App.LoggedInUser.ID) ? incomingDataTemplate : outgoingDataTemplate;
         }
     }
 }

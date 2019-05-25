@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+using Xamarin.Essentials;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -16,14 +16,41 @@ namespace PrintQue
 	public partial class LoginPage : ContentPage
 	{
         LoginViewModel viewModel;
+        bool LoggedOut;
 		public LoginPage ()
 		{
 			InitializeComponent ();
             RegisterLabel_Clicked();
             viewModel = new LoginViewModel();
-            BindingContext = viewModel;                
-            
+            BindingContext = viewModel;
+            viewModel.RememberMe = Preferences.Get("RememberMe", false);
 
+
+
+
+        }
+        protected async override void OnAppearing()
+        {
+            //if (_isDataLoaded)
+            //    return;
+            // _isDataLoaded = true;
+            LoggedOut = Preferences.Get("LoggedOut", false);
+            if (LoggedOut)
+                viewModel.RememberMe = false;
+            if (Preferences.Get("RememberMe", false))
+            {
+                
+                viewModel.Email = await SecureStorage.GetAsync("User_Email");
+                viewModel.Password = await SecureStorage.GetAsync("Password");
+                if (!string.IsNullOrEmpty(viewModel.Email) && !string.IsNullOrEmpty(viewModel.Email) && !LoggedOut)
+                {
+                    Preferences.Set("LoggedOut", false);
+                    viewModel.Login();
+                }
+                    
+            }
+
+            base.OnAppearing();
         }
 
         private void RegisterLabel_Clicked()
@@ -43,6 +70,9 @@ namespace PrintQue
 
         }
 
+        private void RememberMe_Switch_Toggled(object sender, ToggledEventArgs e)
+        {
 
+        }
     }
 }
