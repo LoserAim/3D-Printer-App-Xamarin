@@ -31,13 +31,22 @@
                Placeholder="Password" 
                IsPassword="True"
                Text="{Binding Password, Mode=TwoWay}"/>
+        <StackLayout Orientation="Horizontal" Margin="20,0,0, 0">
+            <Switch x:Name="RememberMe_Switch"  Toggled="RememberMe_Switch_Toggled"  IsToggled="{Binding RememberMe, Mode=TwoWay}"
+           HorizontalOptions="Start" 
+                Scale="2" />
+            <Label Text="Remember Me" VerticalOptions="Center" FontSize="Medium" Margin="20,0,0,0"/>
+
+        </StackLayout>
         <Button x:Name="LoginButton" 
                 Text="Log in" 
                 Command="{Binding LoginCommand}"
                 CommandParameter="{Binding User}"
-                Margin="0,35"  
+                Margin="0,15"  
                 BackgroundColor="DodgerBlue" 
                 TextColor="White"/>
+
+
 
         <Label Text="Don't have an account?" 
                HorizontalOptions="Center"/>

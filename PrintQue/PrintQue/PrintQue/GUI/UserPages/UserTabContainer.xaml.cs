@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+using Xamarin.Essentials;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -24,6 +24,7 @@ namespace PrintQue
             var response = await DisplayAlert("Warning", "You are about to logout. Are you sure?", "Yes", "No");
             if (response)
             {
+                Preferences.Set("LoggedOut", true);
                 App.LoggedInUser = null;
                 await Navigation.PopAsync();
             }

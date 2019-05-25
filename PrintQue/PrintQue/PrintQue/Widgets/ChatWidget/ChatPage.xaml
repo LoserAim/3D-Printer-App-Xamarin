@@ -27,6 +27,7 @@
                  Rotation="180" 
                  FlowDirection="RightToLeft"
                  HasUnevenRows="True" x:Name="ChatList"
+                                      
                  VerticalOptions="FillAndExpand" 
                  SeparatorColor="Transparent"
                  ItemAppearingCommand="{Binding MessageAppearingCommand}"
