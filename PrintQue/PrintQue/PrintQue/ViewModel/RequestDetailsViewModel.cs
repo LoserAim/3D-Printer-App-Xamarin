@@ -246,8 +246,8 @@ namespace PrintQue.ViewModel
         public SetDateCommand SetDateCommand { get; set; }
         public RequestDetailsViewModel(RequestViewModel request)
         {
-            
-            DateMade = request.DateMade;
+
+            DateMade = DateTime.Now;
             DateRequested = request.DateRequested;
             Duration = request.Duration;
             ProjectName = request.ProjectName;
@@ -304,9 +304,16 @@ namespace PrintQue.ViewModel
 
             }
         }
-        public void DeleteData()
+        public async void DeleteData()
         {
+            bool answer = await Xamarin.Forms.Application.Current.MainPage.DisplayAlert("ALERT", "Are you sure you would like to delete this request?", "OK", "Cancel");
+            if (answer)
+            {
+                await RequestViewModel.Remove(_request);
 
+                await Xamarin.Forms.Application.Current.MainPage.DisplayAlert("ALERT", "Request Deleted", "OK");
+
+            }
         }
         internal async void ExecutFilePicker()
         {
@@ -341,7 +348,7 @@ namespace PrintQue.ViewModel
         }
         private void OnDateTimeSubmitted(DateTime datetime)
         {
-            DateMade = datetime;
+            DateRequested = datetime;
             PrintTimeLabel = "Print Time: " + datetime.ToString();
         }
         private string _printTimeLabel;

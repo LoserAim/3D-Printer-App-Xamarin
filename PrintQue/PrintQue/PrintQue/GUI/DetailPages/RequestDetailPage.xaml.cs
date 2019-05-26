@@ -19,23 +19,19 @@ namespace PrintQue.GUI.DetailPages
     public partial class RequestDetailPage : ContentPage
     {
         private DateTime _dateTimeRequestSet;
-        private RequestViewModel _request;
-        private bool insert;
-        private int _status;
+
         RequestDetailsViewModel viewModel;
 
         public RequestDetailPage(RequestViewModel request =null, int Status =0)
         {
 
             InitializeComponent();
-            BindingContext = request;
-            _request = request;
-            _status = Status;
-            viewModel = new RequestDetailsViewModel(request);
 
+            viewModel = new RequestDetailsViewModel(request);
+            
             BindingContext = viewModel;
             _dateTimeRequestSet = DateTime.Now;
-            switch (_status)
+            switch (Status)
             {
                 case 0:
                     //Admin insert
@@ -47,6 +43,7 @@ namespace PrintQue.GUI.DetailPages
                     //User insert
                     RequestDetails.Root.Remove(StatusEditor);
                     RequestDetails.Root.Remove(UserSelectorSection);
+                    RequestDetails.Root.Remove(Duration_Slider);
                     viewModel.insert = true;
                     ToolbarItems.RemoveAt(1);
                     ToolbarItems.RemoveAt(1);
@@ -59,6 +56,7 @@ namespace PrintQue.GUI.DetailPages
                 case 3:
                     //User Edit
                     RequestDetails.Root.Remove(StatusEditor);
+                    RequestDetails.Root.Remove(Duration_Slider);
                     RequestDetails.Root.Remove(UserSelectorSection);
                     viewModel.insert = false;
                     break;
@@ -70,78 +68,8 @@ namespace PrintQue.GUI.DetailPages
 
 
 
-        //private async void ToolbarItem_Delete_Activated(object sender, EventArgs e)
-        //{
-        //    bool answer = await DisplayAlert("ALERT", "Are you sure you would like to delete this request?", "OK", "Cancel");
-        //    if(answer)
-        //    {
-        //        await RequestViewModel.Remove(_request);
 
-        //        await DisplayAlert("ALERT", "Request Deleted", "OK");
 
-        //    }
-        //}
-        private async void ToolbarItem_Save_Activated(object sender, EventArgs e)
-        {
-            var user = await UserViewModel.SearchByEmail(Users_Picker.Text);
-            var printer = await PrinterViewModel.SearchByName(Printers_Picker.Text);
-            var status = await StatusViewModel.SearchByName(Status_Picker.Text);
-            var request = new RequestViewModel()
-            {
-
-                ProjectName = ent_ProjectName.Text,
-                ProjectFilePath = _request.ProjectFilePath,
-                DateRequested = new DateTime(_dateTimeRequestSet.Year, _dateTimeRequestSet.Month, _dateTimeRequestSet.Day),
-                Duration = Convert.ToInt32(lbl_sli_duration.Text),
-                DateMade = DateTime.Now,
-                ApplicationUserId = user.ID,
-                User = user,
-                PrinterId = printer.ID,
-                Printer = printer,
-                StatusId = status.ID,
-                Status = status,
-                PersonalUse = Convert.ToBoolean(PersonalUse_Picker.Text),
-                ProjectDescript = edi_Description.Text,
-            };
-            var exists = await RequestViewModel.SearchProjectNameByUser(request);
-            if (exists == null && insert == true)
-            {
-                await RequestViewModel.Insert(request);
-                await Navigation.PopAsync();
-
-            }
-            else if (!insert)
-            {
-                request.ID = exists.ID;
-                await RequestViewModel.Update(request);
-                await Navigation.PopAsync();
-
-            }
-            else if (exists != null && insert == true)
-            {
-
-                await DisplayAlert("ERROR", "Project Name already Used. Please choose another", "OK");
-
-            }
-            else
-            {
-                await DisplayAlert("ERROR", "Could not save details of Request", "OK");
-
-            }
-        }
-        private void OnDateTimeSubmitted(DateTime datetime)
-        {
-            _dateTimeRequestSet = datetime;
-            PrintTimeLabel.Text = "Print Time: " + datetime.ToString();
-        }
-        private async void ScheduleDay_Clicked(object sender, EventArgs e)
-        {
-            var page = new UserScheduleDateTimePage();
-
-            page.OnDateTimeSubmitted += OnDateTimeSubmitted;
-
-            await Navigation.PushAsync(page);
-        }
         async void Printer_Selector_Tapped(object sender, EventArgs e)
         {
             var page = new PrinterSelectorPage();
