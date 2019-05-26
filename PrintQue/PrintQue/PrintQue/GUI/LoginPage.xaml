@@ -4,11 +4,13 @@
             xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="PrintQue.LoginPage">
-
+    <AbsoluteLayout>
         <StackLayout VerticalOptions="Center" 
                  Margin="30,10"
+                AbsoluteLayout.LayoutBounds="0,1,1,1"
+               AbsoluteLayout.LayoutFlags="All"
                  >
-        <StackLayout HeightRequest="40" VerticalOptions="End">
+            <!--<StackLayout HeightRequest="40" VerticalOptions="End">
             <ActivityIndicator IsRunning="{Binding IsLoading, Mode=TwoWay}"
                              IsVisible="{Binding IsLoading, Mode=TwoWay}"
                               HeightRequest="40"
@@ -22,23 +24,23 @@
                           iOS="#2499CE" />
                 </ActivityIndicator.Color>
             </ActivityIndicator>
-        </StackLayout>
-        <Entry x:Name="userNameEntry" 
+        </StackLayout>-->
+            <Entry x:Name="userNameEntry" 
                Placeholder="Email" 
                Keyboard="Email"
                Text="{Binding Email, Mode=TwoWay}"/>
-        <Entry x:Name="userPasswordEntry" 
+            <Entry x:Name="userPasswordEntry" 
                Placeholder="Password" 
                IsPassword="True"
                Text="{Binding Password, Mode=TwoWay}"/>
-        <StackLayout Orientation="Horizontal" Margin="20,0,0, 0">
-            <Switch x:Name="RememberMe_Switch"  Toggled="RememberMe_Switch_Toggled"  IsToggled="{Binding RememberMe, Mode=TwoWay}"
+            <StackLayout Orientation="Horizontal" Margin="20,0,0, 0">
+                <Switch x:Name="RememberMe_Switch"  Toggled="RememberMe_Switch_Toggled"  IsToggled="{Binding RememberMe, Mode=TwoWay}"
            HorizontalOptions="Start" 
                 Scale="2" />
-            <Label Text="Remember Me" VerticalOptions="Center" FontSize="Medium" Margin="20,0,0,0"/>
+                <Label Text="Remember Me" VerticalOptions="Center" FontSize="Medium" Margin="20,0,0,0"/>
 
-        </StackLayout>
-        <Button x:Name="LoginButton" 
+            </StackLayout>
+            <Button x:Name="LoginButton" 
                 Text="Log in" 
                 Command="{Binding LoginCommand}"
                 CommandParameter="{Binding User}"
@@ -48,14 +50,33 @@
 
 
 
-        <Label Text="Don't have an account?" 
+            <Label Text="Don't have an account?" 
                HorizontalOptions="Center"/>
-        <Label x:Name="RegisterLabel" 
+            <Label x:Name="RegisterLabel" 
                Text="Register"
                
                HorizontalOptions="Center" 
                TextColor="CadetBlue"/>
 
         </StackLayout>
+        <ContentView x:Name="actIndBackground"
+             BackgroundColor="#222222" Opacity="0.5"
+             AbsoluteLayout.LayoutFlags="All"
+             AbsoluteLayout.LayoutBounds="0,0,1,1"
+             IsVisible="{Binding IsLoading}">
+            </ContentView>
+        <ActivityIndicator x:Name="actInd"
+                AbsoluteLayout.LayoutFlags="PositionProportional"
+                AbsoluteLayout.LayoutBounds="0.5,0.5,-1,-1"
+                IsRunning="{Binding IsLoading}"
+                IsVisible="{Binding IsLoading}" />
+        <Label Text="Logging in..."
+               FontSize="Large"
+                AbsoluteLayout.LayoutFlags="PositionProportional"
+                AbsoluteLayout.LayoutBounds="0.5,0.425,-1,-1"
+               IsVisible="{Binding IsLoading}"
+               />
+    </AbsoluteLayout>
+
 
 </ContentPage>
