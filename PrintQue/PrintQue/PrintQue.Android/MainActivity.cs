@@ -7,6 +7,7 @@ using Android.Views;
 using Android.Widget;
 using Android.OS;
 using System.IO;
+using Plugin.CurrentActivity;
 
 namespace PrintQue.Droid
 {
@@ -21,6 +22,7 @@ namespace PrintQue.Droid
             base.OnCreate(savedInstanceState);
             global::Xamarin.Forms.Forms.Init(this, savedInstanceState);
             Xamarin.Essentials.Platform.Init(this, savedInstanceState);
+            CrossCurrentActivity.Current.Init(this, savedInstanceState);
             string DbName = "printerque_db.sqlite";
             string FolderPath = System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal);
             string FullPath = Path.Combine(FolderPath, DbName);
