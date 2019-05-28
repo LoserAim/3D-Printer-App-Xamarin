@@ -12,7 +12,7 @@
 
     <ContentPage.Content>
         <StackLayout>
-            <ListView x:Name="RequestListView" ItemsSource="{Binding requests}" HasUnevenRows="True" IsPullToRefreshEnabled="True" Refreshing="RequestListView_Refreshing" ItemSelected="RequestListView_ItemSelected">
+            <ListView x:Name="RequestListView" ItemsSource="{Binding requests}" HasUnevenRows="True" IsPullToRefreshEnabled="True" Refreshing="RequestListView_Refreshing" IsRefreshing="{Binding RefreshList}" ItemSelected="RequestListView_ItemSelected">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell>

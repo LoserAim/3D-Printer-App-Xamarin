@@ -36,7 +36,9 @@
             <StackLayout Orientation="Horizontal" Margin="20,0,0, 0">
                 <Switch x:Name="RememberMe_Switch"  Toggled="RememberMe_Switch_Toggled"  IsToggled="{Binding RememberMe, Mode=TwoWay}"
            HorizontalOptions="Start" 
-                Scale="2" />
+                Scale="2" 
+                    
+                        OnColor="#00BFFF"/>
                 <Label Text="Remember Me" VerticalOptions="Center" FontSize="Medium" Margin="20,0,0,0"/>
 
             </StackLayout>
@@ -65,17 +67,28 @@
              AbsoluteLayout.LayoutBounds="0,0,1,1"
              IsVisible="{Binding IsLoading}">
             </ContentView>
-        <ActivityIndicator x:Name="actInd"
+        
+        <StackLayout
+            Padding="30"
+            BackgroundColor="#00BFFF"
+            AbsoluteLayout.LayoutFlags="PositionProportional"
+                AbsoluteLayout.LayoutBounds="0.5,0.5,-1,-1"
+            IsVisible="{Binding IsLoading}">
+            <ActivityIndicator x:Name="actInd"
                 AbsoluteLayout.LayoutFlags="PositionProportional"
                 AbsoluteLayout.LayoutBounds="0.5,0.5,-1,-1"
                 IsRunning="{Binding IsLoading}"
-                IsVisible="{Binding IsLoading}" />
-        <Label Text="Logging in..."
+                IsVisible="{Binding IsLoading}" 
+                           Color="White"/>
+            <Label Text="Logging in..."
                FontSize="Large"
+               TextColor="White"
                 AbsoluteLayout.LayoutFlags="PositionProportional"
                 AbsoluteLayout.LayoutBounds="0.5,0.425,-1,-1"
                IsVisible="{Binding IsLoading}"
                />
+        </StackLayout>
+
     </AbsoluteLayout>
 
 
