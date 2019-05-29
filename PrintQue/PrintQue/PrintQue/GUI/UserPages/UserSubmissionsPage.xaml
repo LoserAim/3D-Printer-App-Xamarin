@@ -21,7 +21,7 @@
                                     <Label Text="{Binding ProjectName}" TextColor="Black"/>
                                     <StackLayout Orientation="Horizontal">
                                         <Label Text="Requested:"></Label>
-                                        <Label Text="{Binding DateMade}"></Label>
+                                        <Label Text="{Binding DateRequested}"></Label>
                                     </StackLayout>
                                     <StackLayout Orientation="Horizontal">
                                         <Label Text="Status:"></Label>

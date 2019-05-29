@@ -20,7 +20,10 @@ namespace PrintQue.ViewModel
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
-
+        private DateTime RoundUp(DateTime dt, TimeSpan d)
+        {
+            return new DateTime((dt.Ticks + d.Ticks - 1) / d.Ticks * d.Ticks, dt.Kind);
+        }
 
         private string _projectName;
         private string _projectFilePath;
@@ -246,9 +249,15 @@ namespace PrintQue.ViewModel
         public SetDateCommand SetDateCommand { get; set; }
         public RequestDetailsViewModel(RequestViewModel request)
         {
-
-            DateMade = DateTime.Now;
-            DateRequested = request.DateRequested;
+            if (request.DateMade != null)
+                DateMade = request.DateMade;
+            else
+                DateMade = DateTime.Now;
+            if(request.DateRequested!=null)
+                DateRequested = request.DateRequested;
+            else
+                DateRequested = RoundUp(DateTime.Now, TimeSpan.FromMinutes(15));
+            
             Duration = request.Duration;
             ProjectName = request.ProjectName;
             ProjectDescript = request.ProjectDescript;
@@ -259,7 +268,7 @@ namespace PrintQue.ViewModel
             Printer = request.Printer;
             User = request.User;
 
-            PrintTimeLabel = "Print Time: " + DateMade.ToString();
+            PrintTimeLabel = "Print Time: " + DateRequested.ToString();
             SaveOrUpdateCommand = new SaveOrUpdateCommand(this);
             DeleteCommand = new DeleteCommand(this);
             PushChatPagesCommand = new PushChatPagesCommand(this);
@@ -270,7 +279,15 @@ namespace PrintQue.ViewModel
         {
             var user = await UserViewModel.SearchByEmail(User.Email);
             var printer = await PrinterViewModel.SearchByName(Printer.Name);
-            var status = await StatusViewModel.SearchByName(Status.Name);
+            var status = new StatusViewModel();
+            try
+            {
+                status = await StatusViewModel.SearchByName(Status.Name);
+            }
+            catch (NullReferenceException nre)
+            {
+                status = await StatusViewModel.SearchByName("Pending");
+            }            
             var request = Request;
             request.User = user;
             request.Printer = printer;
@@ -348,8 +365,8 @@ namespace PrintQue.ViewModel
         }
         private void OnDateTimeSubmitted(DateTime datetime)
         {
-            DateRequested = datetime;
-            PrintTimeLabel = "Print Time: " + datetime.ToString();
+            DateRequested = RoundUp(datetime, TimeSpan.FromMinutes(15));
+            PrintTimeLabel = "Print Time: " + DateRequested.ToString();
         }
         private string _printTimeLabel;
         public string PrintTimeLabel

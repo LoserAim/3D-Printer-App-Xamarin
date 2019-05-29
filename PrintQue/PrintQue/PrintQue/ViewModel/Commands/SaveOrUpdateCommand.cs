@@ -24,10 +24,9 @@ namespace PrintQue.ViewModel.Commands
             {
                 if (string.IsNullOrEmpty(request.ProjectName) || string.IsNullOrEmpty(request.ProjectDescript)
                 || string.IsNullOrEmpty(request.User.Email)
-                || string.IsNullOrEmpty(request.Printer.Name)
-                || string.IsNullOrEmpty(request.Status.Name))
+                || string.IsNullOrEmpty(request.Printer.Name))
                     return false;
-                if ((request.DateRequested.CompareTo(DateTime.Now) > 0)
+                if ((request.DateRequested.CompareTo(DateTime.Now) < 1)
                     || string.IsNullOrEmpty(request.ProjectFilePath))
                     return false;
             }
