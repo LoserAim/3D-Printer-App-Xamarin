@@ -42,7 +42,7 @@ namespace PrintQue.ViewModel
             Messages = new ObservableCollection<MessageViewModel>();
             //When you send a message where the SenderID is equal to the App.LoggedInUser.ID then the message will be blue
             //Messages.Insert(0, new MessageViewModel() { Body = "Hi" });
-            Messages.Insert(0, new MessageViewModel() { Body = "How are you?", Sender = App.LoggedInUser, SenderId = App.LoggedInUser.ID });
+            //Messages.Insert(0, new MessageViewModel() { Body = "How are you?", Sender = App.LoggedInUser, SenderId = App.LoggedInUser.ID });
             MessageAppearingCommand = new Command<MessageViewModel>(OnMessageAppearing);
             MessageDisappearingCommand = new Command<MessageViewModel>(OnMessageDisappearing);
             OnSendCommand = new Command(() =>

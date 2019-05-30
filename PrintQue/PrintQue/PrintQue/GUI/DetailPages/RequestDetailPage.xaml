@@ -78,15 +78,19 @@
                     </ViewCell>
                 </TableSection>
             <TableSection>
+
                 <ViewCell>
                     <StackLayout Padding="0,10,0,0">
                         <Label x:Name="PrintTimeLabel" HorizontalTextAlignment="Center" Text="{Binding PrintTimeLabel}"></Label>
                         <Button Text="Want to schedule your print?" Command="{Binding SetDateCommand}"></Button>
                     </StackLayout>
                 </ViewCell>
+            </TableSection>
+            <TableSection x:Name="Duration_Slider">
+
                 <ViewCell>
                     <StackLayout>
-                        <Slider HorizontalOptions="Fill" x:Name="sli_Duration"  Maximum="8" Minimum="1" Value="{Binding Path=Duration,Mode=TwoWay}"/>
+                        <Slider Scale="2" HorizontalOptions="Fill" x:Name="sli_Duration"  Maximum="8" Minimum="1" Value="{Binding Path=Duration,Mode=TwoWay}"/>
                         <Label x:Name="lbl_sli_duration" 
                             HorizontalOptions="Center" 
                                Text="{Binding 
@@ -95,6 +99,8 @@
                                          StringFormat='{0:N0}'}"/>
                     </StackLayout>
                 </ViewCell>
+            </TableSection>
+            <TableSection>
                 <ViewCell>
                     <StackLayout Padding="0,10,0,0" Orientation="Horizontal">
                         <Label x:Name="SelectedFileLabel" HorizontalTextAlignment="Center" Text="{Binding SelectedFileText}"></Label>

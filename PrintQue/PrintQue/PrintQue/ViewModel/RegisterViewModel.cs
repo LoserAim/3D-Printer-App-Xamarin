@@ -96,8 +96,15 @@ namespace PrintQue.ViewModel
         private string confirmpassword;
         private string first_Name;
         private string last_Name;
-
-
+        private bool _isvisibleemail;
+        public bool IsvisibleEmail
+        { get { return _isvisibleemail; }
+            set
+            {
+                _isvisibleemail = value;
+                OnPropertyChanged("IsvisibleEmail");
+            }
+        }
 
 
 

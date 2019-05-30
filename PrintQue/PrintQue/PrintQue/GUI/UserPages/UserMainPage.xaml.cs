@@ -31,10 +31,11 @@ namespace PrintQue
         public async void RefreshPrinterListView()
         {
             //await Helper.AzureAppServiceHelper.SyncAsync();
-
+            PrinterListView.IsRefreshing = true;
             var pri = await PrinterViewModel.GetAll();
             _printers = new ObservableCollection<PrinterViewModel>(pri);
             PrinterListView.ItemsSource = _printers;
+            PrinterListView.IsRefreshing = false;
         }
         public async void SyncOfflineDatabase()
         {
@@ -76,7 +77,7 @@ namespace PrintQue
         private void  PrinterListView_Refreshing(object sender, EventArgs e)
         {
             RefreshPrinterListView();
-            PrinterListView.IsRefreshing = false;
+            
             PrinterListView.EndRefresh();
         }
         private async void CreateRequestButton_Clicked(object sender, EventArgs e)

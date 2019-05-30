@@ -24,6 +24,7 @@ namespace PrintQue.ViewModel.Commands
                 return false;
             if (!string.Equals(user.Password, user.confirmPassword))
                 return false;
+            RegisterViewModel.IsvisibleEmail = true;
             return true;
         }
 

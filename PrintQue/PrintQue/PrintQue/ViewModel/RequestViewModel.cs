@@ -183,10 +183,11 @@ namespace PrintQue.ViewModel
         public static async Task<List<RequestViewModel>> SearchByUser(string ID)
         {
             var requests = ReturnListRequestViewModel(await App.MobileService.GetTable<Request>().Where(r => r.ApplicationUserId.Contains(ID)).ToListAsync());
-            
+            var temp = new List<RequestViewModel>();
             if (requests != null)
             {
-                
+
+
                 return requests;
             }
             else
