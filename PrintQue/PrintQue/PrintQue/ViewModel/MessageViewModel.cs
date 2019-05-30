@@ -79,7 +79,7 @@ namespace PrintQue.ViewModel
                 SenderId = message.SenderId,
                 Body = message.Body,
                 RequestId = message.RequestId,
-                TimeSent = message.TimeSent,
+                TimeSent = message.TimeSent.ToLocalTime(),
             };
             return messi;
         }
