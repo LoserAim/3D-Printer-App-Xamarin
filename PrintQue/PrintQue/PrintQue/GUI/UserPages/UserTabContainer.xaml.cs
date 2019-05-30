@@ -24,7 +24,9 @@ namespace PrintQue
             var response = await DisplayAlert("Warning", "You are about to logout. Are you sure?", "Yes", "No");
             if (response)
             {
-                Preferences.Set("LoggedOut", true);
+                Preferences.Set("RememberMe", false);
+                SecureStorage.Remove("User_Email");
+                SecureStorage.Remove("User_Password");
                 App.LoggedInUser = null;
                 await Navigation.PopAsync();
             }

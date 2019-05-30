@@ -20,11 +20,23 @@ namespace PrintQue.ViewModel.Commands
             var request = (RequestViewModel)parameter;
             if (request == null)
                 return false;
-            if (string.IsNullOrEmpty(request.ProjectName) || string.IsNullOrEmpty(request.ProjectDescript) 
+            try
+            {
+                if (string.IsNullOrEmpty(request.ProjectName) || string.IsNullOrEmpty(request.ProjectDescript)
                 || string.IsNullOrEmpty(request.User.Email)
-                || string.IsNullOrEmpty(request.Printer.Name)
-                || string.IsNullOrEmpty(request.Status.Name))
+                || string.IsNullOrEmpty(request.Printer.Name))
+                    return false;
+                if ((request.DateRequested.CompareTo(DateTime.Now) < 1)
+                    || string.IsNullOrEmpty(request.ProjectFilePath))
+                    return false;
+            }
+            catch (NullReferenceException nre)
+            {
                 return false;
+            }
+
+
+
             return true;
         }
 

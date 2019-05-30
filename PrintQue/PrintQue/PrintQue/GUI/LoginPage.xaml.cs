@@ -16,7 +16,7 @@ namespace PrintQue
 	public partial class LoginPage : ContentPage
 	{
         LoginViewModel viewModel;
-        bool LoggedOut;
+
 		public LoginPage ()
 		{
 			InitializeComponent ();
@@ -34,17 +34,15 @@ namespace PrintQue
             //if (_isDataLoaded)
             //    return;
             // _isDataLoaded = true;
-            LoggedOut = Preferences.Get("LoggedOut", false);
-            if (LoggedOut)
-                viewModel.RememberMe = false;
+
             if (Preferences.Get("RememberMe", false))
             {
                 
                 viewModel.Email = await SecureStorage.GetAsync("User_Email");
                 viewModel.Password = await SecureStorage.GetAsync("Password");
-                if (!string.IsNullOrEmpty(viewModel.Email) && !string.IsNullOrEmpty(viewModel.Email) && !LoggedOut)
+                if (!string.IsNullOrEmpty(viewModel.Email) && !string.IsNullOrEmpty(viewModel.Email))
                 {
-                    Preferences.Set("LoggedOut", false);
+
                     viewModel.Login();
                 }
                     
