@@ -24,7 +24,7 @@ namespace PrintQue.Helper
             {
                 return (messageVm.SenderId == App.LoggedInUser.ID) ? incomingDataTemplate : outgoingDataTemplate;
             }
-            catch(Exception ex)
+            catch(Exception)
             {
                 return outgoingDataTemplate;
             }

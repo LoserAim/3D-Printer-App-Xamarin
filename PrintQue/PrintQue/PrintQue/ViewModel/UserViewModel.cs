@@ -182,11 +182,11 @@ namespace PrintQue.ViewModel
                 AspNetUsers user = (await App.MobileService.GetTable<AspNetUsers>().Where(u => u.Email.Contains(email)).ToListAsync()).FirstOrDefault();
                 return ReturnUserViewModel(user);
             }
-            catch (NullReferenceException nre)
+            catch (NullReferenceException)
             {
                 return null;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return null;
 

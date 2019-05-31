@@ -28,7 +28,7 @@ namespace PrintQue.Widgets.ChatWidget
                     {
                         ChatList.ScrollTo((this.BindingContext as ChatRoomViewModel).Messages.Last(), ScrollToPosition.End, false);
                     }
-                    catch (Exception ex)
+                    catch (Exception)
             {
 
             }

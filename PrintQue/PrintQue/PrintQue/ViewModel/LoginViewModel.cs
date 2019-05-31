@@ -105,7 +105,7 @@ namespace PrintQue.ViewModel
                     await SecureStorage.SetAsync("User_Email", Email);
                     await SecureStorage.SetAsync("User_Password", Password);
                 }
-                catch (Exception ex)
+                catch (Exception)
                 {
                     // Possible that device doesn't support secure storage on device.
                 }

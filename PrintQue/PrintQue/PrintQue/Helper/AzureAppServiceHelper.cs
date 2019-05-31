@@ -35,7 +35,7 @@ namespace PrintQue.Helper
                 if (mspfe.PushResult != null)
                     syncErrors = mspfe.PushResult.Errors;
             }
-            catch(Exception ex)
+            catch(Exception)
             {
 
             }

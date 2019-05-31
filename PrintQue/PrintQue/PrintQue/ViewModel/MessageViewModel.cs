@@ -52,7 +52,7 @@ namespace PrintQue.ViewModel
 
 
             }
-            catch (Exception e)
+            catch (Exception)
             {
 
             }
