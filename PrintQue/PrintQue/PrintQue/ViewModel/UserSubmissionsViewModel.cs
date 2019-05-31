@@ -10,6 +10,7 @@ namespace PrintQue.ViewModel
     {
         public ObservableCollection<RequestViewModel> requests { get; set; } = new ObservableCollection<RequestViewModel>();
         private bool _refreshList;
+
         public bool RefreshList
         {
             get { return _refreshList; }
@@ -48,7 +49,9 @@ namespace PrintQue.ViewModel
                         req.Messages = await MessageViewModel.SearchByRequestID(req.Id);
                     requests.Add(req);
                 }
+                
             }
+
             RefreshList = false;
         }
 

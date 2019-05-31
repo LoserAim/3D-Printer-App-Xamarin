@@ -43,21 +43,20 @@ namespace PrintQue.GUI.UserPages
 	public partial class UserSubmissionsPage : ContentPage
 	{
         UserSubmissionsViewModel viewModel;
-        private bool _isDataLoaded;
+
         public UserSubmissionsPage()
 		{
             viewModel = new UserSubmissionsViewModel();
             BindingContext = viewModel;
-            _isDataLoaded = false;
+
 			InitializeComponent();
 		}
 
         protected override void OnAppearing()
         {
-            if (_isDataLoaded)
-                return;
-            _isDataLoaded = true;
+            
             viewModel.UpdateRequestsList();
+
             base.OnAppearing();
         }
 
@@ -78,6 +77,7 @@ namespace PrintQue.GUI.UserPages
             var request = e.SelectedItem as RequestViewModel;
             await Navigation.PushAsync(new RequestDetailPage(request, 3));
             RequestListView.SelectedItem = null;
+
         }
     }
 }

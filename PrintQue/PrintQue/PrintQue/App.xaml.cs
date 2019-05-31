@@ -35,30 +35,21 @@ namespace PrintQue
         //private async void Getdata()
         //{
         //    var test = await MobileService.GetTable<Request>().ToListAsync();
-        //    if(test != null)
+        //    if (test != null)
         //    {
         //        await AzureAppServiceHelper.SyncAsync();
         //        var test2 = await requestsTable.ToListAsync();
-        //        if(test2 == null);
-                    
+        //        if (test2 == null) ;
+
         //    }
         //}
 
         public App(string databaseLocation)
         {
             InitializeComponent();
-            //Getdata();
-
-            //GlobalConfiguration.Configuration.Formatters.JsonFormatter.SerializerSettings =
-                //new JsonSerializerSettings
-                //{
-                //    DateFormatHandling = DateFormatHandling.IsoDateFormat,
-                //    DateTimeZoneHandling = DateTimeZoneHandling.Unspecified,
-                //};
+            
 
 
-            MainPage = new NavigationPage(new LoginPage());
-            //MainPage = new MainPage();
             DatabaseLocation = databaseLocation;
             //var store = new MobileServiceSQLiteStore(databaseLocation);
             //store.DefineTable<Request>();
@@ -72,7 +63,10 @@ namespace PrintQue
             //statusesTable = MobileService.GetSyncTable<Status>();
             //printColorsTable = MobileService.GetSyncTable<PrintColor>();
             //messagesTable = MobileService.GetSyncTable<Message>();
-            //var test = requestsTable.ToListAsync();
+            //Getdata();
+            MainPage = new NavigationPage(new LoginPage());
+            //MainPage = new MainPage();
+
 
         }
 
