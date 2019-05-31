@@ -30,7 +30,7 @@ namespace PrintQue.ViewModel.Commands
                     || string.IsNullOrEmpty(request.ProjectFilePath))
                     return false;
             }
-            catch (NullReferenceException nre)
+            catch (NullReferenceException)
             {
                 return false;
             }

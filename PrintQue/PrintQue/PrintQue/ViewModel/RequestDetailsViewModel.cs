@@ -311,7 +311,7 @@ namespace PrintQue.ViewModel
             {
                 status = await StatusViewModel.SearchByName(Status.Name);
             }
-            catch (NullReferenceException nre)
+            catch (NullReferenceException)
             {
                 status = await StatusViewModel.SearchByName("Pending");
             }            

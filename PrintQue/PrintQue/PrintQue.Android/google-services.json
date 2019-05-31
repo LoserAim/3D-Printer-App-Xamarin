@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "825578338230",
+    "firebase_url": "https://printque-68ecc.firebaseio.com",
+    "project_id": "printque-68ecc",
+    "storage_bucket": "printque-68ecc.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:825578338230:android:efe3f7f69fcce7db",
+        "android_client_info": {
+          "package_name": "com.companyname.PrintQue"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "825578338230-2va0savfb8bb7pnbip7hstfdl6789qo4.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBg0rfqRtCb1WJgovUv193LYa4F4O7vc3Q"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "825578338230-2va0savfb8bb7pnbip7hstfdl6789qo4.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

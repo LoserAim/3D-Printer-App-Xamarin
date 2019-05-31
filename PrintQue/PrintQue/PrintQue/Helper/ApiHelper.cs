@@ -59,7 +59,7 @@ namespace PrintQue.Helper
                 response = await client.PostAsync(uri, content);
                 return response.IsSuccessStatusCode;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
 
                 return false;
