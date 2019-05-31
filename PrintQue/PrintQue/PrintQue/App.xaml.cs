@@ -18,11 +18,11 @@ namespace PrintQue
         public static UserViewModel    LoggedInUser   = null;
         public static MobileServiceClient MobileService =new MobileServiceClient("http://3dprintqueue.azurewebsites.net");
         public static IMobileServiceSyncTable<Request> requestsTable;
-        //public static IMobileServiceSyncTable<Printer> printersTable;
-        //public static IMobileServiceSyncTable<Status> statusesTable;
-        //public static IMobileServiceSyncTable<PrintColor> printColorsTable;
-        //
-        //public static IMobileServiceSyncTable<Message> messagesTable;
+        public static IMobileServiceSyncTable<Printer> printersTable;
+        public static IMobileServiceSyncTable<Status> statusesTable;
+        public static IMobileServiceSyncTable<PrintColor> printColorsTable;
+        
+        public static IMobileServiceSyncTable<Message> messagesTable;
 
         public App()
         {
@@ -34,7 +34,7 @@ namespace PrintQue
 
         private async void Getdata()
         {
-            var test = await MobileService.GetTable<Request>().ToListAsync();
+            var test = await requestsTable.ToListAsync();
             if (test != null)
             {
                 await AzureAppServiceHelper.SyncAsync();
@@ -53,16 +53,16 @@ namespace PrintQue
             DatabaseLocation = databaseLocation;
             var store = new MobileServiceSQLiteStore(databaseLocation);
             store.DefineTable<Request>();
-            //store.DefineTable<PrintColor>();
-            //store.DefineTable<Printer>();
-            //store.DefineTable<Status>();
-            //store.DefineTable<Message>();
+            store.DefineTable<PrintColor>();
+            store.DefineTable<Printer>();
+            store.DefineTable<Status>();
+            store.DefineTable<Message>();
             MobileService.SyncContext.InitializeAsync(store);
             requestsTable = MobileService.GetSyncTable<Request>();
-            //printersTable = MobileService.GetSyncTable<Printer>();
-            //statusesTable = MobileService.GetSyncTable<Status>();
-            //printColorsTable = MobileService.GetSyncTable<PrintColor>();
-            //messagesTable = MobileService.GetSyncTable<Message>();
+            printersTable = MobileService.GetSyncTable<Printer>();
+            statusesTable = MobileService.GetSyncTable<Status>();
+            printColorsTable = MobileService.GetSyncTable<PrintColor>();
+            messagesTable = MobileService.GetSyncTable<Message>();
             Getdata();
             MainPage = new NavigationPage(new LoginPage());
             //MainPage = new MainPage();

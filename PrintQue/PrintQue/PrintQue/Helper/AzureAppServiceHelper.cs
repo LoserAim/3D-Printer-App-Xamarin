@@ -16,19 +16,15 @@ namespace PrintQue.Helper
         public static async Task SyncAsync()
         {
             ReadOnlyCollection<MobileServiceTableOperationError> syncErrors = null;
-            //var requestAllQuery = App.requestsTable.CreateQuery().Where(c => c.ID != null);
-            //var statusAllQuery = App.statusesTable.CreateQuery().Where(c => c.ID != null);
-            //var printerAllQuery = App.printersTable.CreateQuery().Where(c => c.ID != null);
-            //var printColorsAllQuery = App.printColorsTable.CreateQuery().Where(c => c.ID != null);
-            //var messageAllQuery = App.messagesTable.CreateQuery().Where(c => c.ID != null);
+
             try
             {
-                //await App.MobileService.SyncContext.PushAsync();
-                //await App.requestsTable.PullAsync("AllRequest", requestAllQuery);
-                //await App.statusesTable.PullAsync("AllStatus", statusAllQuery);
-                //await App.printersTable.PullAsync("AllPrinter", printerAllQuery);
-                //await App.printColorsTable.PullAsync("AllPrintColor", printColorsAllQuery);
-                //await App.messagesTable.PullAsync("AllMessage", messageAllQuery);
+                await App.MobileService.SyncContext.PushAsync();
+                await App.requestsTable.PullAsync("AllRequest", "");
+                await App.statusesTable.PullAsync("AllStatus", "");
+                await App.printersTable.PullAsync("AllPrinter", "");
+                await App.printColorsTable.PullAsync("AllPrintColor", "");
+                await App.messagesTable.PullAsync("AllMessage", "");
             }
             catch(MobileServicePushFailedException mspfe)
             {

@@ -98,7 +98,7 @@ namespace PrintQue.ViewModel
             jo.Add("Body", messi.Body);
             jo.Add("RequestId", messi.RequestId);
             jo.Add("TimeSent", DateTime.Now);
-            await App.MobileService.GetTable<Message>().InsertAsync(jo);
+            await App.messagesTable.InsertAsync(jo);
 
             //await App.MobileService.SyncContext.PushAsync();
         }
@@ -106,7 +106,7 @@ namespace PrintQue.ViewModel
         {
             List<Message> messages = new List<Message>();
             
-            messages = await App.MobileService.GetTable<Message>().ToListAsync();
+            messages = await App.messagesTable.ToListAsync();
             if(messages == null)
                 return null;
             
@@ -134,18 +134,18 @@ namespace PrintQue.ViewModel
         }
         public static async Task<MessageViewModel> SearchByID(string ID)
         {
-            Message sorted = (await App.MobileService.GetTable<Message>().Where(u => u.ID.Contains(ID)).ToListAsync()).FirstOrDefault();
+            Message sorted = (await App.messagesTable.Where(u => u.ID.Contains(ID)).ToListAsync()).FirstOrDefault();
             return ReturnMessageViewModel(sorted);
         }
         public static async Task<List<MessageViewModel>> SearchByUserID(string ID)
         {
-            List<Message> sorted = (await App.MobileService.GetTable<Message>().Where(u => u.SenderId.Contains(ID)).ToListAsync());
+            List<Message> sorted = (await App.messagesTable.Where(u => u.SenderId.Contains(ID)).ToListAsync());
             return ReturnListMessageViewModel(sorted);
 
         }
         public static async Task<List<MessageViewModel>> SearchByRequestID(string ID)
         {
-            List<Message> sorted = (await App.MobileService.GetTable<Message>().Where(u => u.RequestId.Contains(ID)).ToListAsync());
+            List<Message> sorted = (await App.messagesTable.Where(u => u.RequestId.Contains(ID)).ToListAsync());
             return ReturnListMessageViewModel(sorted);
         }
     }
