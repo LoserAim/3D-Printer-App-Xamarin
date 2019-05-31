@@ -112,12 +112,19 @@ namespace PrintQue.ViewModel
             var request = ReturnRequest(requestViewModel);
             try
             {
+                
+                var messi = await App.MobileService.GetTable<Message>().Where(m => m.RequestId == request.Id).ToListAsync();
+                
+                foreach(var item in messi)
+                {
+                    await App.MobileService.GetTable<Message>().DeleteAsync(item);
+                }
                 await App.MobileService.GetTable<Request>().DeleteAsync(request);
                 //await App.MobileService.SyncContext.PushAsync();
             }
             catch (Exception)
             {
-
+                await Xamarin.Forms.Application.Current.MainPage.DisplayAlert("ERROR", "Failed to Delete", "OK");
             }
         }
 
