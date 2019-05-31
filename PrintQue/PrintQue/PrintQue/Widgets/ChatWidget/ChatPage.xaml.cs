@@ -4,7 +4,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
-using PrintQue.Helper;
 using PrintQue.ViewModel;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -40,12 +39,11 @@ namespace PrintQue.Widgets.ChatWidget
               );
             });
         }
-        protected async override void OnAppearing()
+        protected override void OnAppearing()
         {
             //if (_isDataLoaded)
             //    return;
             // _isDataLoaded = true;
-            await AzureAppServiceHelper.SyncAsync();
             viewModel.UpdateChatList();
 
             base.OnAppearing();

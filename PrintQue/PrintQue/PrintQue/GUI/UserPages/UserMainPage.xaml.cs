@@ -30,7 +30,7 @@ namespace PrintQue
         private bool isDataLoaded;
         public async void RefreshPrinterListView()
         {
-            await AzureAppServiceHelper.SyncAsync();
+            //await Helper.AzureAppServiceHelper.SyncAsync();
             PrinterListView.IsRefreshing = true;
             var pri = await PrinterViewModel.GetAll();
             _printers = new ObservableCollection<PrinterViewModel>(pri);

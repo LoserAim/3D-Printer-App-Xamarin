@@ -1,5 +1,4 @@
 ﻿using PrintQue.GUI.DetailPages;
-using PrintQue.Helper;
 using PrintQue.Models;
 using PrintQue.ViewModel;
 using SQLite;
@@ -63,9 +62,9 @@ namespace PrintQue.GUI.UserPages
         }
 
 
-        private async void RequestListView_Refreshing(object sender, System.EventArgs e)
+        private void RequestListView_Refreshing(object sender, System.EventArgs e)
         {
-            await AzureAppServiceHelper.SyncAsync();
+            
             viewModel.UpdateRequestsList();
             RequestListView.IsRefreshing = false;
             RequestListView.EndRefresh();
