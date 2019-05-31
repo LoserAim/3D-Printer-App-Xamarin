@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 
-<TabbedPage 
+<TabbedPage x:Name="UserTabbedPage"
             NavigationPage.HasBackButton="False"
             xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
@@ -16,8 +16,8 @@
     </TabbedPage.ToolbarItems>
 
     <local:UserMainPage Title="schedule"/>
-    <local1:UserSubmissionsPage Title="Submissions"/>
-    <local2:ChatPage Title="Messages"/>
+    <local1:UserSubmissionsPage x:Name="Submitted" Title="Submissions"/>
+    <local2:ChatPage x:Name="Chat" Title="Messages"/>
 
 
 </TabbedPage>

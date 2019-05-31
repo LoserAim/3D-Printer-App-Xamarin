@@ -13,7 +13,6 @@ namespace PrintQue.ViewModel
 {
     public class RequestDetailsViewModel : INotifyPropertyChanged
     {
-        private DateTime _dateTimeRequestSet;
         public bool insert;
         public event PropertyChangedEventHandler PropertyChanged;
         private void OnPropertyChanged(string propertyName)
@@ -30,7 +29,7 @@ namespace PrintQue.ViewModel
         private DateTime _dateRequested;
         private DateTime _dateMade;
         private string _selectedFileText;
-
+        private string _id;
 
         private string _projectDescript;
         private bool _personalUse;
@@ -75,6 +74,29 @@ namespace PrintQue.ViewModel
                 OnPropertyChanged("SelectedFileText");
             }
         }
+        public string ID
+        {
+            get { return _id; }
+            set
+            {
+                _id = value;
+                OnPropertyChanged("ID");
+                Request = new RequestViewModel()
+                {
+                    Id = this.ID,
+                    DateMade = this.DateMade,
+                    DateRequested = this.DateRequested,
+                    Duration = this.Duration,
+                    ProjectName = this.ProjectName,
+                    ProjectDescript = this.ProjectDescript,
+                    ProjectFilePath = this.ProjectFilePath,
+                    PersonalUse = this.PersonalUse,
+                    User = this.User,
+                    Printer = this.Printer,
+                    Status = this.Status,
+                };
+            }
+        }
         public string ProjectName
         {
             get { return _projectName; }
@@ -84,6 +106,7 @@ namespace PrintQue.ViewModel
                 OnPropertyChanged("ProjectName");
                 Request = new RequestViewModel()
                 {
+                    Id = this.ID,
                     DateMade = this.DateMade,
                     DateRequested = this.DateRequested,
                     Duration = this.Duration,
@@ -106,6 +129,7 @@ namespace PrintQue.ViewModel
                 OnPropertyChanged("ProjectFilePath");
                 Request = new RequestViewModel()
                 {
+                    Id = this.ID,
                     DateMade = this.DateMade,
                     DateRequested = this.DateRequested,
                     Duration = this.Duration,
@@ -128,6 +152,7 @@ namespace PrintQue.ViewModel
                 OnPropertyChanged("DateRequested");
                 Request = new RequestViewModel()
                 {
+                    Id = this.ID,
                     DateMade = this.DateMade,
                     DateRequested = this.DateRequested,
                     Duration = this.Duration,
@@ -150,6 +175,7 @@ namespace PrintQue.ViewModel
                 OnPropertyChanged("DateMade");
                 Request = new RequestViewModel()
                 {
+                    Id = this.ID,
                     DateMade = this.DateMade,
                     DateRequested = this.DateRequested,
                     Duration = this.Duration,
@@ -172,6 +198,7 @@ namespace PrintQue.ViewModel
                 OnPropertyChanged("ProjectDescript");
                 Request = new RequestViewModel()
                 {
+                    Id = this.ID,
                     DateMade = this.DateMade,
                     DateRequested = this.DateRequested,
                     Duration = this.Duration,
@@ -194,6 +221,7 @@ namespace PrintQue.ViewModel
                 OnPropertyChanged("PersonalUse");
                 Request = new RequestViewModel()
                 {
+                    Id = this.ID,
                     DateMade = this.DateMade,
                     DateRequested = this.DateRequested,
                     Duration = this.Duration,
@@ -216,6 +244,7 @@ namespace PrintQue.ViewModel
                 OnPropertyChanged("Duration");
                 Request = new RequestViewModel()
                 {
+                    Id = this.ID,
                     DateMade = this.DateMade,
                     DateRequested = this.DateRequested,
                     Duration = this.Duration,
@@ -255,7 +284,7 @@ namespace PrintQue.ViewModel
                 DateRequested = request.DateRequested;
             else
                 DateRequested = RoundUp(DateTime.Now, TimeSpan.FromMinutes(15));
-            
+            ID = request.Id;
             Duration = request.Duration;
             ProjectName = request.ProjectName;
             ProjectDescript = request.ProjectDescript;
@@ -324,11 +353,12 @@ namespace PrintQue.ViewModel
             bool answer = await Xamarin.Forms.Application.Current.MainPage.DisplayAlert("ALERT", "Are you sure you would like to delete this request?", "OK", "Cancel");
             if (answer)
             {
-                await RequestViewModel.Remove(_request);
-
-                await Xamarin.Forms.Application.Current.MainPage.DisplayAlert("ALERT", "Request Deleted", "OK");
+                var passed= await RequestViewModel.Remove(Request);
+                if(passed)
+                    await Xamarin.Forms.Application.Current.MainPage.Navigation.PopAsync();
 
             }
+            
         }
         internal async void ExecutFilePicker()
         {

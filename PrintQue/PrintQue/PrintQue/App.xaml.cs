@@ -17,7 +17,7 @@ namespace PrintQue
         public static string DatabaseLocation = string.Empty;
         public static UserViewModel    LoggedInUser   = null;
         public static MobileServiceClient MobileService =new MobileServiceClient("http://3dprintqueue.azurewebsites.net");
-        public static IMobileServiceSyncTable<Request> requestsTable;
+        //public static IMobileServiceSyncTable<Request> requestsTable;
         //public static IMobileServiceSyncTable<Printer> printersTable;
         //public static IMobileServiceSyncTable<Status> statusesTable;
         //public static IMobileServiceSyncTable<PrintColor> printColorsTable;
@@ -32,17 +32,17 @@ namespace PrintQue
             //MainPage = new MainPage();
         }
 
-        private async void Getdata()
-        {
-            var test = await MobileService.GetTable<Request>().ToListAsync();
-            if (test != null)
-            {
-                await AzureAppServiceHelper.SyncAsync();
-                var test2 = await requestsTable.ToListAsync();
-                if (test2 == null) ;
+        //private async void Getdata()
+        //{
+        //    var test = await MobileService.GetTable<Request>().ToListAsync();
+        //    if (test != null)
+        //    {
+        //        await AzureAppServiceHelper.SyncAsync();
+        //        var test2 = await requestsTable.ToListAsync();
+        //        if (test2 == null) ;
 
-            }
-        }
+        //    }
+        //}
 
         public App(string databaseLocation)
         {
@@ -51,19 +51,19 @@ namespace PrintQue
 
 
             DatabaseLocation = databaseLocation;
-            var store = new MobileServiceSQLiteStore(databaseLocation);
-            store.DefineTable<Request>();
+            //var store = new MobileServiceSQLiteStore(databaseLocation);
+            //store.DefineTable<Request>();
             //store.DefineTable<PrintColor>();
             //store.DefineTable<Printer>();
             //store.DefineTable<Status>();
             //store.DefineTable<Message>();
-            MobileService.SyncContext.InitializeAsync(store);
-            requestsTable = MobileService.GetSyncTable<Request>();
+            //MobileService.SyncContext.InitializeAsync(store);
+            //requestsTable = MobileService.GetSyncTable<Request>();
             //printersTable = MobileService.GetSyncTable<Printer>();
             //statusesTable = MobileService.GetSyncTable<Status>();
             //printColorsTable = MobileService.GetSyncTable<PrintColor>();
             //messagesTable = MobileService.GetSyncTable<Message>();
-            Getdata();
+            //Getdata();
             MainPage = new NavigationPage(new LoginPage());
             //MainPage = new MainPage();
 

@@ -107,7 +107,7 @@ namespace PrintQue.ViewModel
             }
         }
 
-        public static async Task Remove(RequestViewModel requestViewModel)
+        public static async Task<bool> Remove(RequestViewModel requestViewModel)
         {
             var request = ReturnRequest(requestViewModel);
             try
@@ -121,10 +121,13 @@ namespace PrintQue.ViewModel
                 }
                 await App.MobileService.GetTable<Request>().DeleteAsync(request);
                 //await App.MobileService.SyncContext.PushAsync();
+                await Xamarin.Forms.Application.Current.MainPage.DisplayAlert("ALERT", "Request Deleted", "OK");
+                return true;
             }
             catch (Exception)
             {
                 await Xamarin.Forms.Application.Current.MainPage.DisplayAlert("ERROR", "Failed to Delete", "OK");
+                return false;
             }
         }
 
