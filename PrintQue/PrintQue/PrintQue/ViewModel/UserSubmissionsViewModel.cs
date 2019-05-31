@@ -44,8 +44,8 @@ namespace PrintQue.ViewModel
                         req.Status = await StatusViewModel.SearchByID(req.StatusId);
                     if (req.ApplicationUserId != null)
                         req.User = await UserViewModel.SearchByID(req.ApplicationUserId);
-                    if (req.ID != null)
-                        req.Messages = await MessageViewModel.SearchByRequestID(req.ID);
+                    if (req.Id != null)
+                        req.Messages = await MessageViewModel.SearchByRequestID(req.Id);
                     requests.Add(req);
                 }
             }

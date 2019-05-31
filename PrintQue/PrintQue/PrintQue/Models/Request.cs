@@ -13,7 +13,7 @@ namespace PrintQue.Models
 {
     public class Request
     {
-        public string ID { get; set; }
+        public string Id { get; set; }
         public string ApplicationUserId { get; set; }
         public string PrinterId { get; set; }
         public string StatusId { get; set; }

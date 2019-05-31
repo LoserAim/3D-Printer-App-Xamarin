@@ -69,7 +69,7 @@ namespace PrintQue.ViewModel
                 var messi = new List<MessageViewModel>();
                 foreach (var n in user.Requests)
                 {
-                    foreach (var m in (await MessageViewModel.SearchByRequestID(n.ID)))
+                    foreach (var m in (await MessageViewModel.SearchByRequestID(n.Id)))
                     {
                         Messages.Insert(0, new MessageViewModel() { Body = m.Body, SenderId = m.SenderId });
                     }
@@ -96,8 +96,8 @@ namespace PrintQue.ViewModel
                 TextToSend = string.Empty;
                 messi.Sender = App.LoggedInUser;
                 messi.Request = (await RequestViewModel.SearchByUser(App.LoggedInUser.ID)).OrderByDescending(r => r.DateMade).FirstOrDefault();
-                messi.RequestId = messi.Request.ID;
-                messi.TimeSent = DateTime.Now;
+                messi.RequestId = messi.Request.Id;
+                messi.TimeSent = new DateTime(DateTime.Now.Ticks, DateTimeKind.Local);
                 var user = await UserViewModel.SearchByID(App.LoggedInUser.ID);
                 user.LatestMessage = DateTime.Now;
                 await UserViewModel.UpdateUser(user);
