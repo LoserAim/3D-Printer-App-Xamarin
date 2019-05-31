@@ -3,6 +3,8 @@ using MailKit.Net.Smtp;
 using MailKit.Security;
 using Microsoft.WindowsAzure.MobileServices;
 using MimeKit;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using PrintQue.Models;
 using System;
 using System.Collections.Generic;
@@ -61,6 +63,7 @@ namespace PrintQue.ViewModel
 
         private static Message ReturnMessage(MessageViewModel messageViewModel)
         {
+
             var messi = new Message()
             {
                 ID = messageViewModel.ID,
@@ -90,7 +93,13 @@ namespace PrintQue.ViewModel
             else
                 PostMessage(messageviewmodel);
             var messi = ReturnMessage(messageviewmodel);
-            await App.MobileService.GetTable<Message>().InsertAsync(messi);
+            JObject jo = new JObject();
+            jo.Add("SenderId", messi.SenderId);
+            jo.Add("Body", messi.Body);
+            jo.Add("RequestId", messi.RequestId);
+            jo.Add("TimeSent", DateTime.Now);
+            await App.MobileService.GetTable<Message>().InsertAsync(jo);
+
             //await App.MobileService.SyncContext.PushAsync();
         }
         public static async Task<List<MessageViewModel>> GetAll()

@@ -7,6 +7,7 @@ using Xamarin.Forms.Xaml;
 using PrintQue.Models;
 using PrintQue.Helper;
 using PrintQue.ViewModel;
+using Newtonsoft.Json;
 
 [assembly: XamlCompilation(XamlCompilationOptions.Compile)]
 namespace PrintQue
@@ -47,6 +48,14 @@ namespace PrintQue
         {
             InitializeComponent();
             //Getdata();
+
+            //GlobalConfiguration.Configuration.Formatters.JsonFormatter.SerializerSettings =
+                //new JsonSerializerSettings
+                //{
+                //    DateFormatHandling = DateFormatHandling.IsoDateFormat,
+                //    DateTimeZoneHandling = DateTimeZoneHandling.Unspecified,
+                //};
+
 
             MainPage = new NavigationPage(new LoginPage());
             //MainPage = new MainPage();

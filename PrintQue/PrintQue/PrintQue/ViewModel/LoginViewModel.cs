@@ -130,7 +130,8 @@ namespace PrintQue.ViewModel
                 case 1:
                     RememberUser();
                     IsLoading = false;
-                    await Xamarin.Forms.Application.Current.MainPage.Navigation.PushAsync(new AdminTabContainer());
+                    await Xamarin.Forms.Application.Current.MainPage.Navigation.PushAsync(new UserTabContainer());
+                    //await Xamarin.Forms.Application.Current.MainPage.Navigation.PushAsync(new AdminTabContainer());
                     break;
                 case 2:
                     RememberUser();

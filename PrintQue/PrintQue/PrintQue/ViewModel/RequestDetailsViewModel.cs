@@ -251,8 +251,6 @@ namespace PrintQue.ViewModel
         {
             if (request.DateMade != null)
                 DateMade = request.DateMade;
-            else
-                DateMade = DateTime.Now;
             if(request.DateRequested!=null)
                 DateRequested = request.DateRequested;
             else
@@ -304,7 +302,7 @@ namespace PrintQue.ViewModel
             }
             else if (!insert)
             {
-                request.ID = exists.ID;
+                request.Id = exists.Id;
                 await RequestViewModel.Update(request);
                 await Xamarin.Forms.Application.Current.MainPage.Navigation.PopAsync();
 
