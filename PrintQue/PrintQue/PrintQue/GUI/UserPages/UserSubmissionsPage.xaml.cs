@@ -56,7 +56,7 @@ namespace PrintQue.GUI.UserPages
         {
             
             viewModel.UpdateRequestsList();
-            viewModel.IsEmpty = true;
+
             base.OnAppearing();
         }
 
