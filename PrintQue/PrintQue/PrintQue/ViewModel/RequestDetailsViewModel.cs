@@ -165,6 +165,7 @@ namespace PrintQue.ViewModel
             }
         }
 
+        /*
         private async void SelectFile_Clicked(object sender, EventArgs e)
         {
             try
@@ -299,6 +300,7 @@ namespace PrintQue.ViewModel
             };
             await Navigation.PushAsync(page);
         }
+        */
 
         public event PropertyChangedEventHandler PropertyChanged;
         private void OnPropertyChanged(string propertyName)
