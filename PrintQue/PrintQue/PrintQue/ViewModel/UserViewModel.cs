@@ -42,12 +42,14 @@ namespace PrintQue.ViewModel
             {
                 Email = email,
             };
-            bool canLogin = await ApiHelper.LoginAsync(email, password);
+            bool canLogin = await ApiHelper.LoginAsync(email, password); // Not Working
             
 
             if (canLogin)
             {
                 var user = await SearchByEmail(email);
+                if (user == null)
+                    return 0;
                 var admin = await IsAdmin(user);
                 //admin
                 if (admin)
