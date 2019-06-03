@@ -48,7 +48,7 @@ namespace PrintQue.ViewModel
             if (canLogin)
             {
                 var user = await SearchByEmail(email);
-                var admin = await IsAdmin(user);
+                var admin = false;
                 //admin
                 if (admin)
                 {

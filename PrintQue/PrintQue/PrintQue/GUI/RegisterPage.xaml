@@ -20,26 +20,26 @@
              BackgroundColor="#222222" Opacity="0.5"
              AbsoluteLayout.LayoutFlags="All"
              AbsoluteLayout.LayoutBounds="0,0,1,1"
-             IsVisible="{Binding IsLoading}">
+             IsVisible="{Binding IsBusy}">
         </ContentView>
         <StackLayout
             Padding="30"
             BackgroundColor="#00BFFF"
             AbsoluteLayout.LayoutFlags="PositionProportional"
                 AbsoluteLayout.LayoutBounds="0.5,0.5,-1,-1"
-            IsVisible="{Binding IsLoading}">
+            IsVisible="{Binding IsBusy}">
             <ActivityIndicator x:Name="actInd"
                 AbsoluteLayout.LayoutFlags="PositionProportional"
                 AbsoluteLayout.LayoutBounds="0.5,0.5,-1,-1"
-                IsRunning="{Binding IsLoading}"
-                IsVisible="{Binding IsLoading}" 
+                IsRunning="{Binding IsBusy}"
+                IsVisible="{Binding IsBusy}" 
                            Color="White"/>
             <Label Text="Registering New User..."
                FontSize="Large"
                TextColor="White"
                 AbsoluteLayout.LayoutFlags="PositionProportional"
                 AbsoluteLayout.LayoutBounds="0.5,0.425,-1,-1"
-               IsVisible="{Binding IsLoading}"
+               IsVisible="{Binding IsBusy}"
                />
         </StackLayout>
 
