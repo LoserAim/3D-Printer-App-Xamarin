@@ -280,7 +280,7 @@ namespace PrintQue.ViewModel
         {
             if (request.DateMade != null)
                 DateMade = request.DateMade;
-            if(request.DateRequested!=null)
+            if(request.DateRequested!=null && request.DateRequested != new DateTime())
                 DateRequested = request.DateRequested;
             else
                 DateRequested = RoundUp(DateTime.Now, TimeSpan.FromMinutes(15));
