@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using PrintQue.ViewModel;
+using Xamarin.Essentials;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -39,14 +40,18 @@ namespace PrintQue.Widgets.ChatWidget
               );
             });
         }
-        protected override void OnAppearing()
+        protected override async void OnAppearing()
         {
             //if (_isDataLoaded)
             //    return;
             // _isDataLoaded = true;
-            viewModel.UpdateChatList();
-
             base.OnAppearing();
+            viewModel.UpdateChatList();
+            if((await RequestViewModel.SearchByUser(App.LoggedInUser.ID)).Count < 1)
+                await DisplayAlert("ALERT", "You need to submit a request before you can message an admin", "OK");
+
+
+            
         }
 
         public void ScrollTap(object sender, System.EventArgs e)
@@ -78,6 +83,12 @@ namespace PrintQue.Widgets.ChatWidget
         public void OnListTapped(object sender, ItemTappedEventArgs e)
         {
             chatInput.UnFocusEntry();
+        }
+
+        private void ChatList_Refreshing(object sender, EventArgs e)
+        {
+            
+            viewModel.UpdateChatList();
         }
     }
 }
