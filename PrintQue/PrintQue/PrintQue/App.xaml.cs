@@ -8,6 +8,8 @@ using PrintQue.Models;
 using PrintQue.Helper;
 using PrintQue.ViewModel;
 using Newtonsoft.Json;
+using Microsoft.AppCenter;
+using Microsoft.AppCenter.Push;
 
 [assembly: XamlCompilation(XamlCompilationOptions.Compile)]
 namespace PrintQue
@@ -70,8 +72,10 @@ namespace PrintQue
 
         }
 
-        protected override void OnStart()
+        protected override async void OnStart()
         {
+            string androidAppSecret = "5d3acf09-ac5b-4fa8-9cc2-a4024926fd08";
+            AppCenter.Start($"android={androidAppSecret}", typeof(Push));
             // Handle when your app starts
         }
 

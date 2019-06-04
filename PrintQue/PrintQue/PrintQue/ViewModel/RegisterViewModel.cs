@@ -176,7 +176,6 @@ namespace PrintQue.ViewModel
                 await Xamarin.Forms.Application.Current.MainPage.DisplayAlert("Success!", "You have successfully Registered!", "OK");
                 await Xamarin.Forms.Application.Current.MainPage.Navigation.PopAsync();
             }
-
             else
             {
                 IsBusy = false;

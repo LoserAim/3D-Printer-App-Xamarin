@@ -57,7 +57,12 @@ namespace PrintQue.Helper
             try
             {
                 response = await client.PostAsync(uri, content);
-                return response.IsSuccessStatusCode;
+                var test3 = await response.Content.ReadAsStringAsync();
+                if(test3.Contains("Success"))
+                {
+                    return true;
+                }
+                return false;
             }
             catch (Exception)
             {
