@@ -24,6 +24,8 @@ namespace PrintQue.Models
         public string ProjectDescript { get; set; }
         public bool PersonalUse { get; set; }
         public double Duration { get; set; }
+        public DateTime TimeDone { get; set; }
+
 
 
     }

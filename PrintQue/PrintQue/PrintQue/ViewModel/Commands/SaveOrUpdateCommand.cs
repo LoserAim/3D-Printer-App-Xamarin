@@ -18,17 +18,35 @@ namespace PrintQue.ViewModel.Commands
         public bool CanExecute(object parameter)
         {
             var request = (RequestViewModel)parameter;
+            viewModel.IsvisibleFileError = false;
+            viewModel.IsvisiblePrintTimeError = false;
+            viewModel.IsvisibleProjectDescError = false;
             if (request == null)
                 return false;
             try
             {
-                if (string.IsNullOrEmpty(request.ProjectName) || string.IsNullOrEmpty(request.ProjectDescript)
-                || string.IsNullOrEmpty(request.User.Email)
-                || string.IsNullOrEmpty(request.Printer.Name))
+                if (string.IsNullOrEmpty(request.ProjectName))
                     return false;
-                if ((request.DateRequested.CompareTo(DateTime.Now) < 1)
-                    || string.IsNullOrEmpty(request.ProjectFilePath))
+                if(string.IsNullOrEmpty(request.ProjectDescript))
+                {
+                    viewModel.IsvisibleProjectDescError = true;
                     return false;
+                }
+                if (string.IsNullOrEmpty(request.User.Email))
+                    return false;
+                if(string.IsNullOrEmpty(request.Printer.Name))
+                    return false;
+                if ((request.DateRequested.CompareTo(DateTime.Now) < 1))
+                {
+                    viewModel.IsvisiblePrintTimeError = false;
+                    return false;
+                }
+                if (string.IsNullOrEmpty(request.ProjectFilePath))
+                {
+                    viewModel.IsvisibleFileError = false;
+                    return false;
+                }
+
             }
             catch (NullReferenceException)
             {

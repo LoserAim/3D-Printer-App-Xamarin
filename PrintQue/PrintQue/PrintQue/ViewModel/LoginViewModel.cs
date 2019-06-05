@@ -120,7 +120,8 @@ namespace PrintQue.ViewModel
         public async void Login()
         {
             IsLoading = true;
-            if (Preferences.Get("RememberMe", false))
+
+            if(Preferences.Get("RememberMe", false))
             {
                 Email = await SecureStorage.GetAsync("User_Email");
                 Password = await SecureStorage.GetAsync("User_Password");
