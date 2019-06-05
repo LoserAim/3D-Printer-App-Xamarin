@@ -52,11 +52,12 @@ namespace PrintQue.GUI.UserPages
 			InitializeComponent();
 		}
 
-        protected override void OnAppearing()
+        protected override async void OnAppearing()
         {
             
             viewModel.UpdateRequestsList();
-
+            if(viewModel.requests.Count < 1)
+                await DisplayAlert("ALERT", "You have no requests. You must submit a request before you can use this page.", "OK");
             base.OnAppearing();
         }
 

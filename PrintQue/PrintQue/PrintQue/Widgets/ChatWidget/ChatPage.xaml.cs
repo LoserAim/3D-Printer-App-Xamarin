@@ -39,13 +39,14 @@ namespace PrintQue.Widgets.ChatWidget
               );
             });
         }
-        protected override void OnAppearing()
+        protected override async void OnAppearing()
         {
             //if (_isDataLoaded)
             //    return;
             // _isDataLoaded = true;
             viewModel.UpdateChatList();
-
+            if ((await RequestViewModel.SearchByUser(App.LoggedInUser.ID)).Count < 1)
+                await DisplayAlert("ALERT", "You have no requests. You must submit a request before you can message the admin.", "OK");
             base.OnAppearing();
         }
 

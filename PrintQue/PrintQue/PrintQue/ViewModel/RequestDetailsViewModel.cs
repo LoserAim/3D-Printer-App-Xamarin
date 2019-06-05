@@ -289,6 +289,8 @@ namespace PrintQue.ViewModel
             ProjectName = request.ProjectName;
             ProjectDescript = request.ProjectDescript;
             ProjectFilePath = request.ProjectFilePath;
+            if (request.PersonalUse == null)
+                PersonalUse = false;
             PersonalUse = request.PersonalUse;
             Request = request;
             Status = request.Status;
