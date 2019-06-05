@@ -15,7 +15,7 @@
                IsTabStop="False"
                x:Name="RequestDetails">
             <TableRoot>
-            <TableSection Title="Requests Details">
+            <TableSection Title="Requests Details" TextColor="Black">
                 <EntryCell  x:Name="ent_ProjectName" Label="ProjectName" Text="{Binding ProjectName, Mode=TwoWay}" />
                 <ViewCell>
                     <StackLayout Padding="0,10,0,0">
