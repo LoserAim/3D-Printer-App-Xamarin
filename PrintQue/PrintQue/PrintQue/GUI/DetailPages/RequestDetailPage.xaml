@@ -7,7 +7,7 @@
              x:Class="PrintQue.GUI.DetailPages.RequestDetailPage">
     <ContentPage.ToolbarItems>
         <ToolbarItem Icon="save.png" Command="{Binding SaveOrUpdateCommand}" CommandParameter="{Binding Request}" Order="Primary"/>
-        <ToolbarItem x:Name="tool_Message" Icon="message.png" Command="{Binding PushChatPagesCommand}" Order="Primary"/>
+        <!--<ToolbarItem x:Name="tool_Message" Icon="message.png" Command="{Binding PushChatPagesCommand}" Order="Primary"/>-->
         <ToolbarItem x:Name="tool_Delete" Icon="trash.png"  Command="{Binding DeleteCommand}" CommandParameter="{Binding Request}" Order="Primary"/>
     </ContentPage.ToolbarItems>
     <TableView Intent="Form" 
@@ -21,6 +21,7 @@
                     <StackLayout Padding="0,10,0,0">
                         <Label Text="Description"/>
                         <Editor x:Name="edi_Description" Text="{Binding ProjectDescript, Mode=TwoWay}" VerticalOptions="FillAndExpand" AutoSize="TextChanges" HeightRequest="100"/>
+                        <Label Text="Project Description must be filled out." TextColor="Red" IsVisible="{Binding IsvisibleProjectDescError}"/>
 
                     </StackLayout>
                 </ViewCell>
@@ -83,6 +84,8 @@
                     <StackLayout Padding="0,10,0,0">
                         <Label x:Name="PrintTimeLabel" HorizontalTextAlignment="Center" Text="{Binding PrintTimeLabel}"></Label>
                         <Button Text="Want to schedule your print?" Command="{Binding SetDateCommand}"></Button>
+                        <Label Text="You must select a valid time in the future." TextColor="Red" IsVisible="{Binding IsvisiblePrintTimeError}"/>
+
                     </StackLayout>
                 </ViewCell>
             </TableSection>
@@ -105,6 +108,7 @@
                     <StackLayout Padding="0,10,0,0" Orientation="Horizontal">
                         <Label x:Name="SelectedFileLabel" HorizontalTextAlignment="Center" Text="{Binding SelectedFileText}"></Label>
                         <Button x:Name="SelectFile" Command="{Binding FilePickerCommand}" Text="Select Model File" HorizontalOptions="FillAndExpand"></Button>
+                        <Label Text="Request must have a file and file must be .stl in order to submit request." TextColor="Red" IsVisible="{Binding IsvisibleFileError}"/>
                     </StackLayout>
                 </ViewCell>
                
