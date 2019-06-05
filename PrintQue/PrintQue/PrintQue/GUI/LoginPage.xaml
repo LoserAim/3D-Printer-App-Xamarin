@@ -25,6 +25,9 @@
                 </ActivityIndicator.Color>
             </ActivityIndicator>
         </StackLayout>-->
+
+            <Image HorizontalOptions="Center" VerticalOptions="Start"  Source="@drawable/logo.png"></Image>
+            <Label></Label>
             <Entry x:Name="userNameEntry" 
                Placeholder="Email" 
                Keyboard="Email"
@@ -36,7 +39,7 @@
             <StackLayout Orientation="Horizontal" Margin="20,0,0, 0">
                 <Switch x:Name="RememberMe_Switch"  Toggled="RememberMe_Switch_Toggled"  IsToggled="{Binding RememberMe, Mode=TwoWay}"
            HorizontalOptions="Start" 
-                Scale="2" 
+                Scale="1.5" 
                     
                         OnColor="#00BFFF"/>
                 <Label Text="Remember Me" VerticalOptions="Center" FontSize="Medium" Margin="20,0,0,0"/>
