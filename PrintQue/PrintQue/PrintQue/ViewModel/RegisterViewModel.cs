@@ -96,16 +96,39 @@ namespace PrintQue.ViewModel
         private string confirmpassword;
         private string first_Name;
         private string last_Name;
-        private bool _isvisibleemail;
-        public bool IsvisibleEmail
-        { get { return _isvisibleemail; }
+
+        private bool _isvisibleemailerror;
+        public bool IsvisibleEmailError
+        {
+            get { return _isvisibleemailerror; }
             set
             {
-                _isvisibleemail = value;
-                OnPropertyChanged("IsvisibleEmail");
+                _isvisibleemailerror = value;
+                OnPropertyChanged("IsvisibleEmailError");
             }
         }
 
+
+        private bool _isvisiblepassworderror;
+        public bool IsvisiblePasswordError
+        {
+            get { return _isvisiblepassworderror; }
+            set
+            {
+                _isvisiblepassworderror = value;
+                OnPropertyChanged("IsvisiblePasswordError");
+            }
+        }
+
+        private bool _isvisiblepassworderror2;
+        public bool IsvisiblePasswordError2
+        { get { return _isvisiblepassworderror2; }
+            set
+            {
+                _isvisiblepassworderror2 = value;
+                OnPropertyChanged("IsvisiblePasswordError2");
+            }
+        }
 
 
         //Important for viewmodels. Notifies Commands of new changes
@@ -169,8 +192,9 @@ namespace PrintQue.ViewModel
         public async void Register()
         {
             IsBusy = true;
-            var response = await apiHelper.RegisterAsync(First_Name, Last_Name, Email, Password, confirmpassword);
 
+            var response = await apiHelper.RegisterAsync(First_Name, Last_Name, Email, Password, confirmpassword);
+            
             if (response)
             {                IsBusy = false;
                 await Xamarin.Forms.Application.Current.MainPage.DisplayAlert("Success!", "You have successfully Registered!", "OK");
@@ -178,6 +202,10 @@ namespace PrintQue.ViewModel
             }
             else
             {
+                if (!password.Equals(confirmpassword))
+                {
+                    IsvisiblePasswordError2 = true;
+                }
                 IsBusy = false;
                 await Xamarin.Forms.Application.Current.MainPage.DisplayAlert("Error", "Try again", "OK");
             }

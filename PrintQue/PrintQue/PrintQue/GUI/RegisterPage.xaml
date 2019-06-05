@@ -10,11 +10,15 @@
 
         <Entry x:Name="First_NameEntry" Placeholder="First Name" Text="{Binding First_Name, Mode=TwoWay}"/>
         <Entry x:Name="Last_NameEntry" Placeholder="Last Name" Text="{Binding Last_Name, Mode=TwoWay}"/>
-        <Entry x:Name="userNameEntry" Placeholder="Email Adress" Keyboard="Email" Text="{Binding Email, Mode=TwoWay}"/>
-        <Entry x:Name="userPasswordEntry" Placeholder="Password" IsPassword="True" Text="{Binding Password, Mode=TwoWay}"/>
-        <Entry x:Name="PasswordConfirmEntry" Placeholder="Confirm Password" IsPassword="True" Text="{Binding confirmPassword, Mode=TwoWay}"/>
-        <Button x:Name="LoginButton" Text="Register" Command="{Binding RegisterCommand}" CommandParameter="{Binding User}" Margin="0,35"  BackgroundColor="DodgerBlue" TextColor="White"/>
             
+        <Entry x:Name="userNameEntry" Placeholder="Email Adress" Keyboard="Email" Text="{Binding Email, Mode=TwoWay}"/>
+            <Label Text="Username must be a valid email address" TextColor="Red" IsVisible="{Binding IsvisibleEmailError}"/>
+        <Entry x:Name="userPasswordEntry" Placeholder="Password" IsPassword="True" Text="{Binding Password, Mode=TwoWay}"/>           
+            <Label Text="Password must contain 1 non-alphanumeric character, 1 lowercase, and 1 uppercase" TextColor="Red" IsVisible="{Binding IsvisiblePasswordError}"/>
+        <Entry x:Name="PasswordConfirmEntry" Placeholder="Confirm Password" IsPassword="True" Text="{Binding confirmPassword, Mode=TwoWay}"/>
+            <Label Text="Your Passwords do not match" TextColor="Red" IsVisible="{Binding IsvisiblePasswordError2}"/>
+        <Button x:Name="LoginButton" Text="Register" Command="{Binding RegisterCommand}" CommandParameter="{Binding User}" Margin="0,35"  BackgroundColor="DodgerBlue" TextColor="White"/>
+                
         </StackLayout>
         <ContentView x:Name="actIndBackground"
              BackgroundColor="#222222" Opacity="0.5"
