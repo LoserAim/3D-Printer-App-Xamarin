@@ -6,6 +6,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Windows.Input;
+using Xamarin.Essentials;
 using Xamarin.Forms;
 
 namespace PrintQue.ViewModel
@@ -22,6 +23,17 @@ namespace PrintQue.ViewModel
             {
                 _textToSend = value;
                 OnPropertyChanged("TextToSend");
+            }
+        }
+        private bool _refreshList;
+
+        public bool RefreshList
+        {
+            get { return _refreshList; }
+            set
+            {
+                _refreshList = value;
+                OnPropertyChanged("RefreshList");
             }
         }
         public event PropertyChangedEventHandler PropertyChanged;
@@ -61,7 +73,7 @@ namespace PrintQue.ViewModel
         }
         public async void UpdateChatList()
         {
-            
+            RefreshList = true;
             var user = await UserViewModel.SearchByID(App.LoggedInUser.ID);
             if (user.Requests != null)
             {
@@ -76,6 +88,7 @@ namespace PrintQue.ViewModel
                 }
                 Messages.OrderBy(m => m.TimeSent);
             }
+            RefreshList = false;
         }
         public async void SetMessages(RequestViewModel request)
         {
@@ -104,7 +117,7 @@ namespace PrintQue.ViewModel
                 await MessageViewModel.Insert(messi);
                 
             }
-            else if (re == 0)
+            if (re == 0)
             {
                 await Xamarin.Forms.Application.Current.MainPage.DisplayAlert("Alert", "You have not made a request! Go create one to message an admin.", "OK");
 

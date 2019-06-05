@@ -27,7 +27,9 @@
                  Rotation="180" 
                  FlowDirection="RightToLeft"
                  HasUnevenRows="True" x:Name="ChatList"
-                                      
+                 IsPullToRefreshEnabled="true" 
+                                       IsRefreshing="{Binding RefreshList}"
+                 Refreshing="ChatList_Refreshing"
                  VerticalOptions="FillAndExpand" 
                  SeparatorColor="Transparent"
                  ItemAppearingCommand="{Binding MessageAppearingCommand}"

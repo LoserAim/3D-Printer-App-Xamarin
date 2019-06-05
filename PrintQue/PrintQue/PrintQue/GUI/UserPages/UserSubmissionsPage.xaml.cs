@@ -58,6 +58,7 @@ namespace PrintQue.GUI.UserPages
             viewModel.UpdateRequestsList();
             if((await RequestViewModel.SearchByUser(App.LoggedInUser.ID)).Count < 1)
                 await DisplayAlert("ALERT", "You have no requests. You must submit a request before you can use this page.", "OK");
+
             base.OnAppearing();
         }
 
