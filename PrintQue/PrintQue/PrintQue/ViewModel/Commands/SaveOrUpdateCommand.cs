@@ -38,12 +38,12 @@ namespace PrintQue.ViewModel.Commands
                     return false;
                 if ((request.DateRequested.CompareTo(DateTime.Now) < 1))
                 {
-                    viewModel.IsvisiblePrintTimeError = false;
+                    viewModel.IsvisiblePrintTimeError = true;
                     return false;
                 }
                 if (string.IsNullOrEmpty(request.ProjectFilePath))
                 {
-                    viewModel.IsvisibleFileError = false;
+                    viewModel.IsvisibleFileError = true;
                     return false;
                 }
 

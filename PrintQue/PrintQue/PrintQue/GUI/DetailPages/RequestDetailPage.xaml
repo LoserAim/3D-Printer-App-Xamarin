@@ -85,7 +85,6 @@
                         <Label x:Name="PrintTimeLabel" HorizontalTextAlignment="Center" Text="{Binding PrintTimeLabel}"></Label>
                         <Button Text="Want to schedule your print?" Command="{Binding SetDateCommand}"></Button>
                         <Label Text="You must select a valid time in the future." TextColor="Red" IsVisible="{Binding IsvisiblePrintTimeError}"/>
-
                     </StackLayout>
                 </ViewCell>
             </TableSection>

@@ -132,7 +132,6 @@ namespace PrintQue.ViewModel
             {
                 case 0:
                     IsLoading = false;
-                    await Xamarin.Forms.Application.Current.MainPage.DisplayAlert("Error", "Try again", "OK");
                     break;
                 case 1:
                     RememberUser();
