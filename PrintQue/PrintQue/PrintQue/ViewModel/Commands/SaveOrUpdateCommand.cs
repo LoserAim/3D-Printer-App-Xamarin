@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Windows.Input;
 
@@ -25,9 +26,9 @@ namespace PrintQue.ViewModel.Commands
                 return false;
             try
             {
-                if (string.IsNullOrEmpty(request.ProjectName))
+                if (string.IsNullOrEmpty(request.ProjectName) || string.IsNullOrEmpty(request.ProjectDescript))
                     return false;
-                if(string.IsNullOrEmpty(request.ProjectDescript))
+                if(!request.ProjectDescript.Any(char.IsUpper) || !request.ProjectDescript.Any(char.IsLower))
                 {
                     viewModel.IsvisibleProjectDescError = true;
                     return false;
