@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Windows.Input;
 
@@ -18,17 +19,35 @@ namespace PrintQue.ViewModel.Commands
         public bool CanExecute(object parameter)
         {
             var request = (RequestViewModel)parameter;
+            viewModel.IsvisibleFileError = false;
+            viewModel.IsvisiblePrintTimeError = false;
+            viewModel.IsvisibleProjectDescError = false;
             if (request == null)
                 return false;
             try
             {
-                if (string.IsNullOrEmpty(request.ProjectName) || string.IsNullOrEmpty(request.ProjectDescript)
-                || string.IsNullOrEmpty(request.User.Email)
-                || string.IsNullOrEmpty(request.Printer.Name))
+                if (string.IsNullOrEmpty(request.ProjectName) || string.IsNullOrEmpty(request.ProjectDescript))
                     return false;
-                if ((request.DateRequested.CompareTo(DateTime.Now) < 1)
-                    || string.IsNullOrEmpty(request.ProjectFilePath))
+                if(!request.ProjectDescript.Any(char.IsUpper) || !request.ProjectDescript.Any(char.IsLower))
+                {
+                    viewModel.IsvisibleProjectDescError = true;
                     return false;
+                }
+                if (string.IsNullOrEmpty(request.User.Email))
+                    return false;
+                if(string.IsNullOrEmpty(request.Printer.Name))
+                    return false;
+                if ((request.DateRequested.CompareTo(DateTime.Now) < 1))
+                {
+                    viewModel.IsvisiblePrintTimeError = true;
+                    return false;
+                }
+                if (string.IsNullOrEmpty(request.ProjectFilePath))
+                {
+                    viewModel.IsvisibleFileError = true;
+                    return false;
+                }
+
             }
             catch (NullReferenceException)
             {

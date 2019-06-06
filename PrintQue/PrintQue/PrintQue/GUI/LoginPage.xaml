@@ -38,19 +38,18 @@
                Text="{Binding Password, Mode=TwoWay}"/>
             <StackLayout Orientation="Horizontal" Margin="20,0,0, 0">
                 <Switch x:Name="RememberMe_Switch"  Toggled="RememberMe_Switch_Toggled"  IsToggled="{Binding RememberMe, Mode=TwoWay}"
-           HorizontalOptions="Start" 
+                 HorizontalOptions="Start" 
                 Scale="1.5" 
-                    
-                        OnColor="#00BFFF"/>
+                OnColor="#ffe6a0"/>
                 <Label Text="Remember Me" VerticalOptions="Center" FontSize="Medium" Margin="20,0,0,0"/>
 
             </StackLayout>
-            <Button x:Name="LoginButton" 
+            <Button x:Name="LoginButton"
                 Text="Log in" 
                 Command="{Binding LoginCommand}"
                 CommandParameter="{Binding User}"
                 Margin="0,15"  
-                BackgroundColor="DodgerBlue" 
+                BackgroundColor="#003567" 
                 TextColor="White"/>
 
 
@@ -73,7 +72,7 @@
         
         <StackLayout
             Padding="30"
-            BackgroundColor="#00BFFF"
+            BackgroundColor="#003567"
             AbsoluteLayout.LayoutFlags="PositionProportional"
                 AbsoluteLayout.LayoutBounds="0.5,0.5,-1,-1"
             IsVisible="{Binding IsLoading}">

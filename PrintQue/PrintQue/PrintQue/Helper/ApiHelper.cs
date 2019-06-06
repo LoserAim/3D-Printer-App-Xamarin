@@ -32,9 +32,32 @@ namespace PrintQue.Helper
             //Need to add url for Account register page
             string url = "http://3dprintqueueweb.azurewebsites.net/api/Account/Register";
             var uri = new Uri(url);
-            response = await client.PostAsync(uri, content);
-            //var response = await client.PostAsync(, content);
-            return response.IsSuccessStatusCode;
+            try
+            {
+                response = await client.PostAsync(uri, content);
+                var test3 = await response.Content.ReadAsStringAsync();
+                if (test3.Contains("Success"))
+                {
+                    await Xamarin.Forms.Application.Current.MainPage.DisplayAlert("Success!", "You have successfully Registered!", "OK");
+                    return true;
+                }
+                else if(test3.Contains("DuplicateUserName"))
+                {
+                    await Xamarin.Forms.Application.Current.MainPage.DisplayAlert("ERROR", "Email is already being used. Please select a different email or contact an Admin", "OK");
+                    return false;
+                }
+                else
+                {
+                    await Xamarin.Forms.Application.Current.MainPage.DisplayAlert("Error", "Try again", "OK");
+                    return false;
+                }
+                
+            }
+            catch (Exception)
+            {
+
+                return false;
+            }
 
         }
       
@@ -61,6 +84,14 @@ namespace PrintQue.Helper
                 if(test3.Contains("Success"))
                 {
                     return true;
+                }
+                else if(test3.Contains("Fail-Email"))
+                {
+                    await Xamarin.Forms.Application.Current.MainPage.DisplayAlert("ERROR", "Email is incorrect!", "OK");
+                }
+                else if(test3.Contains("Fail-Password"))
+                {
+                    await Xamarin.Forms.Application.Current.MainPage.DisplayAlert("ERROR", "Password is incorrect!", "OK");
                 }
                 return false;
             }
