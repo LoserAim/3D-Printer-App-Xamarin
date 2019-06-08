@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Windows.Input;
 using System.Linq;
+using System.Net.Mail;
 
 namespace PrintQue.ViewModel.Commands
 {
@@ -26,15 +27,23 @@ namespace PrintQue.ViewModel.Commands
                 return false;
             if (string.IsNullOrEmpty(user.Email) || string.IsNullOrEmpty(user.Password) || string.IsNullOrEmpty(user.confirmPassword) || string.IsNullOrEmpty(user.First_Name) || string.IsNullOrEmpty(user.Last_Name))
                 return false;
-            if (!user.Email.Contains("@"))
+            MailAddress m;
+            try
+            {
+                m = new MailAddress(user.Email);
+            }
+            catch
             {
                 RegisterViewModel.IsvisibleEmailError = true;
                 return false;
             }
-            else
+            if (!m.Host.Contains('.'))
             {
-                RegisterViewModel.IsvisibleEmailError = false;
+
+                RegisterViewModel.IsvisibleEmailError = true;
+                return false;
             }
+
             if (!user.Password.Any(char.IsUpper) || !user.Password.Any(char.IsLower) || (!user.Password.Any(char.IsSymbol) && !user.Password.Any(char.IsDigit) && !user.Password.Any(char.IsPunctuation)))
             {
                 RegisterViewModel.IsvisiblePasswordError = true;

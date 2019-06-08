@@ -30,7 +30,37 @@ namespace PrintQue.ViewModel
         private DateTime _dateMade;
         private string _selectedFileText;
         private string _id;
+        private bool _isvisibleFileError;
+        private bool _isvisiblePrintTimeError;
+        private bool _isvisibleProjectDescError;
+        public bool IsvisibleFileError
+        {
+            get { return _isvisibleFileError; }
+            set
+            {
+                _isvisibleFileError = value;
+                OnPropertyChanged("IsvisibleFileError");
+            }
+        }
 
+        public bool IsvisiblePrintTimeError
+        {
+            get { return _isvisiblePrintTimeError; }
+            set
+            {
+                _isvisiblePrintTimeError = value;
+                OnPropertyChanged("_isvisiblePrintTimeError");
+            }
+        }
+        public bool IsvisibleProjectDescError
+        {
+            get { return _isvisibleProjectDescError; }
+            set
+            {
+                _isvisibleProjectDescError = value;
+                OnPropertyChanged("IsvisibleProjectDescError");
+            }
+        }
         private string _projectDescript;
         private bool _personalUse;
         private double _duration;
@@ -294,7 +324,9 @@ namespace PrintQue.ViewModel
             Status = request.Status;
             Printer = request.Printer;
             User = request.User;
-
+            IsvisibleFileError = false;
+            IsvisiblePrintTimeError = false;
+            IsvisibleProjectDescError = false;
             PrintTimeLabel = "Print Time: " + DateRequested.ToString();
             SaveOrUpdateCommand = new SaveOrUpdateCommand(this);
             DeleteCommand = new DeleteCommand(this);

@@ -62,7 +62,7 @@ namespace PrintQue.ViewModel
                 StatusId = request.StatusId,
                 ApplicationUserId = request.ApplicationUserId,
                 DateMade = request.DateMade,
-                DateRequested = request.DateRequested,
+                DateRequested = request.DateRequested.ToUniversalTime(),
                 Duration = request.Duration,
                 ProjectName = request.ProjectName,
                 ProjectDescript = request.ProjectDescript,
@@ -204,8 +204,8 @@ namespace PrintQue.ViewModel
 
         public static async Task<List<RequestViewModel>> SearchByUser(string ID)
         {
-            var requests = ReturnListRequestViewModel(await App.MobileService.GetTable<Request>().Where(r => r.ApplicationUserId.Contains(ID)).ToListAsync());
-            var temp = new List<RequestViewModel>();
+            var requests = ReturnListRequestViewModel(await App.MobileService.GetTable<Request>().Where(r => r.ApplicationUserId.Contains(ID)).OrderBy(u => u.DateMade).ToListAsync());
+            
             if (requests != null)
             {
 

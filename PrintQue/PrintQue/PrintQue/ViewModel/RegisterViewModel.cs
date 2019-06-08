@@ -197,7 +197,6 @@ namespace PrintQue.ViewModel
             
             if (response)
             {                IsBusy = false;
-                await Xamarin.Forms.Application.Current.MainPage.DisplayAlert("Success!", "You have successfully Registered!", "OK");
                 await Xamarin.Forms.Application.Current.MainPage.Navigation.PopAsync();
             }
             else
@@ -207,7 +206,7 @@ namespace PrintQue.ViewModel
                     IsvisiblePasswordError2 = true;
                 }
                 IsBusy = false;
-                await Xamarin.Forms.Application.Current.MainPage.DisplayAlert("Error", "Try again", "OK");
+                
             }
 
 

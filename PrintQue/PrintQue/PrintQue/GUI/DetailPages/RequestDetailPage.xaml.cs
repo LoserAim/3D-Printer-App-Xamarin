@@ -37,7 +37,7 @@ namespace PrintQue.GUI.DetailPages
                     //Admin insert
                     viewModel.insert = true;
                     ToolbarItems.RemoveAt(1);
-                    ToolbarItems.RemoveAt(1);
+
                     break;
                 case 1:
                     //User insert
@@ -46,7 +46,7 @@ namespace PrintQue.GUI.DetailPages
                     RequestDetails.Root.Remove(Duration_Slider);
                     viewModel.insert = true;
                     ToolbarItems.RemoveAt(1);
-                    ToolbarItems.RemoveAt(1);
+
                     break;
                 case 2:
                     //Admin Edit
